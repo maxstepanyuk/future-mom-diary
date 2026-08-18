@@ -1,5 +1,5 @@
-import styles from "./page.module.css";
+import css from './DashboardPage.module.css';
 
-export default function Home() {
-  return <main></main>;
+export default function DashboardPage() {
+  return <section>DashboardPage</section>;
 }
