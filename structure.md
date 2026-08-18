@@ -52,9 +52,10 @@ ProfilePage href='/profile'
             <OnboardingForm></OnboardingForm>
 
 AuthPage href='/auth/[authType]'
-    RegistrationPage href='/auth/register'
+    Умовний рендер???????
+    RegistrationForm href='/auth/register' 
          <RegistrationForm></RegistrationForm>
-    LoginPage href='/auth/login'
+    LoginForm href='/auth/login'
         <LoginForm></LoginForm>
 
 //////
