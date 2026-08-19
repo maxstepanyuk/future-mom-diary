@@ -1,6 +1,6 @@
 // import css from './Header.module.css';
 
-export default function Header() {
+export default async function Header() {
   return (
     <header>
       <div>HEADER</div>
