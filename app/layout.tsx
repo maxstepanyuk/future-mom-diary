@@ -39,10 +39,9 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }
 
-export default function RootLayout({ children, modal }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${comfortaa.variable} ${lato.variable}`}>
@@ -50,7 +49,6 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
           <AuthProvider>
             <Header />
             <main>{children}</main>
-            {modal}
           </AuthProvider>
         </TanStackProvider>
       </body>
