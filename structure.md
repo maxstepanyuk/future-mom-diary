@@ -69,7 +69,7 @@ LoginPage href='/auth/login'
 4. <Sidebar/> Діана
 5. <AuthBar/> Діана
 6. <UserBar/> Діана
-7. <GreetingBlock/>
+7. <GreetingBlock/> Лариса
 8. <StatusBlock/>
 9. <BabyTodayCard/>
 10. <MomTipCard/>
@@ -77,8 +77,8 @@ LoginPage href='/auth/login'
 12. <AddTaskModal/>
 13. <FeelingCheckCard/>
 14. <AddDiaryEntryModal/>
-15. <WeekSelector/>
-16. <JourneyDetails/>
+15. <WeekSelector/> Лариса
+16. <JourneyDetails/> Лариса
 17. <DiaryList/>
 18. <DiaryEntryCard/>
 19. <ConfirmationModal/>
@@ -86,8 +86,8 @@ LoginPage href='/auth/login'
 21. <ProfileAvatar/>
 22. <ProfileEditForm/> Женя
 23. <OnboardingForm/>
-24. <RegistrationForm/> Володимер
-25. <LoginForm/> Володимер
+24. <RegistrationForm/> Володимир
+25. <LoginForm/> Володимир
 
 Допоміжні компоненти:
 
@@ -99,3 +99,10 @@ Modals:
     <ConfirmationModal></ConfirmationModal>
 
 ////////////////////////////
+
+quick file create
+
+````bash
+mkdir components/Header
+touch components/Header/Header.tsx
+```
