@@ -79,10 +79,10 @@ LoginPage href='/auth/login'
 14. <AddDiaryEntryModal/> Алекс
 15. <WeekSelector/> Лариса
 16. <JourneyDetails/> Лариса
-17. <DiaryList/>
-18. <DiaryEntryCard/>
+17. <DiaryList/> Sergo-SSD
+18. <DiaryEntryCard/> Sergo-SSD
 19. <ConfirmationModal/> Наталя??
-20. <DiaryEntryDetails/>
+20. <DiaryEntryDetails/> Sergo-SSD
 21. <ProfileAvatar/>
 22. <ProfileEditForm/> Женя
 23. <OnboardingForm/>
