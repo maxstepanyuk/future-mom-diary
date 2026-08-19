@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Comfortaa, Lato } from 'next/font/google';
 import './globals.css';
-import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
-import Header from '@/components/Header/Header';
-import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
+import Header from '@/components/layout/Header/Header';
 
 const comfortaa = Comfortaa({
   variable: '--font-comfortaa',
@@ -25,15 +25,14 @@ export const metadata: Metadata = {
     title: 'Лелека',
     description: 'Лелека - щоденник майбутньої матусі',
     url: process.env.NEXT_PUBLIC_API_URL,
-    // // todo:
-    // images: [
-    //   {
-    //     url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "Лелека логотип",
-    //   },
-    // ],
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_API_URL}/images/leleka.jpg`,
+        width: 720,
+        height: 900,
+        alt: 'Лелека логотип',
+      },
+    ],
     type: 'article',
   },
 };
