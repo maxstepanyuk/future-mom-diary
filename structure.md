@@ -73,25 +73,24 @@ LoginPage href='/auth/login'
 8. <StatusBlock/>
 9. <BabyTodayCard/>
 10. <MomTipCard/>
-11. <TasksReminderCard/>
-12. <AddTaskModal/>
+11. <TasksReminderCard/> 
+12. <AddTaskModal/> 
 13. <FeelingCheckCard/>
-14. <AddDiaryEntryModal/>
+14. <AddDiaryEntryModal/> Алекс
 15. <WeekSelector/> Лариса
 16. <JourneyDetails/> Лариса
 17. <DiaryList/>
 18. <DiaryEntryCard/>
-19. <ConfirmationModal/>
+19. <ConfirmationModal/> Наталя??
 20. <DiaryEntryDetails/>
 21. <ProfileAvatar/>
 22. <ProfileEditForm/> Женя
 23. <OnboardingForm/>
 24. <RegistrationForm/> Володимир
 25. <LoginForm/> Володимир
+26. <AddDiaryEntryForm/> Алекс
 
-Допоміжні компоненти:
-
-
+Допоміжні компоненти: (повтор)
 
 Modals:
     <AddTaskModal></AddTaskModal>
