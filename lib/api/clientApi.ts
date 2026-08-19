@@ -21,6 +21,7 @@ export async function register(registerData: RegisterRequest): Promise<void> {
 }
 
 export async function login(loginData: LoginRequest) {
-  const { data } = await nextApi.post<LoginResponse>('/auth/login', loginData);
-  return data.user;
+  const response = await nextApi.post<LoginResponse>('/auth/login', loginData);
+
+  return response.data.user;
 }

@@ -1,29 +1,34 @@
 // import css from './Header.module.css';
+'use client';
 
 import { login, register } from '@/lib/api/clientApi';
-import { cookies } from 'next/headers';
+import { useEffect } from 'react';
 
-export default async function Test() {
-  const registerData = {
-    name: 'TEST4',
-    email: 'test4@mail.com',
-    password: '12345678',
-  };
+export default function Test() {
+  useEffect(() => {
+    const loginEffect = async () => {
+      const loginData = {
+        email: 'BC81@gmail.com',
+        password: '12345678',
+      };
+      //! проверка лоигна
+      const response = await login(loginData);
+      console.log(response);
+      // const cookieStore = await cookies();
+      // console.log(`Кукистор в браузере: ${cookieStore}`);
+    };
+    loginEffect();
+  }, []);
 
-  const loginData = {
-    email: 'test4@mail.com',
-    password: '12345678',
-  };
+  // const registerData = {
+  //   name: 'TEST4',
+  //   email: 'BC81@gmail.com',
+  //   password: '12345678',
+  // };
 
   // ! проверка реги
   // const response = await register(registerData);
   // console.log(response);
-
-  //! проверка лоигна
-  const response = await login(loginData);
-  console.log(response);
-  const cookieStore = await cookies();
-  // console.log(cookieStore);
 
   return (
     <>

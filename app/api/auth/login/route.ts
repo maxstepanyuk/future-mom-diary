@@ -8,25 +8,36 @@ import { logErrorResponse } from '../../_utils/utils';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const apiRes = await serverApi.post('/auth/login', body);
+    const apiRes = await serverApi.post('auth/login', body);
 
     const cookieStore = await cookies();
     const setCookie = apiRes.headers['set-cookie'];
+
     //!!!!!
-    console.log(setCookie);
+    console.log(`ApiRes: ${setCookie}`);
 
     if (setCookie) {
       const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
       for (const cookieStr of cookieArray) {
         const parsed = parseSetCookie(cookieStr);
 
+        //!!!!
+        console.log(`parsed.value: ${parsed.value}`);
+
         if (parsed.value) {
           cookieStore.set(parsed.name, parsed.value, parsed);
+
+          //!!!
+          console.log(`CookieStore: ${cookieStore}`);
         }
       }
-      //   console.log(cookieStore);
+      //!!!
+      console.log(`CookieStoreBeforeReturn: ${cookieStore}`);
       return NextResponse.json(apiRes.data, {
         status: apiRes.status,
+        // headers: {
+        //   Cookie: cookieStore.toString(),
+        // },
       });
     }
 
