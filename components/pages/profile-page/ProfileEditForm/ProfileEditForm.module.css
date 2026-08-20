@@ -1,0 +1,199 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.input {
+  width: 100%;
+  min-height: 37px;
+  padding: 8px 12px;
+
+  outline: none;
+  background: rgba(0, 0, 0, 0.05);
+
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.dateWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.datePickerWrapper {
+  width: 100%;
+  display: block;
+}
+
+.datePickerWrapper :global(.react-datepicker__input-container) {
+  width: 100%;
+}
+
+.dateInput {
+  width: 100%;
+  padding-right: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.dateChevron {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+
+  width: 20px;
+  height: 20px;
+
+  fill: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.cancelButton,
+.saveButton {
+  min-height: 36px;
+  padding: 8px 20px;
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #000;
+  width: 159px;
+  height: 38px;
+}
+
+.cancelButton {
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
+
+.saveButton {
+  background: #ffdae0;
+  border-bottom: 4px solid #ffcbd3;
+}
+
+.cancelButton:hover,
+.cancelButton:focus {
+  background: #fff;
+}
+.cancelButton:active {
+  background: #b2b2b2;
+}
+.saveButton:hover,
+.saveButton:focus {
+  background: #fff4f6;
+}
+.saveButton:active {
+  background: #ffcbd3;
+}
+
+/* react-select */
+
+:global(.profileSelect__control) {
+  min-height: 37px !important;
+  border: 2px solid transparent !important;
+  border-radius: 12px !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+:global(.profileSelect__control--is-focused) {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+:global(.profileSelect__value-container) {
+  padding: 0 12px !important;
+}
+
+:global(.profileSelect__single-value),
+:global(.profileSelect__placeholder) {
+  margin: 0 !important;
+
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+:global(.profileSelect__indicator-separator) {
+  display: none;
+}
+
+:global(.profileSelect__dropdown-indicator) {
+  padding: 0 12px !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+:global(.profileSelect__dropdown-indicator:hover) {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+:global(.profileSelect__menu) {
+  z-index: 10;
+  overflow: hidden;
+  margin-top: 4px !important;
+  border-radius: 12px !important;
+}
+
+:global(.profileSelect__option) {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+:global(.profileSelect__option--is-focused) {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+:global(.profileSelect__option--is-selected) {
+  color: #000 !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+:global(.profileSelect__control *) {
+  cursor: pointer !important;
+}
+
+@media screen and (min-width: 768px) {
+  .form {
+    gap: 24px;
+  }
+}
