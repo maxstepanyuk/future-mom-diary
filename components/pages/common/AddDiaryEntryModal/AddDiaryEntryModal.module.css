@@ -80,7 +80,7 @@
   font-family: var(--font-lato), sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 17px;
 }
 
 .input,
@@ -197,7 +197,6 @@
 
   .modal {
     max-width: 704px;
-
     padding: 64px 32px;
   }
 
