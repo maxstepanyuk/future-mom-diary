@@ -2,10 +2,12 @@ import { User, UserUpdateData } from '@/types/user';
 import { nextApi } from './api';
 import {
   CheckSessionResponse,
-  getEmotionsResponse,
-  getTasksResponse,
+  GetDiaryNotesResponse,
+  GetEmotionsResponse,
+  GetTasksResponse,
 } from '@/types/responses';
 import { Task } from '@/types/task';
+import { DiaryNote } from '@/types/diaryNote';
 
 interface RegisterRequest {
   name: string;
@@ -22,18 +24,24 @@ interface LoginResponse {
   user: User;
 }
 
-interface updateAvatarRequest {
-  //! пока не понятно как типизировать запрос по аватару
-  avatar: string;
-}
+// interface updateAvatarRequest {
+//   //! пока не понятно как типизировать запрос по аватару
+//   avatar: File;
+// }
 
-interface postTaskRequest {
+interface PostTaskRequest {
   name: string;
   date: string;
 }
 
-interface updateTaskStatusResponse {
+interface UpdateTaskStatusResponse {
   isDone: boolean;
+}
+
+interface PostDiaryNoteRequest {
+  title: string;
+  description: string;
+  emotions: string[];
 }
 
 //////////////! /auth запросы
@@ -68,16 +76,19 @@ export async function updateMe(userData: UserUpdateData): Promise<User> {
   return data;
 }
 
-export async function updateAvatar({
-  avatar,
-}: updateAvatarRequest): Promise<User> {
-  const { data } = await nextApi.patch<User>('/users/current/avatars', avatar);
+export async function updateAvatar(avatar: File): Promise<User> {
+  const formData = new FormData();
+  formData.append('file', avatar);
+  const { data } = await nextApi.patch<User>(
+    '/users/current/avatars',
+    formData
+  );
   return data;
 }
 
 //////////////! /tasks запросы
 
-export async function postTask(taskData: postTaskRequest): Promise<Task> {
+export async function postTask(taskData: PostTaskRequest): Promise<Task> {
   const response = await nextApi.post<Task>('/tasks', taskData);
 
   return response.data;
@@ -87,8 +98,8 @@ export async function getTasks(
   page: number,
   perPage?: number,
   sortOrder?: 'asc' | 'dsc'
-): Promise<getTasksResponse> {
-  const response = await nextApi.get<getTasksResponse>('/tasks', {
+): Promise<GetTasksResponse> {
+  const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
       page,
       limit: perPage,
@@ -99,11 +110,53 @@ export async function getTasks(
 }
 
 export async function updateTaskStatus(taskId: string): Promise<boolean> {
-  const response = await nextApi.patch<updateTaskStatusResponse>(
+  const response = await nextApi.patch<UpdateTaskStatusResponse>(
     `/tasks/status/${taskId}`,
     { isDone: true }
   );
   return response.data.isDone;
+}
+
+//////////////! /diary запросы
+
+export async function postDiaryNote(
+  diaryData: PostDiaryNoteRequest
+): Promise<DiaryNote> {
+  const response = await nextApi.post<DiaryNote>('/diary', diaryData);
+  return response.data;
+}
+
+export async function getDiaryNotes(
+  page: number,
+  perPage?: number,
+  sortOrder?: 'asc' | 'dsc'
+): Promise<GetDiaryNotesResponse> {
+  const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
+    params: {
+      page,
+      limit: perPage,
+      sortOrder,
+    },
+  });
+  return response.data;
+}
+
+export async function updateDiaryNote(
+  noteDiaryId: string,
+  diaryData: PostDiaryNoteRequest
+): Promise<DiaryNote> {
+  const response = await nextApi.patch<DiaryNote>(
+    `/diary/${noteDiaryId}`,
+    diaryData
+  );
+  return response.data;
+}
+
+export async function deleteDiaryNote(noteDiaryId: string): Promise<string> {
+  const response = await nextApi.delete<{ _id: string }>(
+    `/diary/${noteDiaryId}`
+  );
+  return response.data._id;
 }
 
 //////////////! /emotions
@@ -111,8 +164,8 @@ export async function updateTaskStatus(taskId: string): Promise<boolean> {
 export async function getEmotions(
   page: number,
   perPage?: number
-): Promise<getEmotionsResponse> {
-  const response = await nextApi.get<getEmotionsResponse>('/emotions', {
+): Promise<GetEmotionsResponse> {
+  const response = await nextApi.get<GetEmotionsResponse>('/emotions', {
     params: {
       page,
       limit: perPage,

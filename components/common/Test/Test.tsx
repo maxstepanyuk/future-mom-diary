@@ -3,11 +3,15 @@
 
 import {
   checkSession,
+  deleteDiaryNote,
+  getDiaryNotes,
   getEmotions,
   getMe,
   getTasks,
+  postDiaryNote,
   postTask,
   register,
+  updateDiaryNote,
   updateMe,
   updateTaskStatus,
 } from '@/lib/api/clientApi';
@@ -73,6 +77,7 @@ export default function Test() {
     // ! для сессии параметр отсутсвует
 
     try {
+      //! при успехе возврщает буль true
       const response = await checkSession();
       console.log('checkSession:', response);
     } catch (error) {
@@ -191,6 +196,77 @@ export default function Test() {
     }
   };
 
+  ////////////////////////////////// ! проверка создания нотатки postDiaryNote
+  const postDiaryNoteHandler = async () => {
+    // ! пример создания аргумента для postDiaryNote
+
+    const diaryNote = {
+      title: 'TEST NOTE 4',
+      description: 'DESCRIPTION TEST NOTE 4',
+      //!  массив с ID эмоций
+      emotions: ['6895bd86a5c677999ed2ae16'],
+    };
+
+    try {
+      const response = await postDiaryNote(diaryNote);
+      console.log('postDiaryNote:', response);
+    } catch (error) {
+      console.log(`postDiaryNoteError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getDiaryNotes
+  const getDiaryNotesHandler = async () => {
+    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+
+    try {
+      const response = await getDiaryNotes(1, 10);
+      console.log('getDiaryNotes:', response);
+
+      // console.log('getDiaryNotes нулевая нотатка:', response.diaryNotes[0]);
+    } catch (error) {
+      console.log(`getDiaryNotesError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка обновления таска updateDiaryNote
+  const updateDiaryNoteHandler = async () => {
+    // ! пример создания аргумента для updateDiaryNote
+    const noteDiaryId = '6a8712c7ddd422d137b22939';
+    const diaryData = {
+      title: 'TEST updateDiaryNote',
+      description: 'TEST updateDiaryNote Description',
+      //! треба передати масив с ID эмоций
+      emotions: ['6895bd86a5c677999ed2ae16'],
+    };
+
+    try {
+      const response = await updateDiaryNote(noteDiaryId, diaryData);
+      console.log('updateDiaryNote:', response);
+    } catch (error) {
+      console.log(`updateDiaryNoteError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка обновления нотатки deleteDiaryNote
+  const deleteDiaryNoteHandler = async () => {
+    // ! пример создания аргумента для deleteDiaryNote
+    //! для примера возмём массив нотаток, и будем удалять последнию в масиве:
+
+    try {
+      const responsegetDiaryNotes = await getDiaryNotes(1, 10);
+      const noteId =
+        responsegetDiaryNotes.diaryNotes[
+          responsegetDiaryNotes.diaryNotes.length - 1
+        ]._id;
+
+      const response = await deleteDiaryNote(noteId);
+      console.log('deleteDiaryNote:', response);
+    } catch (error) {
+      console.log(`deleteDiaryNote: ${error}`);
+    }
+  };
+
   return (
     <>
       <div>TEST</div>
@@ -198,12 +274,20 @@ export default function Test() {
       <button onClick={loginHandler}>login</button>
       <button onClick={logoutHandler}>logout</button>
       <button onClick={sessionHandler}>checkSession</button>
+
       <button onClick={getMeHandler}>getMe</button>
       <button onClick={updateMeHandler}>updateMe</button>
       <button onClick={updateAvatarHandler}>updateAvatar</button>
+
       <button onClick={getTasksHandler}>getTasks</button>
       <button onClick={postTaskHandler}>postTask</button>
       <button onClick={updateTaskStatusHandler}>updateTaskStatus</button>
+
+      <button onClick={postDiaryNoteHandler}>postDiaryNote</button>
+      <button onClick={getDiaryNotesHandler}>getDiaryNotes</button>
+      <button onClick={updateDiaryNoteHandler}>updateDiaryNotes</button>
+      <button onClick={deleteDiaryNoteHandler}>deleteDiaryNote</button>
+
       <button onClick={getEmotionsHandler}>getEmotions</button>
     </>
   );

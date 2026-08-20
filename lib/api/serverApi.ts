@@ -1,7 +1,8 @@
 import {
   CheckSessionResponse,
-  getEmotionsResponse,
-  getTasksResponse,
+  GetDiaryNotesResponse,
+  GetEmotionsResponse,
+  GetTasksResponse,
 } from '@/types/responses';
 import { nextApi } from './api';
 import { User } from '@/types/user';
@@ -24,12 +25,12 @@ export async function getMeServer(): Promise<User> {
   return data;
 }
 
-export async function getTasks(
+export async function getTasksServer(
   page: number,
   perPage: number,
   sortOrder?: 'asc' | 'dsc'
-): Promise<getTasksResponse> {
-  const response = await nextApi.get<getTasksResponse>('/tasks', {
+): Promise<GetTasksResponse> {
+  const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
       page,
       limit: perPage,
@@ -42,14 +43,32 @@ export async function getTasks(
   return response.data;
 }
 
-export async function getEmotions(
+export async function getEmotionsServer(
   page: number,
   perPage?: number
-): Promise<getEmotionsResponse> {
-  const response = await nextApi.get<getEmotionsResponse>('/emotions', {
+): Promise<GetEmotionsResponse> {
+  const response = await nextApi.get<GetEmotionsResponse>('/emotions', {
     params: {
       page,
       limit: perPage,
+    },
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return response.data;
+}
+
+export async function getDiaryNotesServer(
+  page: number,
+  perPage?: number,
+  sortOrder?: 'asc' | 'dsc'
+): Promise<GetDiaryNotesResponse> {
+  const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
+    params: {
+      page,
+      limit: perPage,
+      sortOrder,
     },
     headers: {
       Cookie: cookieStore.toString(),
