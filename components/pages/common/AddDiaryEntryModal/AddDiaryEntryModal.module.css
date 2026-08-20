@@ -16,7 +16,6 @@
 
   width: 100%;
   max-width: 334px;
-  height: 695px;
   overflow-y: auto;
   padding: 48px 20px;
 
@@ -198,7 +197,6 @@
 
   .modal {
     max-width: 704px;
-    height: 755px;
 
     padding: 64px 32px;
   }
@@ -222,7 +220,6 @@
   .modal {
     width: 768px;
     max-width: 768px;
-    height: 786px;
     padding: 64px;
   }
 
