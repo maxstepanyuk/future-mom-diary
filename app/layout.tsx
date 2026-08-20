@@ -48,8 +48,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${comfortaa.variable} ${lato.variable}`}>
         <TanStackProvider>
           <AuthProvider>
-            <Header />
-            <Sidebar />
             <main>{children}</main>
           </AuthProvider>
         </TanStackProvider>

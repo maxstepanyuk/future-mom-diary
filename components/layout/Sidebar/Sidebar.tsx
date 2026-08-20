@@ -24,9 +24,11 @@ export default function Sidebar() {
       <aside className={`${css.sidebar} ${isOpen ? css.open : ""}`}>
         <div className={css.topBar}>
           <div className={css.topMenu}>
-            <svg width={105} height={45}>
-              <use href="/sprite.svg#icon-Logo" />
-            </svg>
+            <Link href="/" onClick={close}>
+              <svg width={105} height={45}>
+                <use href="/sprite.svg#icon-Logo" />
+              </svg>
+            </Link>
             <button
               type="button"
               className={css.closeBtn}
@@ -46,6 +48,7 @@ export default function Sidebar() {
                     <Link
                       href={isAuthenticated ? href : "/auth/login"}
                       className={`${css.navLink} ${isActive ? css.active : ""}`}
+                      onClick={close}
                     >
                       <Icon name={icon} size={18} />
                       <span>{label}</span>

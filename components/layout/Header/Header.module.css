@@ -3,11 +3,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
+  position: relative;
+  z-index: 2;
 }
 .burgerBtn {
   background: none;
   border: none;
+  outline: none;
   color: #000;
+  cursor: pointer;
 }
 .logo {
   display: flex;
