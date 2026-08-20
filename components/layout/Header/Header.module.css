@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+}
+.burgerBtn {
+  background: none;
+  border: none;
+  color: #000;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+}
