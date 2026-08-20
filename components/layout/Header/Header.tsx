@@ -5,11 +5,11 @@ import Icon from "@/components/common/Icon/Icon";
 import { useMenuStore } from "@/lib/api/store/menuStore";
 
 export default function Header() {
-  const toggle = useMenuStore((state) => state.toggle);
+  const { toggle, close } = useMenuStore();
 
   return (
     <header className={css.header}>
-      <Link href="/" className={css.logo}>
+      <Link href="/" className={css.logo} onClick={close}>
         <svg width={84} height={36}>
           <use href="/sprite.svg#icon-Logo" />
         </svg>
