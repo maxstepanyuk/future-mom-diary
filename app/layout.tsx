@@ -4,6 +4,7 @@ import './globals.css';
 import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
 import Header from '@/components/layout/Header/Header';
+import OnboardingForm from '@/components/pages/onboarding-page/OnboardingForm/OnboardingForm';
 // import RegistrationForm from '@/components/pages/registration-page/RegistrationForm/RegistrationForm';
 // import LoginPage from './(public)/auth/login/page';
 
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Header />
             {/* <RegistrationForm />
             <LoginPage /> */}
+            <OnboardingForm />
             <main>{children}</main>
           </AuthProvider>
         </TanStackProvider>
