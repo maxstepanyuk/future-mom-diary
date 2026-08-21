@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import css from './ProfileAvatar.module.css';
 
-const ProfileAvatar = () => {
+function ProfileAvatar(){
   return (
     <section className={css.profileAvatar}>
       <Image

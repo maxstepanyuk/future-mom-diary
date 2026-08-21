@@ -3,7 +3,7 @@ import ProfileEditForm from './ProfileEditForm/ProfileEditForm';
 
 import css from './ProfilePage.module.css';
 
-const ProfilePage = () => {
+function ProfilePage(){
   return (
     
       <div className={css.container}>
