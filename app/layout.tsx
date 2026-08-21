@@ -49,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <TanStackProvider>
           <AuthProvider>
             <Header />
-            <Test />
+            {/* <Test /> */}
             <main>{children}</main>
           </AuthProvider>
         </TanStackProvider>
