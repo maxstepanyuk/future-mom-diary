@@ -1,0 +1,74 @@
+.wrapper{
+    display: flex;
+        flex-direction: column;
+        gap: 16px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    background-color:#fff4f6;
+    border-radius: 32px;
+}
+
+.headingWrapper{
+    display:flex;
+        justify-content: space-between;
+        align-items: center;
+}
+
+.addButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: transparent;
+    width: 40px;
+    height: 40px;
+}
+.iconButton{
+    fill: black;
+}
+
+
+.taskDefaultContent{
+    display:flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.taskDefaultContentTextWrapper{
+display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+.taskDefaultContentTextBold{
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.taskDefaultContentText{
+    font-weight: 400px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.addButtonDefault{
+    display: flex;
+        align-items: center;
+        justify-content: center;
+
+    background: #ffdae0;
+    border: none;
+    border-bottom: 4px solid #ffcbd3;
+        border-radius: 100px;
+        padding: 10px 24px;
+        width: 173px;
+        height: 42px;
+    
+    font-family: "Lato", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        color: #000;
+}

@@ -1,6 +1,7 @@
 // import css from './Header.module.css';
 'use client';
 
+import TaskReminderCard from '@/components/pages/common/TasksReminderCard/TasksReminderCard';
 import {
   checkSession,
   deleteDiaryNote,
@@ -365,6 +366,7 @@ export default function Test() {
       <button onClick={getWeeksMomInfoHandler}>getWeeksMomInfo</button>
 
       <button onClick={getEmotionsHandler}>getEmotions</button>
+      <TaskReminderCard />
     </>
   );
 }
