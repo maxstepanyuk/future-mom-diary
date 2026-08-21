@@ -9,7 +9,7 @@ import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import css from './OnboardingForm.module.css';
-import { useAuthStore } from '@/lib/store/authStoreRENAME';
+import { useAuthStore } from '@/lib/store/authStore';
 import { updateAvatar, updateMe } from '@/lib/api/clientApi';
 
 import { BabyGender } from '@/types/user';

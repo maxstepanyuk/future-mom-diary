@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 
 import { login } from '@/lib/api/clientApi';
-import { useAuthStore } from '@/lib/store/authStoreRENAME';
+import { useAuthStore } from '@/lib/store/authStore';
 
 interface LoginValues {
   email: string;
