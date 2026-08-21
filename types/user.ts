@@ -5,8 +5,16 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  avatarUrl?: string;
   dueDate?: string | null;
   babyGender?: BabyGender | null;
   theme?: Theme;
+  avatarUrl: string;
+  curWeekNumber: number;
+}
+
+export interface UserUpdateData {
+  name?: string;
+  email?: string;
+  dueDate?: string;
+  babyGender?: BabyGender;
 }
