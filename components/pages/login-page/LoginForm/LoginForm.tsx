@@ -14,11 +14,11 @@ const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Некоректний email')
     .max(64, 'Занадто довгий email')
-    .required('Обов&#39;язкове поле'),
+    .required("Обов'язкове поле"),
   password: Yup.string()
     .min(8, 'Пароль має бути від 8 символів')
     .max(64, 'Занадто довгий пароль')
-    .required('Обов&#39;язкове поле'),
+    .required("Обов'язкове поле"),
 });
 
 const initialValues: LoginValues = {
