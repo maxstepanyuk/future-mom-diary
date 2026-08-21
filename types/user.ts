@@ -6,11 +6,12 @@ export interface User {
   dueDate: string;
   babyGender: string;
   theme: string;
+  curWeekNumber: number;
 }
 
 export interface UserUpdateData {
   name?: string;
   email?: string;
   dueDate?: string;
-  babyGender?: 'girl' | 'boy' | 'unknown';
+  babyGender?: "girl" | "boy" | "unknown";
 }
