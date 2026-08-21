@@ -1,5 +1,4 @@
 import {
-  CheckSessionResponse,
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
@@ -10,13 +9,13 @@ import {
 import { nextApi } from './api';
 import { User } from '@/types/user';
 
-export async function checkSessionServer(): Promise<boolean> {
-  const res = await nextApi.get<CheckSessionResponse>('/auth/session', {
+export async function checkSessionServer() {
+  const res = await nextApi.get('/auth/session', {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
-  return res.data.success;
+  return res;
 }
 
 export async function getMeServer(): Promise<User> {
