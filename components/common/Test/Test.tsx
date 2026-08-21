@@ -8,6 +8,8 @@ import {
   getEmotions,
   getMe,
   getTasks,
+  getWeeksBabyInfo,
+  getWeeksMomInfo,
   getWeeksPregnancyInfo,
   getWeeksPregnancyInfoPublic,
   postDiaryNote,
@@ -22,7 +24,7 @@ import { logout } from '@/lib/api/clientApi';
 import { UserUpdateData } from '@/types/user';
 
 import { useEffect } from 'react';
-
+//! =========================================================================AUTH================================================================================
 export default function Test() {
   ////////////////////////////////// ! пустой юзэффект для будущих проверок
   useEffect(() => {
@@ -87,6 +89,8 @@ export default function Test() {
     }
   };
 
+  //! =========================================================================USER================================================================================
+
   ////////////////////////////////// ! проверка юзера getMe
   const getMeHandler = async () => {
     // ! для getMe параметр отсутсвует
@@ -128,6 +132,8 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка обновления аватара updateMe
   const updateAvatarHandler = async () => {};
+
+  //! =========================================================================TASKS================================================================================
 
   ////////////////////////////////// ! проверка тасков getTasks
   const getTasksHandler = async () => {
@@ -185,18 +191,7 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления таска getEmotions
-  const getEmotionsHandler = async () => {
-    // ! пример создания аргумента для getEmotions
-
-    try {
-      // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
-      const response = await getEmotions(1, 10);
-      console.log('getEmotions:', response);
-    } catch (error) {
-      console.log(`getEmotionsError: ${error}`);
-    }
-  };
+  //! =========================================================================DIARY================================================================================
 
   ////////////////////////////////// ! проверка создания нотатки postDiaryNote
   const postDiaryNoteHandler = async () => {
@@ -268,6 +263,7 @@ export default function Test() {
       console.log(`deleteDiaryNote: ${error}`);
     }
   };
+  //! =========================================================================WEEKS================================================================================
 
   ////////////////////////////////// ! проверка  getWeeksPregnancyInfo
   const getWeeksPregnancyInfoHandler = async () => {
@@ -290,6 +286,51 @@ export default function Test() {
       console.log('getWeeksPregnancyInfoPublic:', response);
     } catch (error) {
       console.log(`getWeeksPregnancyInfoPublicError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getWeeksBabyInfo
+  const getWeeksBabyInfoHandler = async () => {
+    // ! для getWeeksBabyInfo нужен номер недели (от 1 до 41) возмём её из юзера
+
+    try {
+      const user = await getMe();
+      //! проверяем есть ли номер недели если нет, подставляем 1
+      const weekNumber = user.curWeekNumber ?? 1;
+      const response = await getWeeksBabyInfo(weekNumber);
+      console.log('getWeeksBabyInfo:', response);
+    } catch (error) {
+      console.log(`getWeeksBabyInfoError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getWeeksMomInfo
+  const getWeeksMomInfoHandler = async () => {
+    // ! для getWeeksMomInfo нужен номер недели (от 1 до 41) возмём её из юзера
+
+    try {
+      const user = await getMe();
+      //! проверяем есть ли номер недели если нет, подставляем 1
+      const weekNumber = user.curWeekNumber ?? 1;
+      const response = await getWeeksMomInfo(weekNumber);
+      console.log('getWeeksMomInfo:', response);
+    } catch (error) {
+      console.log(`getWeeksMomInfoError: ${error}`);
+    }
+  };
+
+  //! =========================================================================EMOTIONS================================================================================
+
+  ////////////////////////////////// ! проверка обновления таска getEmotions
+  const getEmotionsHandler = async () => {
+    // ! пример создания аргумента для getEmotions
+
+    try {
+      // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
+      const response = await getEmotions(1, 10);
+      console.log('getEmotions:', response);
+    } catch (error) {
+      console.log(`getEmotionsError: ${error}`);
     }
   };
 
@@ -320,6 +361,8 @@ export default function Test() {
       <button onClick={getWeeksPregnancyInfoPublicHandler}>
         getWeeksPregnancyInfoPublic
       </button>
+      <button onClick={getWeeksBabyInfoHandler}>getWeeksBabyInfo</button>
+      <button onClick={getWeeksMomInfoHandler}>getWeeksMomInfo</button>
 
       <button onClick={getEmotionsHandler}>getEmotions</button>
     </>

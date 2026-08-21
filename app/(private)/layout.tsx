@@ -11,7 +11,7 @@ export default function PrivateLayout({
       <Header />
       <div className={css.wrapper}>
         <Sidebar />
-        <main>{children}</main>
+        <main className={css.content}>{children}</main>
       </div>
     </>
   );
