@@ -36,6 +36,9 @@
   color: #000;
   cursor: pointer;
 }
+.closeBtn :hover {
+  fill: #ffcbd3;
+}
 .navList {
   display: flex;
   flex-direction: column;
@@ -47,8 +50,39 @@
   gap: 12px;
   padding: 8px;
   border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+.navText {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
-  transition: background-color 0.2s ease;
+}
+.navLink:hover {
+  background-color: #fff4f6;
+}
+@media (min-width: 1440px) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(0);
+    width: 312px;
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .topMenu {
+    padding: 24px 16px 16px 16px;
+  }
+  .navList {
+    padding: 8px 16px 16px 16px;
+  }
+  .navText {
+    font-size: 16px;
+  }
+  .overlay {
+    display: none;
+  }
+  .closeBtn {
+    display: none;
+  }
+  .topLogo {
+    padding-left: 8px;
+  }
 }
