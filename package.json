@@ -11,11 +11,13 @@
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",
     "axios": "^1.19.0",
+    "formik": "^2.4.9",
     "next": "16.3.1",
     "react": "19.2.8",
     "react-datepicker": "^9.1.0",
     "react-dom": "19.2.8",
-    "react-select": "^5.10.2"
+    "react-select": "^5.10.2",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -34,6 +34,9 @@
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.6);
 }
+.readonlyInput {
+  cursor: default;
+}
 
 .actions {
   display: flex;
@@ -48,8 +51,8 @@
 }
 
 .datePickerWrapper {
-  width: 100%;
   display: block;
+  width: 100%;
 }
 
 .datePickerWrapper :global(.react-datepicker__input-container) {
@@ -63,17 +66,23 @@
   cursor: pointer;
 }
 
-.dateChevron {
+.dateArrow {
   position: absolute;
   top: 50%;
   right: 12px;
   transform: translateY(-50%);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+.arrowIcon {
+  display: block;
   width: 20px;
   height: 20px;
-
   fill: rgba(0, 0, 0, 0.6);
-  pointer-events: none;
 }
 
 .cancelButton,
@@ -116,21 +125,36 @@
 .saveButton:active {
   background: #ffcbd3;
 }
+.error {
+  margin: 0;
+
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #d32f2f;
+}
 
 /* react-select */
 
 :global(.profileSelect__control) {
   min-height: 37px !important;
+
   border: 2px solid transparent !important;
   border-radius: 12px !important;
+
   background: rgba(0, 0, 0, 0.05) !important;
   box-shadow: none !important;
-  cursor: pointer;
+
+  cursor: pointer !important;
 }
 
 :global(.profileSelect__control--is-focused) {
   border-color: transparent !important;
   box-shadow: none !important;
+}
+
+:global(.profileSelect__control *) {
+  cursor: pointer !important;
 }
 
 :global(.profileSelect__value-container) {
@@ -145,6 +169,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
+
   color: rgba(0, 0, 0, 0.6) !important;
 }
 
@@ -152,34 +177,63 @@
   display: none;
 }
 
+/* контейнер для нашей иконки из sprite.svg */
 :global(.profileSelect__dropdown-indicator) {
   padding: 0 12px !important;
-  color: rgba(0, 0, 0, 0.6) !important;
+
+  color: transparent !important;
+
+  cursor: pointer !important;
 }
 
 :global(.profileSelect__dropdown-indicator:hover) {
-  color: rgba(0, 0, 0, 0.6) !important;
+  color: transparent !important;
+}
+
+/* svg из sprite */
+:global(.profileSelect__dropdown-indicator svg) {
+  display: block;
+
+  width: 20px;
+  height: 20px;
+
+  fill: rgba(0, 0, 0, 0.6);
+
+  cursor: pointer;
 }
 
 :global(.profileSelect__menu) {
   z-index: 10;
+
   overflow: hidden;
+
   margin-top: 4px !important;
+
   border-radius: 12px !important;
+
+  background: #fff !important;
+}
+
+:global(.profileSelect__menu-list) {
+  padding: 0 !important;
 }
 
 :global(.profileSelect__option) {
+  padding: 8px 12px !important;
+
   font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
 
-  color: #000;
-  background-color: #fff;
-  cursor: pointer;
+  color: #000 !important;
+  background: #fff !important;
+
+  cursor: pointer !important;
 }
 
 :global(.profileSelect__option--is-focused) {
+  color: #000 !important;
   background: rgba(0, 0, 0, 0.05) !important;
 }
 
@@ -188,8 +242,9 @@
   background: rgba(0, 0, 0, 0.05) !important;
 }
 
-:global(.profileSelect__control *) {
-  cursor: pointer !important;
+:global(.profileSelect__option--is-selected.profileSelect__option--is-focused) {
+  color: #000 !important;
+  background: rgba(0, 0, 0, 0.05) !important;
 }
 
 @media screen and (min-width: 768px) {
