@@ -9,9 +9,9 @@ import { logErrorResponse } from '@/app/api/_utils/utils';
 export async function PATCH(request: Request) {
   try {
     const cookieStore = await cookies();
-    const body = await request.json();
+    const formData = await request.formData();
 
-    const res = await serverApi.patch('/users/current/avatars', body, {
+    const res = await serverApi.patch('/users/current/avatars', formData, {
       headers: {
         Cookie: cookieStore.toString(),
       },
