@@ -77,7 +77,7 @@ export async function updateMe(userData: UserUpdateData): Promise<User> {
 
 export async function updateAvatar(avatar: File): Promise<User> {
   const formData = new FormData();
-  formData.append('file', avatar);
+  formData.append('avatar', avatar);
   const { data } = await nextApi.patch<User>(
     '/users/current/avatars',
     formData
