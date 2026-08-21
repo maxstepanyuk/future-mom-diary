@@ -9,6 +9,7 @@ import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import css from './OnboardingForm.module.css';
+import { useAuthStore } from '@/lib/store/AuthStore';
 
 interface OnboardingValues {
   babyGender: string;
@@ -27,6 +28,8 @@ const initialValues: OnboardingValues = {
 
 export default function OnboardingForm() {
   const router = useRouter();
+
+  const setUser = useAuthStore(state => state.setUser);
 
   const [avatarPreview, setAvatarPreview] = useState(
     'https://ftp.goit.study/img/common/women-default-avatar.jpg'
@@ -67,11 +70,14 @@ export default function OnboardingForm() {
           babyGender: values.babyGender,
           dueDate: values.dueDate,
         }),
+        credentials: 'include',
       });
 
       if (!userResponse.ok) {
         throw new Error('Не вдалося зберегти дані користувача');
       }
+
+      let currentUserData = await userResponse.json();
 
       if (avatarFile) {
         const formData = new FormData();
@@ -80,12 +86,17 @@ export default function OnboardingForm() {
         const avatarResponse = await fetch('/api/users/current/avatars', {
           method: 'PATCH',
           body: formData,
+          credentials: 'include',
         });
 
         if (!avatarResponse.ok) {
           throw new Error('Не вдалося завантажити аватар');
         }
+
+        currentUserData = await avatarResponse.json();
       }
+
+      setUser(currentUserData);
 
       toast.success('Дані успішно збережено!');
 
@@ -146,6 +157,7 @@ export default function OnboardingForm() {
             <Form className={css.onboardingForm}>
               <label className={css.label}>
                 <span className={css.labelTitle}>Стать дитини</span>
+
                 <div className={css.selectWrapper}>
                   <Field
                     as="select"
@@ -163,10 +175,12 @@ export default function OnboardingForm() {
 
                     <option value="unknown">Ще не знаю</option>
                   </Field>
+
                   <svg className={css.selectIcon} width="20" height="20">
                     <use href="/sprite.svg#icon-keyboard_arrow_down" />
                   </svg>
                 </div>
+
                 <ErrorMessage
                   name="babyGender"
                   component="span"
