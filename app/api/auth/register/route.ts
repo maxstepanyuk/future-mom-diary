@@ -23,7 +23,9 @@ export async function POST(req: NextRequest) {
           cookieStore.set(parsed.name, parsed.value, parsed);
         }
       }
-      return NextResponse.json(apiRes.data, { status: apiRes.status });
+      return new NextResponse(null, {
+        status: apiRes.status,
+      });
     }
 
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
