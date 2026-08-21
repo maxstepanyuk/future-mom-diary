@@ -5,6 +5,8 @@ import {
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
+  GetWeeksBabyInfoResponse,
+  GetWeeksMomInfoResponse,
   GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
 import { Task } from '@/types/task';
@@ -170,6 +172,25 @@ export async function getWeeksPregnancyInfoPublic(): Promise<GetWeeksPregnancyIn
   );
   return response.data;
 }
+
+export async function getWeeksBabyInfo(
+  weekNumber: number
+): Promise<GetWeeksBabyInfoResponse> {
+  const response = await nextApi.get<GetWeeksBabyInfoResponse>(
+    `/weeks/${weekNumber}/baby`
+  );
+  return response.data;
+}
+
+export async function getWeeksMomInfo(
+  weekNumber: number
+): Promise<GetWeeksMomInfoResponse> {
+  const response = await nextApi.get<GetWeeksMomInfoResponse>(
+    `/weeks/${weekNumber}/mom`
+  );
+  return response.data;
+}
+
 //////////////! /emotions
 
 export async function getEmotions(
