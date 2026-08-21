@@ -13,9 +13,20 @@
   color: #000;
   cursor: pointer;
 }
+.burgerBtn:hover {
+  fill: #ffcbd3;
+}
+.burgerBtn:focus {
+  fill: #000;
+}
 .logo {
   display: flex;
   align-items: center;
   color: #000;
   text-decoration: none;
+}
+@media (min-width: 1440px) {
+  .header {
+    display: none;
+  }
 }

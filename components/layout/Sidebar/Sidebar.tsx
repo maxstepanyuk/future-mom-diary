@@ -7,7 +7,7 @@ import Icon from "@/components/common/Icon/Icon";
 import { useMenuStore } from "@/lib/api/store/menuStore";
 
 const navItems = [
-  { label: "Мій день", href: "/", icon: "icon-fitness_center" },
+  { label: "Мій день", href: "/", icon: "icon-today" },
   { label: "Подорож", href: "/journey", icon: "icon-conversion_path" },
   { label: "Щоденник", href: "/diary", icon: "icon-book_2" },
   { label: "Профіль", href: "/profile", icon: "icon-account_circle" },
@@ -24,7 +24,7 @@ export default function Sidebar() {
       <aside className={`${css.sidebar} ${isOpen ? css.open : ""}`}>
         <div className={css.topBar}>
           <div className={css.topMenu}>
-            <Link href="/" onClick={close}>
+            <Link className={css.topLogo} href="/" onClick={close}>
               <svg width={105} height={45}>
                 <use href="/sprite.svg#icon-Logo" />
               </svg>
@@ -50,8 +50,8 @@ export default function Sidebar() {
                       className={`${css.navLink} ${isActive ? css.active : ""}`}
                       onClick={close}
                     >
-                      <Icon name={icon} size={18} />
-                      <span>{label}</span>
+                      <Icon name={icon} size={24} />
+                      <span className={css.navText}>{label}</span>
                     </Link>
                   </li>
                 );
