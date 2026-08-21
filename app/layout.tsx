@@ -5,6 +5,7 @@ import TanStackProvider from "@/components/providers/TanStackProvider/TanStackPr
 import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
 import Header from "@/components/layout/Header/Header";
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
+// import Test from '@/components/common/Test/Test';
 
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
@@ -48,6 +49,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${comfortaa.variable} ${lato.variable}`}>
         <TanStackProvider>
           <AuthProvider>
+            <Header />
+            {/* <Test /> */}
             <main>{children}</main>
           </AuthProvider>
         </TanStackProvider>
