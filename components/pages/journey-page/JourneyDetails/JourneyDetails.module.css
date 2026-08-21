@@ -1,0 +1,163 @@
+/* контейнер таба */
+.content {
+  padding: 16px 0;
+}
+
+/* планшет */
+@media (min-width: 768px) {
+  .content {
+    padding: 16px 0;
+  }
+}
+
+/* десктоп */
+@media (min-width: 1440px) {
+  .content {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+}
+
+/* розвиток малюка */
+.babyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* картинка */
+.image {
+  width: 100%;
+  max-width: 335px;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  align-self: center;
+}
+
+/* аналогія розміру */
+.analogy {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* опис */
+.text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+/* цікавий факт */
+.fact {
+  background: var(--color-scheme-foreground);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.blockTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #d6336c;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.listItem {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+  padding-left: 16px;
+  position: relative;
+}
+
+.listItem::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #d6336c;
+}
+
+.tipItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: #fdf2f6;
+  border-radius: 8px;
+}
+
+.tipCategory {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d6336c;
+  text-transform: uppercase;
+}
+
+.tipText {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--opacity-transparent, rgba(255, 255, 255, 0));
+  border-radius: 100px;
+  padding: 4px;
+  background: var(--color-scheme-foreground);
+  width: fit-content;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--opacity-transparent, rgba(255, 255, 255, 0));
+  border-radius: 100px;
+  padding: 10px 24px;
+  height: 42px;
+  background: transparent;
+  font-size: 15px;
+  color: var(--foreground);
+  transition: background 0.2s;
+}
+
+.tabActive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--opacity-transparent, rgba(255, 255, 255, 0));
+  border-radius: 100px;
+  padding: 10px 24px;
+  height: 42px;
+  background: var(--color-scheme-foreground-alt);
+  font-size: 15px;
+  color: var(--color-scheme-text, #000);
+  font-weight: 500;
+  transition: background 0.2s;
+}
+

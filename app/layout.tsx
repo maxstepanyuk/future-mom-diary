@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
-import { Comfortaa, Lato } from 'next/font/google';
-import './globals.css';
-import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
-import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
-import Header from '@/components/layout/Header/Header';
+import type { Metadata } from "next";
+import { Comfortaa, Lato } from "next/font/google";
+import "./globals.css";
+import TanStackProvider from "@/components/providers/TanStackProvider/TanStackProvider";
+import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
+import Header from "@/components/layout/Header/Header";
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
 // import Test from '@/components/common/Test/Test';
 
