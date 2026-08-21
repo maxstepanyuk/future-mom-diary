@@ -1,3 +1,4 @@
+import { ComfortTip } from './comfortTip';
 import { DiaryNote } from './diaryNote';
 import { Emotion } from './emotion';
 import { Task } from './task';
@@ -39,4 +40,19 @@ export interface GetWeeksPregnancyInfoResponse {
     image: string;
   };
   momHint: string;
+}
+
+export interface GetWeeksBabyInfoResponse {
+  analogy: string;
+  image: string;
+  description: string[];
+  interestingFact: string;
+}
+
+export interface GetWeeksMomInfoResponse {
+  feelings: {
+    states: string[];
+    sensationDescr: string;
+  };
+  comfortTips: ComfortTip[];
 }
