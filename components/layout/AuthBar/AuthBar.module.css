@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+.registerLink {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 24px;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  background: #ffdae0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.loginLink {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 24px;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
