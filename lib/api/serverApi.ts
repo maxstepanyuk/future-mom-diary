@@ -3,6 +3,7 @@ import {
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
+  GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
 import { nextApi } from './api';
 import { User } from '@/types/user';
@@ -74,5 +75,29 @@ export async function getDiaryNotesServer(
       Cookie: cookieStore.toString(),
     },
   });
+  return response.data;
+}
+
+export async function getWeeksPregnancyInfoServer(): Promise<GetWeeksPregnancyInfoResponse> {
+  const response = await nextApi.get<GetWeeksPregnancyInfoResponse>(
+    '/weeks/greeting',
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    }
+  );
+  return response.data;
+}
+
+export async function getWeeksPregnancyInfoPublicServer(): Promise<GetWeeksPregnancyInfoResponse> {
+  const response = await nextApi.get<GetWeeksPregnancyInfoResponse>(
+    '/weeks/greeting/public',
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    }
+  );
   return response.data;
 }

@@ -27,3 +27,16 @@ export interface GetDiaryNotesResponse {
   totalPages: number;
   page: number;
 }
+
+export interface GetWeeksPregnancyInfoResponse {
+  curWeekToPregnant: number;
+  daysBeforePregnant: number;
+  babyToday: {
+    babySize: number;
+    babyWeight: number;
+    babyActivity: string;
+    babyDevelopment: string;
+    image: string;
+  };
+  momHint: string;
+}

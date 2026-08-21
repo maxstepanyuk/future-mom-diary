@@ -5,6 +5,7 @@ import {
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
+  GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
 import { Task } from '@/types/task';
 import { DiaryNote } from '@/types/diaryNote';
@@ -24,11 +25,6 @@ interface LoginResponse {
   user: User;
 }
 
-// interface updateAvatarRequest {
-//   //! пока не понятно как типизировать запрос по аватару
-//   avatar: File;
-// }
-
 interface PostTaskRequest {
   name: string;
   date: string;
@@ -45,6 +41,7 @@ interface PostDiaryNoteRequest {
 }
 
 //////////////! /auth запросы
+
 export async function register(registerData: RegisterRequest): Promise<void> {
   await nextApi.post('/auth/register', registerData);
 }
@@ -159,6 +156,20 @@ export async function deleteDiaryNote(noteDiaryId: string): Promise<string> {
   return response.data._id;
 }
 
+//////////////! /weeks запросы
+
+export async function getWeeksPregnancyInfo(): Promise<GetWeeksPregnancyInfoResponse> {
+  const response =
+    await nextApi.get<GetWeeksPregnancyInfoResponse>('/weeks/greeting');
+  return response.data;
+}
+
+export async function getWeeksPregnancyInfoPublic(): Promise<GetWeeksPregnancyInfoResponse> {
+  const response = await nextApi.get<GetWeeksPregnancyInfoResponse>(
+    '/weeks/greeting/public'
+  );
+  return response.data;
+}
 //////////////! /emotions
 
 export async function getEmotions(

@@ -8,6 +8,8 @@ import {
   getEmotions,
   getMe,
   getTasks,
+  getWeeksPregnancyInfo,
+  getWeeksPregnancyInfoPublic,
   postDiaryNote,
   postTask,
   register,
@@ -267,6 +269,30 @@ export default function Test() {
     }
   };
 
+  ////////////////////////////////// ! проверка  getWeeksPregnancyInfo
+  const getWeeksPregnancyInfoHandler = async () => {
+    // ! для getWeeksPregnancyInfo не нужны аргументы
+
+    try {
+      const response = await getWeeksPregnancyInfo();
+      console.log('getWeeksPregnancyInfo:', response);
+    } catch (error) {
+      console.log(`getWeeksPregnancyInfoError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getWeeksPregnancyInfoPublic
+  const getWeeksPregnancyInfoPublicHandler = async () => {
+    // ! для getWeeksPregnancyInfoPublic не нужны аргументы
+
+    try {
+      const response = await getWeeksPregnancyInfoPublic();
+      console.log('getWeeksPregnancyInfoPublic:', response);
+    } catch (error) {
+      console.log(`getWeeksPregnancyInfoPublicError: ${error}`);
+    }
+  };
+
   return (
     <>
       <div>TEST</div>
@@ -287,6 +313,13 @@ export default function Test() {
       <button onClick={getDiaryNotesHandler}>getDiaryNotes</button>
       <button onClick={updateDiaryNoteHandler}>updateDiaryNotes</button>
       <button onClick={deleteDiaryNoteHandler}>deleteDiaryNote</button>
+
+      <button onClick={getWeeksPregnancyInfoHandler}>
+        getWeeksPregnancyInfo
+      </button>
+      <button onClick={getWeeksPregnancyInfoPublicHandler}>
+        getWeeksPregnancyInfoPublic
+      </button>
 
       <button onClick={getEmotionsHandler}>getEmotions</button>
     </>

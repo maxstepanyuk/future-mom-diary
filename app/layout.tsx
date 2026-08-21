@@ -4,7 +4,7 @@ import './globals.css';
 import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
 import Header from '@/components/layout/Header/Header';
-// import Test from '@/components/common/Test/Test';
+import Test from '@/components/common/Test/Test';
 
 const comfortaa = Comfortaa({
   variable: '--font-comfortaa',
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <TanStackProvider>
           <AuthProvider>
             <Header />
-            {/* <Test /> */}
+            <Test />
             <main>{children}</main>
           </AuthProvider>
         </TanStackProvider>
