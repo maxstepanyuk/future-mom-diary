@@ -137,7 +137,7 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка тасков getTasks
   const getTasksHandler = async () => {
-    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
 
     try {
       const response = await getTasks(1, 10);
@@ -214,7 +214,7 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка  getDiaryNotes
   const getDiaryNotesHandler = async () => {
-    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
 
     try {
       const response = await getDiaryNotes(1, 10);
