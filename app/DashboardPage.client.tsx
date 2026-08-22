@@ -3,6 +3,12 @@
 import { getTasks, getWeeksPregnancyInfo } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
 
+import css from "./DashboardPage.module.css";
+import StatusBlock from "@/components/pages/dashboard-page/StatusBlock/StatusBlock";
+import BabyTodayCard from "@/components/pages/dashboard-page/BabyTodayCard/BabyTodayCard";
+import MomTipCard from "@/components/pages/dashboard-page/MomTipCard/MomTipCard";
+import FeelingCheckCard from "@/components/pages/dashboard-page/FeelingCheckCard/FeelingCheckCard";
+
 export default function DashboardPageClient() {
   //tasks
   const TASKS_PAGE = 1;
@@ -27,7 +33,17 @@ export default function DashboardPageClient() {
   return (
     <>
       <section>
-        {/* remove demo - start */}
+        <div className={css.container}>
+          <div className={css.leftColumn}>
+            <StatusBlock />
+            <BabyTodayCard />
+            <MomTipCard />
+          </div>
+          <div className={css.rightColumn}>
+            <FeelingCheckCard />
+          </div>
+        </div>
+        {/* todo: remove demo - start */}
         <h3>/weeks/greeting</h3>
         <pre>{weekGreeting.isLoading && "tasks.isLoading"}</pre>
         <pre>{JSON.stringify(weekGreeting.data, null, "  ")}</pre>
@@ -35,7 +51,7 @@ export default function DashboardPageClient() {
         <h3>tasks</h3>
         <pre>{tasks.isLoading && "tasks.isLoading"}</pre>
         <pre>{JSON.stringify(tasks.data, null, "  ")}</pre>
-        {/* remove demo - end */}
+        {/* todo: remove demo - end */}
       </section>
     </>
   );
