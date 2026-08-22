@@ -1,5 +1,9 @@
-// import css from './DashboardPage.module.css';
+import DashboardPageWrapper from "@/components/pages/dashboard-page/DashboardPage/DashboardPage";
 
 export default function DashboardPage() {
-  return <section>DashboardPage</section>;
+  return (
+    <section>
+      <DashboardPageWrapper />
+    </section>
+  );
 }

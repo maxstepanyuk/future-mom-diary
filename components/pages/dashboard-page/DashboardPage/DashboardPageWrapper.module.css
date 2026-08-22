@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  @media screen and (min-width: 1440px) {
+    gap: 32px;
+  }
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 642px;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1440px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    max-width: 100%;
+    width: 100%;
+  }
+}
