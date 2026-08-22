@@ -108,10 +108,13 @@ export async function getTasks(
   return response.data;
 }
 
-export async function updateTaskStatus(taskId: string): Promise<boolean> {
+export async function updateTaskStatus(
+  taskId: string,
+  isDone: boolean
+): Promise<boolean> {
   const response = await nextApi.patch<UpdateTaskStatusResponse>(
     `/tasks/status/${taskId}`,
-    { isDone: true }
+    { isDone: isDone }
   );
   return response.data.isDone;
 }

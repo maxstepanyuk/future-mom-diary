@@ -184,8 +184,8 @@ export default function Test() {
       //! 2.берём из массива тасок таску по индексу
       const task = tasks.tasks[0];
       //! 3. передаём id таски аргументом
-      //! при успехе в ответ приходит булевое true
-      const response = await updateTaskStatus(task._id);
+      //! в ответ приходит новое состояние таски булевым значением
+      const response = await updateTaskStatus(task._id, false);
       console.log('updateTaskStatus:', response);
     } catch (error) {
       console.log(`updateTaskStatusError: ${error}`);
