@@ -40,6 +40,7 @@ export default function OnboardingForm() {
 
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -144,6 +145,7 @@ export default function OnboardingForm() {
                     as="select"
                     name="babyGender"
                     className={css.select}
+                    onClick={() => setIsSelectOpen(prev => !prev)}
                     disabled={isLoading}
                   >
                     <option value="" disabled>
@@ -157,7 +159,13 @@ export default function OnboardingForm() {
                     <option value="unknown">Ще не знаю</option>
                   </Field>
 
-                  <svg className={css.selectIcon} width="20" height="20">
+                  <svg
+                    className={`${css.selectIcon} ${
+                      isSelectOpen ? css.selectIconOpen : ''
+                    }`}
+                    width="20"
+                    height="20"
+                  >
                     <use href="/sprite.svg#icon-keyboard_arrow_down" />
                   </svg>
                 </div>
