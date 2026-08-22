@@ -2,8 +2,10 @@ import DashboardPageWrapper from "@/components/pages/dashboard-page/DashboardPag
 
 export default function DashboardPage() {
   return (
-    <section>
-      <DashboardPageWrapper />
-    </section>
+    <>
+      <section>
+        <DashboardPageWrapper />
+      </section>
+    </>
   );
 }

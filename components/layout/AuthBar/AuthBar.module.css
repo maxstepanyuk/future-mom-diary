@@ -1,0 +1,65 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+.wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 268px;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.registerLink {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 24px;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  background: #ffdae0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.registerLink:hover,
+.registerLink:focus {
+  background: #fff;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
+.registerLink:active {
+  background: #b2b2b2;
+  border-bottom: none;
+}
+
+.loginLink {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 24px;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.loginLink:hover,
+.loginLink:focus {
+  background: #fff4f6;
+}
+.loginLink:active {
+  background: #ffcbd3;
+  border-bottom: none;
+}
+@media (min-width: 1440px) {
+  .registerLink {
+    font-size: 16px;
+  }
+  .loginLink {
+    font-size: 16px;
+  }
+}

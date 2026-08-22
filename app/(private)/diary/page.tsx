@@ -1,3 +1,8 @@
+import AddDiaryEntryModal from "@/components/pages/common/AddDiaryEntryModal/AddDiaryEntryModal";
 export default function DiaryPage() {
-  return <div>DiaryPage</div>;
+  return (
+    <div>
+      <AddDiaryEntryModal />
+    </div>
+  );
 }

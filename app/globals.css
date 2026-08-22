@@ -1,6 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --color-scheme-foreground: #fff4f6;
+  --color-scheme-foreground-alt: #ffdae0;
 }
 
 html {
@@ -59,7 +61,6 @@ p {
 button {
   cursor: pointer;
 }
-
 
 /* img {
   display: block;
