@@ -1,29 +1,66 @@
 'use client';
 
+import css from './TaskList.module.css';
+import clsx from 'clsx';
+
+import { updateTaskStatus } from '@/lib/api/clientApi';
 import { Task } from '@/types/task';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface TaskListProps {
   tasks: Task[];
 }
 
 export default function TaskList({ tasks }: TaskListProps) {
-  const checkboxClickHandle = () => {};
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: updateTaskStatus,
+
+    onSuccess: () => {
+      //   console.log('success');
+      queryClient.invalidateQueries({ queryKey: ['tasks', 1] });
+    },
+  });
+
+  async function checkboxChangeHandler(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    // console.log(event.target);
+    // console.log(event.target.name);
+    // console.log(event.target.checked);
+
+    mutate({
+      taskId: event.target.name,
+      isDone: event.target.checked,
+    });
+  }
   return (
     <>
-      <ul>
+      <ul className={css.taskList}>
         {tasks.map(task => {
           return (
-            <li key={task._id}>
-              <p>{task.date}</p>
-              <div>
+            <li key={task._id} className={css.taskItem}>
+              <p className={css.taskDate}>
+                {task.date.slice(5).replaceAll('-', '.')}
+              </p>
+              <div className={css.checkboxAndNameWrapper}>
                 <input
+                  className={css.checkbox}
                   type="checkbox"
-                  name="status"
-                  value={`${task.isDone}`}
-                  onChange={checkboxClickHandle}
+                  name={task._id}
+                  //   value={`${task.isDone}`}
+                  onChange={checkboxChangeHandler}
                   checked={task.isDone}
                 ></input>
-                <p>{task.name}</p>
+                <p
+                  className={clsx(
+                    css.taskName,
+                    task.isDone && css.taskNameDone
+                  )}
+                >
+                  {task.name}
+                </p>
               </div>
             </li>
           );

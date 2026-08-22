@@ -1,0 +1,47 @@
+.taskList{
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.taskItem{
+    display: flex;
+    flex-direction: column;
+}
+
+.taskDate{
+    display: flex;
+    padding-left: 26px;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 16px; 
+}
+.checkboxAndNameWrapper{
+    display: flex;
+    column-gap: 8px;
+    height: 21px;
+}
+
+/*! сделать кастомный чекбокс? */
+.checkbox{
+    /* appearance: none; */
+    display: flex;
+    width: 18px;
+    height: 18px;
+    align-self: flex-end;
+    background: rgba(0, 0, 0, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 4px;
+    accent-color: black
+}
+
+.taskName{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 19px;
+}
+.taskNameDone{
+    text-decoration: line-through;
+}
+

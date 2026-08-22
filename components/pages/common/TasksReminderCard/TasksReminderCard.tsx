@@ -6,12 +6,15 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getTasks } from '@/lib/api/clientApi';
 import TaskList from './TaskList/TaskList';
 import { useRouter } from 'next/navigation';
+import Modal from '@/components/common/Modal/Modal';
+import AddTaskModal from '../AddTaskModal/AddTaskModal';
 
 export default function TaskReminderCard() {
   const isAuthenticated = useAuthStore(store => store.isAuthenticated);
   //   console.log(isAuthenticated);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModal, setIsModal] = useState(false);
 
   const {
     data: tasksData,
@@ -21,26 +24,33 @@ export default function TaskReminderCard() {
   } = useQuery({
     queryKey: ['tasks', currentPage],
     queryFn: () => {
-      //   if (!isAuthenticated) {
-      //     return null;
-      //   }
-      return getTasks(currentPage);
+      return getTasks({ page: 1, perPage: 10, sortOrder: 'desc' });
     },
-    enabled: !isAuthenticated,
+    enabled: isAuthenticated,
     placeholderData: keepPreviousData,
     // refetchOnMount: false,
   });
 
   const router = useRouter();
 
-  const addbuttonClickHandler = () => {
+  function addbuttonClickHandler() {
     if (!isAuthenticated) {
       router.push('/auth/login');
     }
-  };
+    setIsModal(true);
+  }
+
+  function modalCloseHandler() {
+    setIsModal(false);
+  }
 
   return (
     <>
+      {isModal && (
+        <Modal onClose={modalCloseHandler}>
+          <AddTaskModal />
+        </Modal>
+      )}
       {isLoading && <p>Loading...</p>}
       {isError && <p>Some Error...</p>}
       <div className={css.wrapper}>

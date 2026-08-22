@@ -138,10 +138,10 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка тасков getTasks
   const getTasksHandler = async () => {
-    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+    // ! для getTasks объект: {page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')}
 
     try {
-      const response = await getTasks(1, 10);
+      const response = await getTasks({ page: 1, perPage: 10 });
       console.log('getTasks:', response);
     } catch (error) {
       console.log(`getTasksError: ${error}`);
@@ -162,7 +162,7 @@ export default function Test() {
     console.log(dateToPost);
 
     const postTaskData = {
-      name: 'TEST task1',
+      name: 'TEST 17:10 task1',
       date: dateToPost,
     };
 
@@ -180,12 +180,15 @@ export default function Test() {
 
     try {
       //! 1.получаем таски
-      const tasks = await getTasks(1, 10);
+      const tasks = await getTasks({ page: 10, perPage: 10 });
       //! 2.берём из массива тасок таску по индексу
       const task = tasks.tasks[0];
       //! 3. передаём id таски аргументом
       //! в ответ приходит новое состояние таски булевым значением
-      const response = await updateTaskStatus(task._id, false);
+      const response = await updateTaskStatus({
+        taskId: task._id,
+        isDone: false,
+      });
       console.log('updateTaskStatus:', response);
     } catch (error) {
       console.log(`updateTaskStatusError: ${error}`);
