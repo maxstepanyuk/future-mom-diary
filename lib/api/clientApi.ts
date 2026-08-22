@@ -9,6 +9,7 @@ import {
   GetWeeksMomInfoResponse,
   GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
+
 import { Task } from '@/types/task';
 import { DiaryNote } from '@/types/diaryNote';
 
@@ -125,8 +126,9 @@ export async function postDiaryNote(
   return response.data;
 }
 
+// Отримати список записів з пагінацією та сортуванням
 export async function getDiaryNotes(
-  page: number,
+  page: number = 1,
   perPage?: number,
   sortOrder?: 'asc' | 'desc'
 ): Promise<GetDiaryNotesResponse> {
