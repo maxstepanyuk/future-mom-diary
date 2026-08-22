@@ -1,4 +1,4 @@
-import DashboardPageWrapper from "@/components/pages/dashboard-page/DashboardPage/DashboardPage";
+import DashboardPageWrapper from "@/components/pages/dashboard-page/DashboardPageWrapper/DashboardPageWrapper";
 
 export default function DashboardPage() {
   return (
