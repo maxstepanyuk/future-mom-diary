@@ -1,8 +1,21 @@
 .wrapper {
-  display: flex;
+  width: 100%;
 }
-@media (min-width: 1440px) {
+
+.content {
+  width: 100%;
+  min-width: 0;
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+
   .content {
-    margin-left: 312px;
+    flex: 1;
+    width: auto;
+    min-width: 0;
   }
 }
