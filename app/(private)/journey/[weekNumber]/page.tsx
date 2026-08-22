@@ -6,9 +6,5 @@ export default async function JourneyPage({ params }: JourneyPageProps) {
   const { weekNumber } = await params;
   const week = Number(weekNumber);
 
-  return (
-    <div>
-      <JourneyDetails weekNumber={week} />
-    </div>
-  );
+  return <JourneyDetails weekNumber={week} />;
 }
