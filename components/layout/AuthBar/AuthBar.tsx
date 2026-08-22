@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import css from "./AuthBar.module.css";
-import { useMenuStore } from "@/lib/api/store/menuStore";
+import { useMenuStore } from "@/lib/store/menuStore";
 
 export default function AuthBar() {
   const close = useMenuStore((state) => state.close);
