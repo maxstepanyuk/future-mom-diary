@@ -25,8 +25,6 @@ body {
   font-family: var(--font-lato), var(--font-comfortaa), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: row;
 }
 
 * {
