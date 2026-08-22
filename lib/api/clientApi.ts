@@ -96,7 +96,7 @@ export async function postTask(taskData: PostTaskRequest): Promise<Task> {
 export async function getTasks(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetTasksResponse> {
   const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
@@ -128,7 +128,7 @@ export async function postDiaryNote(
 export async function getDiaryNotes(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
     params: {

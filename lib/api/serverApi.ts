@@ -30,7 +30,7 @@ export async function getMeServer(): Promise<User> {
 export async function getTasksServer(
   page: number,
   perPage: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetTasksResponse> {
   const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
@@ -64,7 +64,7 @@ export async function getEmotionsServer(
 export async function getDiaryNotesServer(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
     params: {
