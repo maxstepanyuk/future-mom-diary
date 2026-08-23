@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { DiaryList } from '@/components/pages/diary-page/DiaryList';
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
-import { DiaryNote } from '@/types/diary';
+import { DiaryNote } from '@/types/diaryNote';
 import { getDiaryNotes } from '@/lib/api/clientApi';
 import styles from './page.module.css';
 

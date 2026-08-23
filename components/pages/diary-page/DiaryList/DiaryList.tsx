@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { DiaryNote } from '@/types/diary';
+import { DiaryNote } from '@/types/diaryNote';
 import { DiaryEntryCard } from '../DiaryEntryCard/DiaryEntryCard';
 import styles from './DiaryList.module.css';
 
@@ -12,15 +11,14 @@ interface DiaryListProps {
   onOpenAddModal?: () => void;
 }
 
-export const DiaryList: React.FC<DiaryListProps> = ({
+export const DiaryList = ({
   notes,
   selectedNoteId,
   onSelectNote,
   onOpenAddModal,
-}) => {
+}: DiaryListProps) => {
   return (
     <div className={styles.container}>
-      {/* Ваша правильна структура флекс-контейнера */}
       <div className={styles.title}>
         <h2 className={styles.heading}>Ваші записи</h2>
 
