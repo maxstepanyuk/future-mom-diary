@@ -93,11 +93,17 @@ export async function postTask(taskData: PostTaskRequest): Promise<Task> {
   return response.data;
 }
 
-export async function getTasks(
-  page: number,
-  perPage?: number,
-  sortOrder?: 'asc' | 'desc'
-): Promise<GetTasksResponse> {
+interface getTaskRequest {
+  page: number;
+  perPage?: number;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export async function getTasks({
+  page,
+  perPage,
+  sortOrder,
+}: getTaskRequest): Promise<GetTasksResponse> {
   const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
       page,
@@ -108,13 +114,32 @@ export async function getTasks(
   return response.data;
 }
 
-export async function updateTaskStatus(taskId: string): Promise<boolean> {
+interface updateTaskStatusRequest {
+  taskId: string;
+  isDone: boolean;
+}
+
+export async function updateTaskStatus({
+  taskId,
+  isDone,
+}: updateTaskStatusRequest): Promise<boolean> {
   const response = await nextApi.patch<UpdateTaskStatusResponse>(
     `/tasks/status/${taskId}`,
-    { isDone: true }
+    { isDone: isDone }
   );
   return response.data.isDone;
 }
+
+// export async function updateTaskStatus(
+//   taskId: string,
+//   isDone: boolean
+// ): Promise<boolean> {
+//   const response = await nextApi.patch<UpdateTaskStatusResponse>(
+//     `/tasks/status/${taskId}`,
+//     { isDone: isDone }
+//   );
+//   return response.data.isDone;
+// }
 
 //////////////! /diary запросы
 
@@ -139,7 +164,7 @@ export async function getDiaryNotes(
   });
   return response.data;
 }
-
+//! надо ли сделать 1 объект?
 export async function updateDiaryNote(
   noteDiaryId: string,
   diaryData: PostDiaryNoteRequest
