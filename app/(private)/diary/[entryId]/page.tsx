@@ -1,74 +1,52 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import styles from './page.module.css';
-import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails/DiaryEntryDetails';
-import { DiaryNote } from '@/types/diaryNote';
+import { useQuery } from '@tanstack/react-query';
+import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
 import { getDiaryNotes } from '@/lib/api/clientApi';
+import { DiaryNote } from '@/types/diaryNote';
+import styles from './page.module.css';
 
-export default function DiaryEntryPage() {
+export default function DiaryDetailPage() {
   const params = useParams();
   const router = useRouter();
   const entryId = params.entryId as string;
 
-  const [note, setNote] = useState<DiaryNote | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['diary'],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+  });
 
-  useEffect(() => {
-    async function loadNote() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await getDiaryNotes({ page: 1, limit: 100 });
-        const foundNote = data.tasks.find((item) => item._id === entryId);
+  const notes: DiaryNote[] = data?.diaryNotes ?? [];
+  const selectedNote = notes.find((n) => n._id === entryId) || null;
 
-        if (foundNote) {
-          setNote(foundNote);
-        } else {
-          setError('Запис не знайдено');
-        }
-      } catch (err) {
-  const errorMessage = err instanceof Error ? err.message : 'Не вдалося завантажити детальну інформацію';
-  setError(errorMessage);
-} finally {
-        setIsLoading(false);
-      }
-    }
+  if (isLoading) {
+    return <div className={styles.loader}>Завантаження нотатки...</div>;
+  }
 
-    if (entryId) {
-      loadNote();
-    }
-  }, [entryId]);
+  if (error || !selectedNote) {
+    return (
+      <div className={styles.errorContainer}>
+        <p>Запис не знайдено</p>
+        <button type="button" onClick={() => router.push('/diary')}>
+          Повернутися до списку
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <main className={styles.wrapper}>
+    <div className={styles.container}>
       <button 
         type="button" 
-        className={styles.backBtn} 
-        onClick={() => router.back()}
+        className={styles.backButton} 
+        onClick={() => router.push('/diary')}
       >
-        ← Назад до списку
+        ← Назад до щоденника
       </button>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
-
-      {isLoading ? (
-        <div className={styles.loading}>Завантаження...</div>
-      ) : (
-        <div className={styles.detailsContainer}>
-          <DiaryEntryDetails
-            note={note}
-            onEdit={(editedNote) => {
-              // Відкриває модальне вікно для редагування (інший розробник)
-            }}
-            onDelete={(id) => {
-              // Відкриває модальне вікно ConfirmationModal (інший розробник)
-            }}
-          />
-        </div>
-      )}
-    </main>
+      <DiaryEntryDetails note={selectedNote} />
+    </div>
   );
 }

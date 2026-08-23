@@ -22,7 +22,7 @@ export default function DiaryPage() {
     queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
   });
 
-  const notes: DiaryNote[] = data?.tasks ?? [];
+  const notes: DiaryNote[] = data?.diaryNotes  ?? [];
 
   const selectedNote: DiaryNote | null =
     notes.find((n) => n._id === activeIdFromQuery) || notes[0] || null;
@@ -60,7 +60,6 @@ export default function DiaryPage() {
         </main>
       )}
 
-      {}
       {isModalOpen && (
         <AddDiaryEntryModal onClose={() => setIsModalOpen(false)} />
       )}

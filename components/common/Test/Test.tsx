@@ -212,15 +212,12 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка  getDiaryNotes
+ ////////////////////////////////// ! проверка getDiaryNotes
   const getDiaryNotesHandler = async () => {
-    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
-
     try {
-      const response = await getDiaryNotes(1, 10);
+      const response = await getDiaryNotes({ page: 1, limit: 10 });
       console.log("getDiaryNotes:", response);
 
-      // console.log('getDiaryNotes нулевая нотатка:', response.diaryNotes[0]);
     } catch (error) {
       console.log(`getDiaryNotesError: ${error}`);
     }
@@ -228,12 +225,10 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка обновления таска updateDiaryNote
   const updateDiaryNoteHandler = async () => {
-    // ! пример создания аргумента для updateDiaryNote
     const noteDiaryId = "6a8712c7ddd422d137b22939";
     const diaryData = {
       title: "TEST updateDiaryNote",
       description: "TEST updateDiaryNote Description",
-      //! треба передати масив с ID эмоций
       emotions: ["6895bd86a5c677999ed2ae16"],
     };
 
@@ -245,20 +240,17 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления нотатки deleteDiaryNote
+  ////////////////////////////////// ! проверка удаления нотатки deleteDiaryNote
   const deleteDiaryNoteHandler = async () => {
-    // ! пример создания аргумента для deleteDiaryNote
-    //! для примера возмём массив нотаток, и будем удалять последнию в масиве:
-
     try {
-      const responsegetDiaryNotes = await getDiaryNotes(1, 10);
-      const noteId =
-        responsegetDiaryNotes.diaryNotes[
-          responsegetDiaryNotes.diaryNotes.length - 1
-        ]._id;
+      const responsegetDiaryNotes = await getDiaryNotes({ page: 1, limit: 10 });
+      const notes = responsegetDiaryNotes.diaryNotes || [];
 
-      const response = await deleteDiaryNote(noteId);
-      console.log("deleteDiaryNote:", response);
+      if (notes.length > 0) {
+        const noteId = notes[notes.length - 1]._id;
+        const response = await deleteDiaryNote(noteId);
+        console.log("deleteDiaryNote:", response);
+      }
     } catch (error) {
       console.log(`deleteDiaryNote: ${error}`);
     }

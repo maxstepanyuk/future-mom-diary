@@ -8,8 +8,8 @@ export interface DiaryNote {
   description: string;
 }
 export interface GetDiaryNotesResponse {
-  tasks: DiaryNote[];
+  diaryNotes: DiaryNote[];
+  page: number;
   totalCount: number;
   totalPages: number;
-  page: number;
 }
