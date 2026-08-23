@@ -13,8 +13,10 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { updateAvatar, updateMe } from '@/lib/api/clientApi';
 
 import { BabyGender } from '@/types/user';
+import 'react-datepicker/dist/react-datepicker.css';
+import DueDatePicker from '@/components/common/DueDatePicker/DueDatePicker';
 
-interface OnboardingValues {
+export interface OnboardingValues {
   babyGender: BabyGender | '';
   dueDate: string;
 }
@@ -180,12 +182,7 @@ export default function OnboardingForm() {
               <label className={css.label}>
                 <span className={css.labelTitle}>Планова дата пологів</span>
 
-                <Field
-                  type="date"
-                  name="dueDate"
-                  className={css.input}
-                  disabled={isLoading}
-                />
+                <DueDatePicker isLoading={isLoading} />
 
                 <ErrorMessage
                   name="dueDate"
