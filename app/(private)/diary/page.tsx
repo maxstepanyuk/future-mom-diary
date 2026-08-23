@@ -15,7 +15,6 @@ export default function DiaryPage() {
   const searchParams = useSearchParams();
   const activeIdFromQuery = searchParams.get('entryId');
 
-  // Стан для модального вікна створення запису
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery({
@@ -61,7 +60,7 @@ export default function DiaryPage() {
         </main>
       )}
 
-      {/* Модалка створення запису з гілки main */}
+      {}
       {isModalOpen && (
         <AddDiaryEntryModal onClose={() => setIsModalOpen(false)} />
       )}

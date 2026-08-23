@@ -70,7 +70,7 @@ export const DiaryEntryDetails = ({
         <ul className={styles.emotionsList}>
           {note.emotions.map((emotion) => (
             <li key={emotion._id} className={styles.emotionBadge}>
-              {emotion.name}
+              {emotion.title}
             </li>
           ))}
         </ul>
