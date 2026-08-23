@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 
 import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
-// import Test from '@/components/common/Test/Test';
 
 import './globals.css';
 
