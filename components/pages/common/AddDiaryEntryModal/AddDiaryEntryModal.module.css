@@ -77,7 +77,6 @@
 
   color: #000000;
 
-  font-family: var(--font-lato), sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
@@ -94,7 +93,6 @@
   border: 1px solid transparent;
   border-radius: 12px;
 
-  font-family: var(--font-lato), sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
@@ -183,7 +181,6 @@
   border-radius: 100px;
   box-shadow: 0 4px 0 #ffcbd3;
 
-  font-family: var(--font-lato), sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
