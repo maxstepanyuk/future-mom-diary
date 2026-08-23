@@ -10,11 +10,11 @@
   height: 105px;
   background: #fff4f6;
   @media screen and (min-width: 768px) {
-    width: 336px;
+    min-width: 336px;
     height: auto;
   }
   @media screen and (min-width: 1440px) {
-    width: 305px;
+    min-width: 305px;
   }
 }
 .list {
