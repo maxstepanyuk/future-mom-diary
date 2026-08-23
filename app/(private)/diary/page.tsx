@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { DiaryList } from '@/components/pages/diary-page/DiaryList';
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
 import { DiaryNote } from '@/types/diaryNote';
@@ -13,53 +14,17 @@ export default function DiaryPage() {
   const searchParams = useSearchParams();
   const activeIdFromQuery = searchParams.get('entryId');
 
-  const [notes, setNotes] = useState<DiaryNote[]>([]);
-  const [selectedNote, setSelectedNote] = useState<DiaryNote | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['diary'],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+  });
 
-  
-  useEffect(() => {
-    let isMounted = true;
+  const notes: DiaryNote[] = data?.tasks ?? [];
 
-    async function loadNotes() {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const data = await getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' });
-
-        if (!isMounted) return;
-
-        const fetchedNotes = data.tasks || [];
-        setNotes(fetchedNotes);
-        if (fetchedNotes.length > 0) {
-          const found = activeIdFromQuery
-            ? fetchedNotes.find((n) => n._id === activeIdFromQuery)
-            : fetchedNotes[0];
-
-          setSelectedNote(found || fetchedNotes[0]);
-        }
-      } catch (err) {
-        if (isMounted) {
-          const message = err instanceof Error ? err.message : 'Сталася помилка';
-          setError(message);
-        }
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    }
-
-    loadNotes();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [activeIdFromQuery]);
+  const selectedNote: DiaryNote | null =
+    notes.find((n) => n._id === activeIdFromQuery) || notes[0] || null;
 
   const handleSelectNote = (note: DiaryNote) => {
-    setSelectedNote(note);
-
     if (window.innerWidth < 1440) {
       router.push(`/diary/${note._id}`);
     } else {
@@ -67,9 +32,11 @@ export default function DiaryPage() {
     }
   };
 
+  const errorMessage = error instanceof Error ? error.message : 'Сталася помилка при завантаженні';
+
   return (
     <div className={styles.pageContainer}>
-      {error && <div className={styles.errorAlert}>{error}</div>}
+      {error && <div className={styles.errorAlert}>{errorMessage}</div>}
 
       {isLoading ? (
         <div className={styles.loader}>Завантаження нотаток...</div>

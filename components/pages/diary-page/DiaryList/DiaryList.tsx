@@ -1,6 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { DiaryNote } from '@/types/diaryNote';
 import { DiaryEntryCard } from '../DiaryEntryCard/DiaryEntryCard';
 import styles from './DiaryList.module.css';
