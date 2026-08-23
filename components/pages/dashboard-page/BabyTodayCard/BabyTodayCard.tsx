@@ -44,14 +44,12 @@ export default async function BabyTodayCard() {
             />
             <div className={css.textDescription}>
               <p className={css.text}>
-                <strong>Розмір:</strong>
-                {baby?.babySize}
+                <strong>Розмір:</strong> Приблизно {baby?.babySize} см.
                 <br />
               </p>
 
               <p className={css.text}>
-                <strong>Вага:</strong>
-                {baby?.babyWeight}
+                <strong>Вага:</strong> Близько {baby?.babyWeight} грамів.
                 <br />
               </p>
               <p className={css.text}>

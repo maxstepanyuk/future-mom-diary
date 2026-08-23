@@ -130,6 +130,7 @@ export async function getWeeksBabyInfoServer(
 export async function getWeeksMomInfoServer(
   weekNumber: number,
 ): Promise<GetWeeksMomInfoResponse> {
+  const cookieStore = await cookies();
   const response = await nextApi.get<GetWeeksMomInfoResponse>(
     `/weeks/${weekNumber}/mom`,
     {
