@@ -7,6 +7,7 @@ import TaskReminderCard from "@/components/pages/common/TasksReminderCard/TasksR
 import Header from "@/components/layout/Header/Header";
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
+import GreetingBlock from "@/components/pages/common/GreetingBlock/GreetingBlock";
 
 export default function DashboardPage() {
   return (
@@ -16,6 +17,7 @@ export default function DashboardPage() {
         <Sidebar />
         <div className={css.content}>
           <Breadcrumbs />
+          <GreetingBlock />
           <section>
             <div className={css.container}>
               <div className={css.leftColumn}>
