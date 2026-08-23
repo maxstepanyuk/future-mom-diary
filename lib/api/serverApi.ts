@@ -112,17 +112,11 @@ export async function getWeeksPregnancyInfoPublicServer(): Promise<GetWeeksPregn
   return response.data;
 }
 
-<<<<<<< HEAD
 export async function getWeeksBabyInfoServer(
   weekNumber: number,
 ): Promise<GetWeeksBabyInfoResponse> {
   const cookieStore = await cookies();
   const response = await serverApi.get<GetWeeksBabyInfoResponse>(
-=======
-export async function getWeeksBabyInfoServer(weekNumber: number) {
-  const cookieStore = await cookies();
-  const response = await nextApi.get<GetWeeksBabyInfoResponse>(
->>>>>>> main
     `/weeks/${weekNumber}/baby`,
     {
       headers: {
@@ -137,11 +131,7 @@ export async function getWeeksMomInfoServer(
   weekNumber: number,
 ): Promise<GetWeeksMomInfoResponse> {
   const cookieStore = await cookies();
-<<<<<<< HEAD
   const response = await serverApi.get<GetWeeksMomInfoResponse>(
-=======
-  const response = await nextApi.get<GetWeeksMomInfoResponse>(
->>>>>>> main
     `/weeks/${weekNumber}/mom`,
     {
       headers: {
