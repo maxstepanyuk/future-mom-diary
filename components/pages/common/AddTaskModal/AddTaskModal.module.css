@@ -1,81 +1,120 @@
 .section {
-    padding: 64px 20px;
-    width: 335px;
+  padding: 64px 20px;
+  width: 335px;
+  position: relative;
+
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+  }
 }
 
-.contentHeading{
-    align-self: center;
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: transparent;
+  width: 32px;
+  height: 32px;
+
+  @media only screen and (min-width: 768px) {
+    top: 25px;
+    right: 32px;
+  }
 }
 
-.contentWrapper{
-    display: flex;
-    flex-direction: column;
-    row-gap: 48px;
-    
+.closeButton {
+  fill: black;
+}
+.contentHeading {
+  align-self: center;
+  font-weight: 700;
+  font-size: 36px;
+
+  line-height: 43px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    /* row-gap: 24px; */
-    
+.headingDivider {
+  @media only screen and (min-width: 768px) {
+    display: none;
+  }
 }
 
-.label{
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-    color: #000;
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
 }
 
-.taskField{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    
-    border: 2px solid rgba(255, 255, 255, 0);
-    border-radius: 12px;
-    padding: 8px 12px;
-    /* width: 295px; */
-    height: 37px;
-    
-    background: rgba(0, 0, 0, 0.05);
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
 }
 
-.errorWrapper{
-    display: flex;
-    min-height: 16px;
+.label {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 }
 
-.error{
-font-weight: 400;
-font-size: 12px;
-line-height: 16px;
-color: #c60000;
+.labelTitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #000;
+  @media only screen and (min-width: 1440px) {
+    font-size: 16px;
+  }
 }
 
-.submitButton{
-    display: flex;
-    align-self: center;
-        align-items: center;
-        justify-content: center;
-    
-        background: #ffdae0;
-        border: none;
-        border-bottom: 4px solid #ffcbd3;
-        border-radius: 100px;
-        padding: 10px 24px;
-        width: 173px;
-        height: 42px;
-    
-        font-family: "Lato", sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 22px;
-        color: #000;
-        
+.taskField {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding: 8px 12px;
+  height: 37px;
+
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #c60000;
+}
+
+.submitButton {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffdae0;
+  border: none;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  padding: 10px 24px;
+  width: 173px;
+  height: 42px;
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000;
 }

@@ -1,22 +1,27 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import css from './AddTaskModal.module.css';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { postTask } from '@/lib/api/clientApi';
+
+interface AddTaskModalProps {
+  onClose: () => void;
+}
+interface OrderFormValues {
+  taskName: string;
+  taskDate: string;
+}
 
 const date = new Date();
 const defaultDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 console.log(defaultDate);
 
-interface OrderFormValues {
-  taskName: string;
-  taskDate: string;
-}
-
 const initialValues: OrderFormValues = {
   taskName: '',
   taskDate: defaultDate,
 };
-// "Дата має бути більшою або рівною поточній"
+
 const taskFormSchema = Yup.object().shape({
   taskName: Yup.string()
     .min(1, 'Назва натотки повинна мати щонайменше 1 символ')
@@ -27,19 +32,52 @@ const taskFormSchema = Yup.object().shape({
     .required('Дата обов’язкова'),
 });
 
-export default function AddTaskModal() {
+export default function AddTaskModal({ onClose }: AddTaskModalProps) {
+  const queryClient = useQueryClient();
+
+  const postTaskMutation = useMutation({
+    mutationFn: postTask,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks', 1] });
+    },
+  });
+
   function submitHandler(
     values: OrderFormValues,
     actions: FormikHelpers<OrderFormValues>
   ) {
-    console.log('Order data:', values);
+    postTaskMutation.mutate(
+      { name: values.taskName, date: values.taskDate },
+      {
+        onSuccess: () => {
+          actions.resetForm();
+        },
+      }
+    );
     actions.resetForm();
   }
 
   return (
     <section className={css.section}>
+      <button
+        className={css.closeButton}
+        type="button"
+        onClick={onClose}
+        aria-label="Додати завдання"
+      >
+        <svg className={css.iconButton} width={24} height={24}>
+          <use href="/sprite.svg#icon-close" aria-hidden="true"></use>
+        </svg>
+      </button>
       <div className={css.contentWrapper}>
-        <h2 className={css.contentHeading}>Нове завдання</h2>
+        <h2 className={css.contentHeading}>
+          Нове{' '}
+          <span className={css.headingDivider}>
+            <br />
+          </span>
+          завдання
+        </h2>
 
         <Formik
           initialValues={initialValues}
@@ -55,26 +93,24 @@ export default function AddTaskModal() {
                 className={css.taskField}
                 placeholder="Назва завдання"
               />
-              <div className={css.errorWrapper}>
-                <ErrorMessage
-                  name="taskName"
-                  component="span"
-                  className={css.error}
-                />
-              </div>
+
+              <ErrorMessage
+                name="taskName"
+                component="span"
+                className={css.error}
+              />
             </label>
 
             <label className={css.label}>
               <legend className={css.labelTitle}>Дата</legend>
 
               <Field type="date" name="taskDate" className={css.taskField} />
-              <div className={css.errorWrapper}>
-                <ErrorMessage
-                  name="taskDate"
-                  component="span"
-                  className={css.error}
-                />
-              </div>
+
+              <ErrorMessage
+                name="taskDate"
+                component="span"
+                className={css.error}
+              />
             </label>
 
             <button type="submit" className={css.submitButton}>

@@ -48,7 +48,7 @@ export default function TaskReminderCard() {
     <>
       {isModal && (
         <Modal onClose={modalCloseHandler}>
-          <AddTaskModal />
+          <AddTaskModal onClose={modalCloseHandler} />
         </Modal>
       )}
       {isLoading && <p>Loading...</p>}
