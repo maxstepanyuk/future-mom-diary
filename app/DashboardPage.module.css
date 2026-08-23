@@ -19,6 +19,15 @@
   width: 360px;
   flex-shrink: 0;
 }
+.wrapper {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 0px 20px 0px 20px;
+}
 
 @media (max-width: 1440px) {
   .container {
@@ -29,5 +38,10 @@
   .rightColumn {
     max-width: 100%;
     width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .content {
+    padding: 0px 32px 0px 32px;
   }
 }
