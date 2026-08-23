@@ -1,19 +1,26 @@
 import React from "react";
 import css from "./StatusBlock.module.css";
 import {
-  checkSessionServer,
   getWeeksPregnancyInfoPublicServer,
   getWeeksPregnancyInfoServer,
 } from "@/lib/api/serverApi";
+import { cookies } from "next/headers";
 
 export default async function StatusBlock() {
-  const isAuth = await checkSessionServer();
-  let data = isAuth
-    ? await getWeeksPregnancyInfoServer().catch(() => null)
-    : null;
-  if (!data) {
+  const cookieStore = await cookies();
+  const isAuth = cookieStore.has("accessToken");
+
+  let data;
+  if (isAuth) {
+    try {
+      data = await getWeeksPregnancyInfoServer();
+    } catch (e) {
+      data = await getWeeksPregnancyInfoPublicServer();
+    }
+  } else {
     data = await getWeeksPregnancyInfoPublicServer();
   }
+
   return (
     <div>
       <ul className={css.list}>
