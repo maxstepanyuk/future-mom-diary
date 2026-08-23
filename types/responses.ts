@@ -24,9 +24,9 @@ export interface GetEmotionsResponse {
 
 export interface GetDiaryNotesResponse {
   diaryNotes: DiaryNote[];
+  page: number;
   totalCount: number;
   totalPages: number;
-  page: number;
 }
 
 export interface GetWeeksPregnancyInfoResponse {

@@ -1,0 +1,1 @@
+export { DiaryEntryDetails } from './DiaryEntryDetails';

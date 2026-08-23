@@ -7,3 +7,9 @@ export interface DiaryNote {
   emotions: Emotion[];
   description: string;
 }
+export interface GetDiaryNotesResponse {
+  diaryNotes: DiaryNote[];
+  page: number;
+  totalCount: number;
+  totalPages: number;
+}

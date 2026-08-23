@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: auto; 
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: #666666;
+  cursor: pointer;
+  font-size: 14px;
+  align-self: flex-start;
+  padding: 4px 0;
+}
+
+.detailsContainer {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    max-width: 704px;
+    margin: 0 auto;
+  }
+}
