@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import { Comfortaa } from "next/font/google";
 import localFont from "next/font/local";
-import "./globals.css";
-import TanStackProvider from "@/components/providers/TanStackProvider/TanStackProvider";
-import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
-import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
+
+import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
 // import Test from '@/components/common/Test/Test';
 
+import './globals.css';
+
 const comfortaa = Comfortaa({
-  variable: "--font-comfortaa",
-  subsets: ["latin", "cyrillic"],
-  weight: ["700"],
-  display: "swap",
+  variable: '--font-comfortaa',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['700'],
+  display: 'swap',
 });
 
 const lato = localFont({
@@ -42,21 +41,21 @@ const lato = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Лелека",
-  description: "Лелека - щоденник майбутньої матусі",
+  title: 'Лелека',
+  description: 'Лелека - щоденник майбутньої матусі',
   openGraph: {
-    title: "Лелека",
-    description: "Лелека - щоденник майбутньої матусі",
+    title: 'Лелека',
+    description: 'Лелека - щоденник майбутньої матусі',
     url: process.env.NEXT_PUBLIC_API_URL,
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_API_URL}/images/leleka.jpg`,
         width: 720,
         height: 900,
-        alt: "Лелека логотип",
+        alt: 'Лелека логотип',
       },
     ],
-    type: "article",
+    type: 'article',
   },
 };
 
@@ -64,19 +63,15 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+  children,
+}: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="uk">
       <body className={`${comfortaa.variable} ${lato}`}>
         <TanStackProvider>
           <AuthProvider>
-            <Header />
-            <Sidebar />
-            {/* <Test /> */}
-            <main>
-              <Breadcrumbs />
-              {children}
-            </main>
+            {children}
           </AuthProvider>
         </TanStackProvider>
       </body>
