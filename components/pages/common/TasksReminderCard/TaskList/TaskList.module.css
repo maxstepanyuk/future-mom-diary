@@ -1,0 +1,84 @@
+.taskListWrapper {
+  max-height: 601px;
+  overflow: auto;
+
+  @media only screen and (min-width: 768px) {
+    max-height: 567px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-height: 405px;
+  }
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.taskItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskDate {
+  display: flex;
+  padding-left: 26px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+}
+
+.checkboxLabel {
+  cursor: pointer;
+  display: flex;
+  column-gap: 8px;
+  min-height: 21px;
+}
+
+.checkboxWrapper {
+  display: flex;
+}
+
+/*! сделать кастомный чекбокс? */
+.checkbox {
+  display: none;
+}
+
+.customCheckbox {
+  display: flex;
+  align-self: flex-end;
+  width: 18px;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  color: black;
+}
+
+.iconCheckbox {
+  display: none;
+}
+
+.iconCheckboxUse {
+  display: flex;
+}
+
+.checkbox:checked + .customCheckbox {
+  display: none;
+}
+.checkbox:checked + .customCheckbox + .iconCheckbox {
+  display: flex;
+  align-self: flex-end;
+}
+
+.taskName {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 19px;
+}
+.taskNameDone {
+  text-decoration: line-through;
+}

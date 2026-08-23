@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Comfortaa } from "next/font/google";
-import localFont from "next/font/local";
+import { Comfortaa } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
@@ -17,24 +17,24 @@ const comfortaa = Comfortaa({
 const lato = localFont({
   src: [
     {
-      path: "../fonts/Lato-Light.woff2",
-      weight: "300",
-      style: "normal",
+      path: '../fonts/Lato-Light.woff2',
+      weight: '300',
+      style: 'normal',
     },
     {
-      path: "../fonts/Lato-Regular.woff2",
-      weight: "400",
-      style: "normal",
+      path: '../fonts/Lato-Regular.woff2',
+      weight: '400',
+      style: 'normal',
     },
     {
-      path: "../fonts/Lato-Medium.woff2",
-      weight: "500",
-      style: "normal",
+      path: '../fonts/Lato-Medium.woff2',
+      weight: '500',
+      style: 'normal',
     },
     {
-      path: "../fonts/Lato-Bold.woff2",
-      weight: "700",
-      style: "normal",
+      path: '../fonts/Lato-Bold.woff2',
+      weight: '700',
+      style: 'normal',
     },
   ],
 });
@@ -62,16 +62,12 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({
-  children,
-}: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="uk">
       <body className={`${comfortaa.variable} ${lato}`}>
         <TanStackProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </TanStackProvider>
       </body>
     </html>

@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+
+  width: 335px;
+  max-height: 705px;
+
+  @media only screen and (min-width: 768px) {
+    width: 704px;
+    max-height: 671px;
+    margin-bottom: 32px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    width: 390px;
+    max-height: 499px;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+  padding: 24px;
+  background-color: #fff4f6;
+  border-radius: 32px;
+}
+
+.headingWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: transparent;
+  width: 40px;
+  height: 40px;
+}
+.iconButton {
+  fill: black;
+}
+
+.taskDefaultContentTextWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.taskDefaultContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.taskDefaultContentTextBold {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.taskDefaultContentText {
+  font-weight: 400px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.addButtonDefault {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffdae0;
+  border: none;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  padding: 10px 24px;
+  width: 173px;
+  height: 42px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000;
+}

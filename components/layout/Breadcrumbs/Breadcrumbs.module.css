@@ -1,5 +1,5 @@
 .breadcrumbs {
-  padding: 24px 32px 16px 32px;
+  padding: 24px 32px 16px 12px;
 }
 .list {
   display: flex;
@@ -22,4 +22,9 @@
   line-height: 1.6;
   text-align: center;
   color: #7f7f7f;
+}
+@media (min-width: 768px) {
+  .breadcrumbs {
+    padding: 24px 32px 16px 0px;
+  }
 }
