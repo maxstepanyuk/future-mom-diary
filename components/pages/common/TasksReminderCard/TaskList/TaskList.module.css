@@ -22,18 +22,51 @@
     height: 21px;
 }
 
+.checkboxLabel{
+    cursor: pointer;
+    display: flex;
+    column-gap: 8px;
+    height: 21px;
+}
+
+.checkboxWrapper{
+    display: flex;
+}
+
+
 /*! сделать кастомный чекбокс? */
 .checkbox{
-    /* appearance: none; */
+    display: none;
+}
+
+
+
+.customCheckbox{
     display: flex;
+    align-self: flex-end;
     width: 18px;
     height: 18px;
-    align-self: flex-end;
     background: rgba(0, 0, 0, 0.05);
 
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 4px;
-    accent-color: black
+    color: black
+}
+
+.iconCheckbox{    
+    display: none;
+}
+
+.iconCheckboxUse{
+    display: flex;
+}
+
+.checkbox:checked+.customCheckbox{
+    display: none;
+}
+.checkbox:checked+.customCheckbox+.iconCheckbox {
+    display: flex;
+    align-self: flex-end;
 }
 
 .taskName{

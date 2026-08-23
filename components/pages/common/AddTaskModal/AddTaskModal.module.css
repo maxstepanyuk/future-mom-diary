@@ -1,3 +1,81 @@
 .section {
-    padding: 20px 64px;
+    padding: 64px 20px;
+    width: 335px;
+}
+
+.contentHeading{
+    align-self: center;
+}
+
+.contentWrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 48px;
+    
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 24px; */
+    
+}
+
+.label{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000;
+}
+
+.taskField{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    padding: 8px 12px;
+    /* width: 295px; */
+    height: 37px;
+    
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.errorWrapper{
+    display: flex;
+    min-height: 16px;
+}
+
+.error{
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+color: #c60000;
+}
+
+.submitButton{
+    display: flex;
+    align-self: center;
+        align-items: center;
+        justify-content: center;
+    
+        background: #ffdae0;
+        border: none;
+        border-bottom: 4px solid #ffcbd3;
+        border-radius: 100px;
+        padding: 10px 24px;
+        width: 173px;
+        height: 42px;
+    
+        font-family: "Lato", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        color: #000;
+        
 }

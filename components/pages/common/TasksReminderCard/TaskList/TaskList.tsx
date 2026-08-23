@@ -44,15 +44,27 @@ export default function TaskList({ tasks }: TaskListProps) {
               <p className={css.taskDate}>
                 {task.date.slice(5).replaceAll('-', '.')}
               </p>
-              <div className={css.checkboxAndNameWrapper}>
-                <input
-                  className={css.checkbox}
-                  type="checkbox"
-                  name={task._id}
-                  //   value={`${task.isDone}`}
-                  onChange={checkboxChangeHandler}
-                  checked={task.isDone}
-                ></input>
+
+              <label className={css.checkboxLabel}>
+                <div className={css.checkboxWrapper}>
+                  <input
+                    className={css.checkbox}
+                    type="checkbox"
+                    name={task._id}
+                    //   value={`${task.isDone}`}
+                    onChange={checkboxChangeHandler}
+                    checked={task.isDone}
+                  />
+                  <span className={css.customCheckbox}></span>
+                  <svg className={css.iconCheckbox} width={18} height={18}>
+                    <use
+                      className={css.iconCheckboxUse}
+                      href="/sprite.svg#icon-checkbox"
+                      aria-hidden="true"
+                    ></use>
+                  </svg>
+                </div>
+
                 <p
                   className={clsx(
                     css.taskName,
@@ -61,7 +73,7 @@ export default function TaskList({ tasks }: TaskListProps) {
                 >
                   {task.name}
                 </p>
-              </div>
+              </label>
             </li>
           );
         })}

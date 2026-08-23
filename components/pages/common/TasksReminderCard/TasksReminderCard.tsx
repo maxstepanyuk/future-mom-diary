@@ -62,7 +62,7 @@ export default function TaskReminderCard() {
             onClick={addbuttonClickHandler}
             aria-label="Додати завдання"
           >
-            <svg className={css.iconButton} width={24} height={24}>
+            <svg className={css.iconButton} width={18} height={18}>
               <use href="/sprite.svg#icon-add_circle" aria-hidden="true"></use>
             </svg>
           </button>
