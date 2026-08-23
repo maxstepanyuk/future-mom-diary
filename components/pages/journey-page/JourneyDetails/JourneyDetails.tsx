@@ -86,9 +86,9 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                   <p className={css.text}>
                     {momQuery.data.feelings.sensationDescr}
                   </p>
-                  <ul className={css.list}>
+                  <ul className={css.statesList}>
                     {momQuery.data.feelings.states.map((state, index) => (
-                      <li key={index} className={css.listItem}>
+                      <li key={index} className={css.stateItem}>
                         {state}
                       </li>
                     ))}
@@ -98,9 +98,9 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                 {/* Блок "Поради для вашого комфорту" */}
                 <div className={css.block}>
                   <h3 className={css.blockTitle}>Поради для вашого комфорту</h3>
-                  <ul className={css.list}>
+                  <ul className={css.tipsList}>
                     {momQuery.data.comfortTips.map((tip, index) => (
-                      <li key={index} className={css.listItem}>
+                      <li key={index} className={css.tipItem}>
                         <span className={css.tipCategory}>{tip.category}</span>
                         <span className={css.tipText}>{tip.tip}</span>
                       </li>
