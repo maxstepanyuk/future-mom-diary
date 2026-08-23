@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { DiaryList } from '@/components/pages/diary-page/DiaryList';
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
+import AddDiaryEntryModal from '@/components/pages/common/AddDiaryEntryModal/AddDiaryEntryModal';
 import { DiaryNote } from '@/types/diaryNote';
 import { getDiaryNotes } from '@/lib/api/clientApi';
 import styles from './page.module.css';
@@ -13,6 +14,9 @@ export default function DiaryPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeIdFromQuery = searchParams.get('entryId');
+
+  // Стан для модального вікна створення запису
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['diary'],
@@ -47,6 +51,7 @@ export default function DiaryPage() {
               notes={notes}
               selectedNoteId={selectedNote?._id}
               onSelectNote={handleSelectNote}
+              onOpenAddModal={() => setIsModalOpen(true)}
             />
           </section>
 
@@ -54,6 +59,11 @@ export default function DiaryPage() {
             <DiaryEntryDetails note={selectedNote} />
           </section>
         </main>
+      )}
+
+      {/* Модалка створення запису з гілки main */}
+      {isModalOpen && (
+        <AddDiaryEntryModal onClose={() => setIsModalOpen(false)} />
       )}
     </div>
   );
