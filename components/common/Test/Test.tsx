@@ -1,6 +1,7 @@
 // import css from './Header.module.css';
-"use client";
+'use client';
 
+import TaskReminderCard from '@/components/pages/common/TasksReminderCard/TasksReminderCard';
 import {
   checkSession,
   deleteDiaryNote,
@@ -18,18 +19,18 @@ import {
   updateDiaryNote,
   updateMe,
   updateTaskStatus,
-} from "@/lib/api/clientApi";
-import { login } from "@/lib/api/clientApi";
-import { logout } from "@/lib/api/clientApi";
-import { UserUpdateData } from "@/types/user";
+} from '@/lib/api/clientApi';
+import { login } from '@/lib/api/clientApi';
+import { logout } from '@/lib/api/clientApi';
+import { UserUpdateData } from '@/types/user';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 //! =========================================================================AUTH================================================================================
 export default function Test() {
   ////////////////////////////////// ! пустой юзэффект для будущих проверок
   useEffect(() => {
     const testHandler = async () => {
-      console.log("TEST useEffect");
+      console.log('TEST useEffect');
     };
     testHandler();
   }, []);
@@ -38,14 +39,14 @@ export default function Test() {
   const registerHandler = async () => {
     // ! пример аргумента для регистрации
     const registerData = {
-      name: "TEST4",
-      email: "BC81@gmail.com",
-      password: "12345678",
+      name: 'TEST4',
+      email: 'BC81@gmail.com',
+      password: '12345678',
     };
     try {
       // ! register ничего не возвращает
       await register(registerData);
-      console.log("register Success: метод register ничего не возвращает");
+      console.log('register Success: метод register ничего не возвращает');
     } catch (error) {
       console.log(`registerError: ${error}`);
     }
@@ -54,12 +55,12 @@ export default function Test() {
   const loginHandler = async () => {
     // ! пример аргумента для логина
     const loginData = {
-      email: "BC81@gmail.com",
-      password: "12345678",
+      email: 'BC81@gmail.com',
+      password: '12345678',
     };
     try {
       const response = await login(loginData);
-      console.log("login Success:", response);
+      console.log('login Success:', response);
     } catch (error) {
       console.log(`loginError: ${error}`);
     }
@@ -70,7 +71,7 @@ export default function Test() {
     try {
       // ! logout ничего не возвращает
       await logout();
-      console.log("logaut success!!");
+      console.log('logaut success!!');
     } catch (error) {
       console.log(`logautError!!: ${error}`);
     }
@@ -83,7 +84,7 @@ export default function Test() {
     try {
       //! при успехе возврщает буль true
       const response = await checkSession();
-      console.log("checkSession:", response);
+      console.log('checkSession:', response);
     } catch (error) {
       console.log(`checkSessionError: ${error}`);
     }
@@ -97,7 +98,7 @@ export default function Test() {
 
     try {
       const response = await getMe();
-      console.log("getMe:", response);
+      console.log('getMe:', response);
     } catch (error) {
       console.log(`getMeError: ${error}`);
     }
@@ -115,7 +116,7 @@ export default function Test() {
 
     const userUpdateData: UserUpdateData = {
       //! необходимо как минимум 1 поле для изминения
-      name: "TEST_UPDATE",
+      name: 'TEST_UPDATE',
       // email: string;
       //! дата должна быть между 1 и 41 после текущей даты
       // dueDate: dateToPost,
@@ -124,7 +125,7 @@ export default function Test() {
     //! необходимо добавить логику проверку полей при реализации запроса
     try {
       const response = await updateMe(userUpdateData);
-      console.log("updateMe:", response);
+      console.log('updateMe:', response);
     } catch (error) {
       console.log(`updateMeError: ${error}`);
     }
@@ -137,11 +138,11 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка тасков getTasks
   const getTasksHandler = async () => {
-    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
+    // ! для getTasks объект: {page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')}
 
     try {
-      const response = await getTasks(1, 10);
-      console.log("getTasks:", response);
+      const response = await getTasks({ page: 1, perPage: 10 });
+      console.log('getTasks:', response);
     } catch (error) {
       console.log(`getTasksError: ${error}`);
     }
@@ -153,21 +154,21 @@ export default function Test() {
     // ! пример создания даты:
     const date = new Date();
 
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
 
     const dateToPost = `${date.getFullYear()}-${month}-${day}`;
 
     console.log(dateToPost);
 
     const postTaskData = {
-      name: "TEST task1",
+      name: 'TEST 17:10 task1',
       date: dateToPost,
     };
 
     try {
       const response = await postTask(postTaskData);
-      console.log("getTasks:", response);
+      console.log('getTasks:', response);
     } catch (error) {
       console.log(`getTasksError: ${error}`);
     }
@@ -179,13 +180,16 @@ export default function Test() {
 
     try {
       //! 1.получаем таски
-      const tasks = await getTasks(1, 10);
+      const tasks = await getTasks({ page: 10, perPage: 10 });
       //! 2.берём из массива тасок таску по индексу
       const task = tasks.tasks[0];
       //! 3. передаём id таски аргументом
-      //! при успехе в ответ приходит булевое true
-      const response = await updateTaskStatus(task._id);
-      console.log("updateTaskStatus:", response);
+      //! в ответ приходит новое состояние таски булевым значением
+      const response = await updateTaskStatus({
+        taskId: task._id,
+        isDone: false,
+      });
+      console.log('updateTaskStatus:', response);
     } catch (error) {
       console.log(`updateTaskStatusError: ${error}`);
     }
@@ -198,15 +202,15 @@ export default function Test() {
     // ! пример создания аргумента для postDiaryNote
 
     const diaryNote = {
-      title: "TEST NOTE 4",
-      description: "DESCRIPTION TEST NOTE 4",
+      title: 'TEST NOTE 4',
+      description: 'DESCRIPTION TEST NOTE 4',
       //!  массив с ID эмоций
-      emotions: ["6895bd86a5c677999ed2ae16"],
+      emotions: ['6895bd86a5c677999ed2ae16'],
     };
 
     try {
       const response = await postDiaryNote(diaryNote);
-      console.log("postDiaryNote:", response);
+      console.log('postDiaryNote:', response);
     } catch (error) {
       console.log(`postDiaryNoteError: ${error}`);
     }
@@ -218,7 +222,7 @@ export default function Test() {
 
     try {
       const response = await getDiaryNotes(1, 10);
-      console.log("getDiaryNotes:", response);
+      console.log('getDiaryNotes:', response);
 
       // console.log('getDiaryNotes нулевая нотатка:', response.diaryNotes[0]);
     } catch (error) {
@@ -229,17 +233,17 @@ export default function Test() {
   ////////////////////////////////// ! проверка обновления таска updateDiaryNote
   const updateDiaryNoteHandler = async () => {
     // ! пример создания аргумента для updateDiaryNote
-    const noteDiaryId = "6a8712c7ddd422d137b22939";
+    const noteDiaryId = '6a8712c7ddd422d137b22939';
     const diaryData = {
-      title: "TEST updateDiaryNote",
-      description: "TEST updateDiaryNote Description",
+      title: 'TEST updateDiaryNote',
+      description: 'TEST updateDiaryNote Description',
       //! треба передати масив с ID эмоций
-      emotions: ["6895bd86a5c677999ed2ae16"],
+      emotions: ['6895bd86a5c677999ed2ae16'],
     };
 
     try {
       const response = await updateDiaryNote(noteDiaryId, diaryData);
-      console.log("updateDiaryNote:", response);
+      console.log('updateDiaryNote:', response);
     } catch (error) {
       console.log(`updateDiaryNoteError: ${error}`);
     }
@@ -258,7 +262,7 @@ export default function Test() {
         ]._id;
 
       const response = await deleteDiaryNote(noteId);
-      console.log("deleteDiaryNote:", response);
+      console.log('deleteDiaryNote:', response);
     } catch (error) {
       console.log(`deleteDiaryNote: ${error}`);
     }
@@ -271,7 +275,7 @@ export default function Test() {
 
     try {
       const response = await getWeeksPregnancyInfo();
-      console.log("getWeeksPregnancyInfo:", response);
+      console.log('getWeeksPregnancyInfo:', response);
     } catch (error) {
       console.log(`getWeeksPregnancyInfoError: ${error}`);
     }
@@ -283,7 +287,7 @@ export default function Test() {
 
     try {
       const response = await getWeeksPregnancyInfoPublic();
-      console.log("getWeeksPregnancyInfoPublic:", response);
+      console.log('getWeeksPregnancyInfoPublic:', response);
     } catch (error) {
       console.log(`getWeeksPregnancyInfoPublicError: ${error}`);
     }
@@ -298,7 +302,7 @@ export default function Test() {
       //! проверяем есть ли номер недели если нет, подставляем 1
       const weekNumber = user.curWeekNumber ?? 1;
       const response = await getWeeksBabyInfo(weekNumber);
-      console.log("getWeeksBabyInfo:", response);
+      console.log('getWeeksBabyInfo:', response);
     } catch (error) {
       console.log(`getWeeksBabyInfoError: ${error}`);
     }
@@ -313,7 +317,7 @@ export default function Test() {
       //! проверяем есть ли номер недели если нет, подставляем 1
       const weekNumber = user.curWeekNumber ?? 1;
       const response = await getWeeksMomInfo(weekNumber);
-      console.log("getWeeksMomInfo:", response);
+      console.log('getWeeksMomInfo:', response);
     } catch (error) {
       console.log(`getWeeksMomInfoError: ${error}`);
     }
@@ -328,7 +332,7 @@ export default function Test() {
     try {
       // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
       const response = await getEmotions(1, 10);
-      console.log("getEmotions:", response);
+      console.log('getEmotions:', response);
     } catch (error) {
       console.log(`getEmotionsError: ${error}`);
     }
@@ -365,6 +369,7 @@ export default function Test() {
       <button onClick={getWeeksMomInfoHandler}>getWeeksMomInfo</button>
 
       <button onClick={getEmotionsHandler}>getEmotions</button>
+      <TaskReminderCard />
     </>
   );
 }

@@ -5,12 +5,14 @@ import {
   GetWeeksBabyInfoResponse,
   GetWeeksMomInfoResponse,
   GetWeeksPregnancyInfoResponse,
-} from '@/types/responses';
-import { nextApi } from './api';
-import { User } from '@/types/user';
+} from "@/types/responses";
+import { serverApi } from "@/app/api/api";
+import { User } from "@/types/user";
+import { cookies } from "next/headers";
 
 export async function checkSessionServer() {
-  const res = await nextApi.get('/auth/session', {
+  const cookieStore = await cookies();
+  const res = await serverApi.get("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -19,7 +21,8 @@ export async function checkSessionServer() {
 }
 
 export async function getMeServer(): Promise<User> {
-  const { data } = await nextApi.get<User>('/users/current', {
+  const cookieStore = await cookies();
+  const { data } = await serverApi.get<User>("/users/current", {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -30,9 +33,10 @@ export async function getMeServer(): Promise<User> {
 export async function getTasksServer(
   page: number,
   perPage: number,
-  sortOrder?: 'asc' | 'desc'
+  sortOrder?: "asc" | "desc",
 ): Promise<GetTasksResponse> {
-  const response = await nextApi.get<GetTasksResponse>('/tasks', {
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetTasksResponse>("/tasks", {
     params: {
       page,
       limit: perPage,
@@ -47,9 +51,10 @@ export async function getTasksServer(
 
 export async function getEmotionsServer(
   page: number,
-  perPage?: number
+  perPage?: number,
 ): Promise<GetEmotionsResponse> {
-  const response = await nextApi.get<GetEmotionsResponse>('/emotions', {
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetEmotionsResponse>("/emotions", {
     params: {
       page,
       limit: perPage,
@@ -64,9 +69,10 @@ export async function getEmotionsServer(
 export async function getDiaryNotesServer(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'desc'
+  sortOrder?: "asc" | "desc",
 ): Promise<GetDiaryNotesResponse> {
-  const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetDiaryNotesResponse>("/diary", {
     params: {
       page,
       limit: perPage,
@@ -80,46 +86,58 @@ export async function getDiaryNotesServer(
 }
 
 export async function getWeeksPregnancyInfoServer(): Promise<GetWeeksPregnancyInfoResponse> {
-  const response = await nextApi.get<GetWeeksPregnancyInfoResponse>(
-    '/weeks/greeting',
+  const cookieStore = await cookies();
+
+  const response = await serverApi.get<GetWeeksPregnancyInfoResponse>(
+    "/weeks/greeting",
     {
       headers: {
         Cookie: cookieStore.toString(),
       },
-    }
+    },
   );
   return response.data;
 }
 
 export async function getWeeksPregnancyInfoPublicServer(): Promise<GetWeeksPregnancyInfoResponse> {
-  const response = await nextApi.get<GetWeeksPregnancyInfoResponse>(
-    '/weeks/greeting/public',
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetWeeksPregnancyInfoResponse>(
+    "/weeks/greeting/public",
     {
       headers: {
         Cookie: cookieStore.toString(),
       },
-    }
+    },
   );
   return response.data;
 }
 
-export async function getWeeksBabyInfoServer(weekNumber: number) {
-  const response = await nextApi.get<GetWeeksBabyInfoResponse>(
+export async function getWeeksBabyInfoServer(
+  weekNumber: number,
+): Promise<GetWeeksBabyInfoResponse> {
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetWeeksBabyInfoResponse>(
     `/weeks/${weekNumber}/baby`,
     {
       headers: {
         Cookie: cookieStore.toString(),
       },
-    }
+    },
   );
   return response.data;
 }
 
 export async function getWeeksMomInfoServer(
-  weekNumber: number
+  weekNumber: number,
 ): Promise<GetWeeksMomInfoResponse> {
-  const response = await nextApi.get<GetWeeksMomInfoResponse>(
-    `/weeks/${weekNumber}/mom`
+  const cookieStore = await cookies();
+  const response = await serverApi.get<GetWeeksMomInfoResponse>(
+    `/weeks/${weekNumber}/mom`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    },
   );
   return response.data;
 }

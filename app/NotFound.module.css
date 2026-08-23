@@ -1,0 +1,31 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex: 1;
+}
+
+.link {
+  display: block;
+  text-align: center;
+  padding: 10px 24px;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  background: #ffdae0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.link:hover,
+.link:focus {
+  background: #fff;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
+.link:active {
+  background: #b2b2b2;
+  border-bottom: none;
+}
