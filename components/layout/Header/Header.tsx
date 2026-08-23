@@ -9,7 +9,7 @@ export default function Header() {
   const { toggle, close, isOpen } = useMenuStore();
   const pathname = usePathname();
   const isAuthPage = pathname.startsWith("/auth");
-  if (isAuthPage || isOpen) return null;
+  if (isAuthPage) return null;
 
   return (
     <header className={css.header}>
@@ -23,7 +23,7 @@ export default function Header() {
         type="button"
         className={css.burgerBtn}
         onClick={toggle}
-        aria-label="Відкрити меню"
+        aria-label={isOpen ? "Закрити меню" : "Відкрити меню"}
       >
         <Icon name="icon-menu" size={32} />
       </button>
