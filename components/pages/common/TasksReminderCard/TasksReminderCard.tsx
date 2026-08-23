@@ -24,7 +24,7 @@ export default function TaskReminderCard() {
   } = useQuery({
     queryKey: ['tasks', currentPage],
     queryFn: () => {
-      return getTasks({ page: 1, perPage: 10, sortOrder: 'desc' });
+      return getTasks({ page: 1, perPage: 11, sortOrder: 'desc' });
     },
     enabled: isAuthenticated,
     placeholderData: keepPreviousData,
@@ -53,47 +53,52 @@ export default function TaskReminderCard() {
       )}
       {isLoading && <p>Loading...</p>}
       {isError && <p>Some Error...</p>}
-      <div className={css.wrapper}>
-        <div className={css.headingWrapper}>
-          <h3 className={css.heading}>Важливі завдання</h3>
-          <button
-            className={css.addButton}
-            type="button"
-            onClick={addbuttonClickHandler}
-            aria-label="Додати завдання"
-          >
-            <svg className={css.iconButton} width={18} height={18}>
-              <use href="/sprite.svg#icon-add_circle" aria-hidden="true"></use>
-            </svg>
-          </button>
-        </div>
-
-        <div className={css.taskContentWrapper}>
-          <div className={css.taskContent}>
-            {tasksData && tasksData.tasks.length > 0 ? (
-              <TaskList tasks={tasksData.tasks} />
-            ) : (
-              <div className={css.taskDefaultContent}>
-                <div className={css.taskDefaultContentTextWrapper}>
-                  <p className={css.taskDefaultContentTextBold}>
-                    Наразі немає жодних завдань
-                  </p>
-                  <p className={css.taskDefaultContentText}>
-                    Створіть мершій нове завдання!
-                  </p>
-                </div>
-                <button
-                  className={css.addButtonDefault}
-                  type="button"
-                  onClick={addbuttonClickHandler}
-                  aria-label="Додати завдання"
-                >
-                  Створити завдання
-                </button>
-              </div>
-            )}
+      <div className={css.container}>
+        <section className={css.section}>
+          <div className={css.headingWrapper}>
+            <h3 className={css.heading}>Важливі завдання</h3>
+            <button
+              className={css.addButton}
+              type="button"
+              onClick={addbuttonClickHandler}
+              aria-label="Додати завдання"
+            >
+              <svg className={css.iconButton} width={18} height={18}>
+                <use
+                  href="/sprite.svg#icon-add_circle"
+                  aria-hidden="true"
+                ></use>
+              </svg>
+            </button>
           </div>
-        </div>
+
+          <div className={css.taskContentWrapper}>
+            <div className={css.taskContent}>
+              {tasksData && tasksData.tasks.length > 0 ? (
+                <TaskList tasks={tasksData.tasks} />
+              ) : (
+                <div className={css.taskDefaultContent}>
+                  <div className={css.taskDefaultContentTextWrapper}>
+                    <p className={css.taskDefaultContentTextBold}>
+                      Наразі немає жодних завдань
+                    </p>
+                    <p className={css.taskDefaultContentText}>
+                      Створіть мершій нове завдання!
+                    </p>
+                  </div>
+                  <button
+                    className={css.addButtonDefault}
+                    type="button"
+                    onClick={addbuttonClickHandler}
+                    aria-label="Додати завдання"
+                  >
+                    Створити завдання
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );

@@ -36,7 +36,7 @@ export default function TaskList({ tasks }: TaskListProps) {
     });
   }
   return (
-    <>
+    <div className={css.taskListWrapper}>
       <ul className={css.taskList}>
         {tasks.map(task => {
           return (
@@ -78,6 +78,6 @@ export default function TaskList({ tasks }: TaskListProps) {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
