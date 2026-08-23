@@ -11,7 +11,6 @@
 }
 
 .label {
-  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -28,7 +27,6 @@
 
   border: 2px solid rgba(255, 255, 255, 0);
   border-radius: 12px;
-  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -92,7 +90,6 @@
   border: 0;
   border-radius: 100px;
   cursor: pointer;
-  font-family: "Lato", sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.6;
@@ -128,7 +125,6 @@
 .error {
   margin: 0;
 
-  font-family: "Lato", sans-serif;
   font-size: 12px;
   line-height: 1.4;
   color: #d32f2f;
@@ -165,7 +161,6 @@
 :global(.profileSelect__placeholder) {
   margin: 0 !important;
 
-  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -221,7 +216,6 @@
 :global(.profileSelect__option) {
   padding: 8px 12px !important;
 
-  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
