@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails/DiaryEntryDetails';
-import { DiaryNote } from '@/types/diary';
-import { getDiaryNotes } from '@/services/diaryApi';
+import { DiaryNote } from '@/types/diaryNote';
+import { getDiaryNotes } from '@/lib/api/clientApi';
 
 export default function DiaryEntryPage() {
   const params = useParams();
