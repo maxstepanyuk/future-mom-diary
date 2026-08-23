@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-lato), var(--font-comfortaa), sans-serif;
+  font-family: "lato";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
