@@ -2,10 +2,14 @@
 import css from "./Header.module.css";
 import Link from "next/link";
 import Icon from "@/components/common/Icon/Icon";
-import { useMenuStore } from "@/lib/api/store/menuStore";
+import { useMenuStore } from "@/lib/store/menuStore";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const { toggle, close } = useMenuStore();
+  const { toggle, close, isOpen } = useMenuStore();
+  const pathname = usePathname();
+  const isAuthPage = pathname.startsWith("/auth");
+  if (isAuthPage || isOpen) return null;
 
   return (
     <header className={css.header}>

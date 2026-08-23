@@ -1,9 +1,9 @@
-// UserBar.tsx
 "use client";
 
 import Image from "next/image";
 import Icon from "@/components/common/Icon/Icon";
 import css from "./UserBar.module.css";
+import { useAuthStore } from "@/lib/store/authStore";
 
 type UserBarProps = {
   name: string;
@@ -12,8 +12,9 @@ type UserBarProps = {
 };
 
 export default function UserBar({ name, email, avatarUrl }: UserBarProps) {
+  const { clearIsAuthenticated } = useAuthStore();
   const handleLogout = () => {
-    console.log("logout clicked");
+    clearIsAuthenticated();
   };
 
   return (

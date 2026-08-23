@@ -6,7 +6,7 @@
   margin-right: auto;
   padding-left: 20px;
   padding-right: 20px;
-  outline: 1px solid red;
+  /* outline: 1px solid red; */
 
   @media only screen and (min-width: 768px) {
     max-width: 768px;
@@ -76,7 +76,6 @@
   flex-direction: column;
 }
 .labelTitle {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -94,7 +93,6 @@
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.05);
   padding: 8px 12px;
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -117,7 +115,6 @@
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.05);
   padding: 8px 52px 8px 12px;
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -135,10 +132,11 @@
 input:focus {
   outline: none;
   border: 2px solid #ffcbd3;
+  border-radius: 12px;
 }
 .select:focus {
   outline: none;
-  border: 1px solid rgba(255, 255, 255, 0);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px 12px 0 0;
 }
 select option:checked {
@@ -155,7 +153,12 @@ select option:hover {
   transform: translateY(-50%);
   pointer-events: none;
   fill: none;
+  transition: transform 250ms ease;
   stroke: #292d32;
+}
+
+.selectIconOpen {
+  transform: translateY(-50%) rotate(180deg);
 }
 .onboardingBtn {
   border: none;
@@ -169,7 +172,7 @@ select option:hover {
   font-size: 14px;
   line-height: 1.6;
   color: #000;
-  font-family: 'Lato', sans-serif;
+  transition: background-color 0.3s ease;
   @media (min-width: 768px) {
   }
   @media (min-width: 1440px) {
@@ -185,7 +188,6 @@ select option:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Lato', sans-serif;
   border: none;
   border-bottom: 4px solid rgba(0, 0, 0, 0.15);
   border-radius: 100px;
@@ -197,13 +199,13 @@ select option:hover {
   line-height: 1.6;
   color: #000;
   margin-bottom: 32px;
+  transition: background-color 0.3s ease;
 }
 .uploadBtn:hover,
 .uploadBtn:focus {
   background-color: #fff;
 }
 .text {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -246,6 +248,7 @@ select option:hover {
   margin-top: 4px;
 }
 .avatarImage {
+  object-fit: cover;
   width: 164px;
   height: 164px;
   border-radius: 50%;

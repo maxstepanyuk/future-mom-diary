@@ -73,7 +73,6 @@
   flex-direction: column;
 }
 .labelTitle {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -90,7 +89,6 @@
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.05);
   padding: 8px 12px;
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -100,6 +98,11 @@
   @media (min-width: 1440px) {
     font-size: 16px;
   }
+}
+input:focus {
+  outline: none;
+  border: 2px solid #ffcbd3;
+  border-radius: 12px;
 }
 .registerBtn {
   border: none;
@@ -113,15 +116,19 @@
   font-size: 14px;
   line-height: 1.6;
   color: #000;
-  font-family: 'Lato', sans-serif;
+  transition: background-color 0.3s ease;
   @media (min-width: 768px) {
   }
   @media (min-width: 1440px) {
     font-size: 16px;
   }
 }
+.registerBtn:hover,
+.registerBtn:focus {
+  background-color: #fff4f6;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
 .text {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;

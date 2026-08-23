@@ -10,6 +10,9 @@ import Select, {
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { updateMe } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 import css from './ProfileEditForm.module.css';
@@ -45,7 +48,10 @@ const validationSchema = Yup.object({
     .required('Email обов’язковий'),
 
   babyGender: Yup.string()
-    .oneOf(['girl', 'boy', 'unknown'])
+    .oneOf(
+      ['girl', 'boy', 'unknown'],
+      'Оберіть стать дитини'
+    )
     .required('Оберіть стать дитини'),
 
   dueDate: Yup.date()
@@ -84,38 +90,116 @@ function SelectDropdownIndicator(
   );
 }
 
+function parseDueDate(date?: string | null): Date | null {
+  if (!date) {
+    return null;
+  }
+
+  return new Date(`${date}T00:00:00`);
+}
+
+function formatDueDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 function ProfileEditForm() {
   const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [isDateOpen, setIsDateOpen] = useState(false);
 
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
+
+  if (!user) {
+    return null;
+  }
+
   const initialValues: ProfileFormValues = {
-    name: 'Ганна',
-    email: 'hanna@gmail.com',
-    babyGender: '',
-    dueDate: new Date(2025, 6, 16),
+    name: user.name ?? '',
+    email: user.email ?? '',
+    babyGender: user.babyGender ?? '',
+    dueDate: parseDueDate(user.dueDate),
   };
 
   return (
     <Formik<ProfileFormValues>
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values, actions) => {
+        if (
+          values.babyGender !== 'girl' &&
+          values.babyGender !== 'boy' &&
+          values.babyGender !== 'unknown'
+        ) {
+          actions.setFieldError(
+            'babyGender',
+            'Оберіть стать дитини'
+          );
+
+          actions.setSubmitting(false);
+          return;
+        }
+
+        if (!values.dueDate) {
+          actions.setFieldError(
+            'dueDate',
+            'Оберіть планову дату пологів'
+          );
+
+          actions.setSubmitting(false);
+          return;
+        }
+
+        try {
+          actions.setStatus(undefined);
+
+          const updatedUser = await updateMe({
+            name: values.name.trim(),
+            babyGender: values.babyGender,
+            dueDate: formatDueDate(values.dueDate),
+          });
+
+          setUser(updatedUser);
+
+          actions.resetForm({
+            values: {
+              name: updatedUser.name ?? '',
+              email: updatedUser.email ?? '',
+              babyGender: updatedUser.babyGender ?? '',
+              dueDate: parseDueDate(updatedUser.dueDate),
+            },
+          });
+        } catch {
+          actions.setStatus(
+            'Не вдалося зберегти зміни. Спробуйте ще раз.'
+          );
+        } finally {
+          actions.setSubmitting(false);
+        }
       }}
     >
       {({
         values,
         errors,
         touched,
+        status,
         handleChange,
         handleBlur,
         setFieldValue,
+        setFieldTouched,
         resetForm,
         isSubmitting,
       }) => (
         <Form className={css.form}>
           <div className={css.fieldGroup}>
-            <label htmlFor="name" className={css.label}>
+            <label
+              htmlFor="name"
+              className={css.label}
+            >
               Ім’я
             </label>
 
@@ -137,7 +221,10 @@ function ProfileEditForm() {
           </div>
 
           <div className={css.fieldGroup}>
-            <label htmlFor="email" className={css.label}>
+            <label
+              htmlFor="email"
+              className={css.label}
+            >
               Пошта
             </label>
 
@@ -179,14 +266,14 @@ function ProfileEditForm() {
                 );
               }}
               onBlur={() => {
-                setFieldValue(
-                  'babyGender',
-                  values.babyGender,
-                  true
-                );
+                setFieldTouched('babyGender', true);
               }}
-              onMenuOpen={() => setIsGenderOpen(true)}
-              onMenuClose={() => setIsGenderOpen(false)}
+              onMenuOpen={() => {
+                setIsGenderOpen(true);
+              }}
+              onMenuClose={() => {
+                setIsGenderOpen(false);
+              }}
               menuIsOpen={isGenderOpen}
               isSearchable={false}
               classNamePrefix="profileSelect"
@@ -219,13 +306,15 @@ function ProfileEditForm() {
                 onChange={(date: Date | null) => {
                   setFieldValue('dueDate', date);
                 }}
-                onBlur={handleBlur}
-                onCalendarOpen={() =>
-                  setIsDateOpen(true)
-                }
-                onCalendarClose={() =>
-                  setIsDateOpen(false)
-                }
+                onBlur={() => {
+                  setFieldTouched('dueDate', true);
+                }}
+                onCalendarOpen={() => {
+                  setIsDateOpen(true);
+                }}
+                onCalendarClose={() => {
+                  setIsDateOpen(false);
+                }}
                 dateFormat="dd.MM.yyyy"
                 className={`${css.input} ${css.dateInput}`}
                 wrapperClassName={
@@ -246,11 +335,32 @@ function ProfileEditForm() {
             )}
           </div>
 
+          {status && (
+            <p
+              className={css.error}
+              role="alert"
+            >
+              {status}
+            </p>
+          )}
+
           <div className={css.actions}>
             <button
               type="button"
               className={css.cancelButton}
-              onClick={() => resetForm()}
+              onClick={() => {
+                resetForm({
+                  values: {
+                    name: user.name ?? '',
+                    email: user.email ?? '',
+                    babyGender: user.babyGender ?? '',
+                    dueDate: parseDueDate(user.dueDate),
+                  },
+                });
+
+                setIsGenderOpen(false);
+                setIsDateOpen(false);
+              }}
               disabled={isSubmitting}
             >
               Відмінити зміни
@@ -261,7 +371,9 @@ function ProfileEditForm() {
               className={css.saveButton}
               disabled={isSubmitting}
             >
-              Зберегти зміни
+              {isSubmitting
+                ? 'Збереження...'
+                : 'Зберегти зміни'}
             </button>
           </div>
         </Form>

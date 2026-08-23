@@ -1,6 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --color-scheme-foreground: #fff4f6;
+  --color-scheme-foreground-alt: #ffdae0;
 }
 
 html {
@@ -16,11 +18,9 @@ body {
 
 body {
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-lato), var(--font-comfortaa), sans-serif;
+  font-family: "lato";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

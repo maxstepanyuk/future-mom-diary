@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Comfortaa, Lato } from 'next/font/google';
-import './globals.css';
+import { Comfortaa } from 'next/font/google';
+import localFont from 'next/font/local';
+
 import TanStackProvider from '@/components/providers/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
-import Header from '@/components/layout/Header/Header';
-import Sidebar from '@/components/layout/Sidebar/Sidebar';
-import Test from '@/components/common/Test/Test';
+
+import './globals.css';
 
 const comfortaa = Comfortaa({
   variable: '--font-comfortaa',
@@ -14,10 +14,29 @@ const comfortaa = Comfortaa({
   display: 'swap',
 });
 
-const lato = Lato({
-  variable: '--font-lato',
-  subsets: ['latin'], // todo: no cyrillic
-  weight: ['100', '300', '400', '700', '900'], // todo: remove unused
+const lato = localFont({
+  src: [
+    {
+      path: '../fonts/Lato-Light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Lato-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Lato-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Lato-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -45,14 +64,10 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={`${comfortaa.variable} ${lato.variable}`}>
+    <html lang="uk">
+      <body className={`${comfortaa.variable} ${lato}`}>
         <TanStackProvider>
-          <AuthProvider>
-            <Header />
-            <Test />
-            <main>{children}</main>
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </TanStackProvider>
       </body>
     </html>

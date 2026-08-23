@@ -4,7 +4,9 @@ import { usePathname } from "next/navigation";
 import AuthBar from "../AuthBar/AuthBar";
 import css from "./Sidebar.module.css";
 import Icon from "@/components/common/Icon/Icon";
-import { useMenuStore } from "@/lib/api/store/menuStore";
+import { useMenuStore } from "@/lib/store/menuStore";
+import { useAuthStore } from "@/lib/store/authStore";
+import UserBar from "../UserBar/UserBar";
 
 const navItems = [
   { label: "Мій день", href: "/", icon: "icon-today" },
@@ -16,7 +18,9 @@ const navItems = [
 export default function Sidebar() {
   const { isOpen, close } = useMenuStore();
   const pathname = usePathname();
-  const isAuthenticated = false;
+  const { user, isAuthenticated } = useAuthStore();
+  const isAuthPage = pathname.startsWith("/auth");
+  if (isAuthPage) return null;
   return (
     <>
       {isOpen && <div className={css.overlay} onClick={close} />}
@@ -59,8 +63,15 @@ export default function Sidebar() {
             </ul>
           </nav>
         </div>
-
-        <AuthBar />
+        {isAuthenticated && user ? (
+          <UserBar
+            name={user.name}
+            email={user.email}
+            avatarUrl={user.avatarUrl}
+          />
+        ) : (
+          <AuthBar />
+        )}
       </aside>
     </>
   );
