@@ -1,8 +1,27 @@
 import React from "react";
 import css from "./BabyTodayCard.module.css";
 import Image from "next/image";
+import {
+  checkSessionServer,
+  getWeeksPregnancyInfoPublicServer,
+  getWeeksPregnancyInfoServer,
+} from "@/lib/api/serverApi";
+import { cookies } from "next/headers";
 
-export default function BabyTodayCard() {
+export default async function BabyTodayCard() {
+  const cookieStore = await cookies();
+  const isAuth = cookieStore.get("accessToken");
+  let data;
+  if (isAuth) {
+    try {
+      data = await getWeeksPregnancyInfoServer();
+    } catch (e) {
+      data = await getWeeksPregnancyInfoPublicServer();
+    }
+  } else {
+    data = await getWeeksPregnancyInfoPublicServer();
+  }
+
   return (
     <>
       <div className={css.wrapper}>
@@ -13,35 +32,31 @@ export default function BabyTodayCard() {
           <li className={css.content}>
             <Image
               className={css.image}
-              src="/images/plant.jpg"
+              src={data.babyToday.image || ""}
               alt="plant"
               width={287}
               height={216}
             />
             <div className={css.textDescription}>
               <p className={css.text}>
-                <strong>Розмір:</strong>Приблизно 12 см <br />
+                <strong>Розмір:</strong> Приблизно {data.babyToday.babySize} см.
+                <br />
               </p>
 
               <p className={css.text}>
-                <strong>Вага:</strong> Близько 45 грамів
+                <strong>Вага:</strong> Близько {data.babyToday.babyWeight}{" "}
+                грамів.
                 <br />
               </p>
               <p className={css.text}>
-                <strong>Активність:</strong> М&#39;язи обличчя вже працюють!
-                Малюк вчиться хмуритися, мружитись і навіть може зловити
-                гикавку.
+                <strong>Активність:</strong>
+                {data.babyToday?.babyActivity}
               </p>
             </div>
           </li>
         </ul>
         <article>
-          <p className={css.description}>
-            У цей час тіло малюка починає вкриватися лануго — надзвичайно ніжним
-            пушком, який зберігатиме тепло. Його шийка стає міцнішою, а рухи —
-            все більш скоординованими. Хоч ви ще не відчуваєте цих кульбітів,
-            знайте: всередині вас відбувається справжнє диво!
-          </p>
+          <p className={css.description}>{data.babyToday?.babyDevelopment}</p>
         </article>
       </div>
     </>
