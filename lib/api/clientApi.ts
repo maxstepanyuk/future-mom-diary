@@ -127,20 +127,40 @@ export async function postDiaryNote(
 }
 
 // Отримати список записів з пагінацією та сортуванням
-export async function getDiaryNotes(
-  page: number = 1,
-  perPage?: number,
-  sortOrder?: 'asc' | 'desc'
-): Promise<GetDiaryNotesResponse> {
+export interface GetDiaryNotesParams {
+  page?: number;
+  limit?: number;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export async function getDiaryNotes({
+  page = 1,
+  limit,
+  sortOrder,
+}: GetDiaryNotesParams = {}): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
     params: {
       page,
-      limit: perPage,
+      limit,
       sortOrder,
     },
   });
   return response.data;
 }
+// export async function getDiaryNotes(
+//   page: number = 1,
+//   perPage?: number,
+//   sortOrder?: 'asc' | 'desc'
+// ): Promise<GetDiaryNotesResponse> {
+//   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
+//     params: {
+//       page,
+//       limit: perPage,
+//       sortOrder,
+//     },
+//   });
+//   return response.data;
+// }
 
 export async function updateDiaryNote(
   noteDiaryId: string,

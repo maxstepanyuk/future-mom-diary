@@ -18,6 +18,7 @@ export default function DiaryPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  
   useEffect(() => {
     let isMounted = true;
 
@@ -32,7 +33,6 @@ export default function DiaryPage() {
 
         const fetchedNotes = data.tasks || [];
         setNotes(fetchedNotes);
-
         if (fetchedNotes.length > 0) {
           const found = activeIdFromQuery
             ? fetchedNotes.find((n) => n._id === activeIdFromQuery)

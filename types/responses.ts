@@ -23,7 +23,7 @@ export interface GetEmotionsResponse {
 }
 
 export interface GetDiaryNotesResponse {
-  diaryNotes: DiaryNote[];
+  tasks: DiaryNote[];
   totalCount: number;
   totalPages: number;
   page: number;
