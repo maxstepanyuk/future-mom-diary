@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-// todo: add css
+import css from "./NotFound.module.css"
+
 export default function NotFound() {
   return (
-    <div>
+    <div className={css.wrapper}>
       <h2>Сторінку не знайдено</h2>
-      <Link href="/">Певернутися на головну</Link>
+      <Link href="/" className={"todo"}>Певернутися на головну</Link>
     </div>
   );
 }
