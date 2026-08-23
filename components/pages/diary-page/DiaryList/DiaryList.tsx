@@ -1,5 +1,6 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { DiaryNote } from '@/types/diaryNote';
 import { DiaryEntryCard } from '../DiaryEntryCard/DiaryEntryCard';
 import styles from './DiaryList.module.css';
@@ -18,8 +19,8 @@ export const DiaryList = ({
   onOpenAddModal,
 }: DiaryListProps) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
+    <section className={styles.container} aria-label="Список записів">
+      <header className={styles.title}>
         <h2 className={styles.heading}>Ваші записи</h2>
 
         <div className={styles.createContainer}>
@@ -30,32 +31,29 @@ export const DiaryList = ({
             aria-label="Додати новий запис"
           >
             <span className={styles.addText}>Новий запис</span>
-            <svg
-              width={24}
-              height={24}
-              className={styles.iconPlus}
-              aria-hidden="true"
-            >
+            <svg width={24} height={24} className={styles.iconPlus} aria-hidden="true">
               <use href="/sprite.svg#icon-add_circle" />
             </svg>
           </button>
         </div>
-      </div>
+      </header>
 
-      <div className={styles.list}>
-        {notes.length === 0 ? (
-          <p className={styles.emptyText}>Наразі записи у щоденнику відсутні</p>
-        ) : (
-          notes.map((note) => (
-            <DiaryEntryCard
-              key={note._id}
-              note={note}
-              isSelected={note._id === selectedNoteId}
-              onClick={() => onSelectNote(note)}
-            />
-          ))
-        )}
-      </div>
-    </div>
+      {}
+      {notes.length === 0 ? (
+        <p className={styles.emptyText}>Наразі записи у щоденнику відсутні</p>
+      ) : (
+        <ul className={styles.list}>
+          {notes.map((note) => (
+            <li key={note._id}>
+              <DiaryEntryCard
+                note={note}
+                isSelected={note._id === selectedNoteId}
+                onClick={() => onSelectNote(note)}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 };
