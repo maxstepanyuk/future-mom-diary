@@ -5,6 +5,8 @@ import {
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
+  GetWeeksBabyInfoResponse,
+  GetWeeksMomInfoResponse,
   GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
 import { Task } from '@/types/task';
@@ -75,7 +77,7 @@ export async function updateMe(userData: UserUpdateData): Promise<User> {
 
 export async function updateAvatar(avatar: File): Promise<User> {
   const formData = new FormData();
-  formData.append('file', avatar);
+  formData.append('avatar', avatar);
   const { data } = await nextApi.patch<User>(
     '/users/current/avatars',
     formData
@@ -94,7 +96,7 @@ export async function postTask(taskData: PostTaskRequest): Promise<Task> {
 export async function getTasks(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetTasksResponse> {
   const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
@@ -126,7 +128,7 @@ export async function postDiaryNote(
 export async function getDiaryNotes(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
     params: {
@@ -170,6 +172,25 @@ export async function getWeeksPregnancyInfoPublic(): Promise<GetWeeksPregnancyIn
   );
   return response.data;
 }
+
+export async function getWeeksBabyInfo(
+  weekNumber: number
+): Promise<GetWeeksBabyInfoResponse> {
+  const response = await nextApi.get<GetWeeksBabyInfoResponse>(
+    `/weeks/${weekNumber}/baby`
+  );
+  return response.data;
+}
+
+export async function getWeeksMomInfo(
+  weekNumber: number
+): Promise<GetWeeksMomInfoResponse> {
+  const response = await nextApi.get<GetWeeksMomInfoResponse>(
+    `/weeks/${weekNumber}/mom`
+  );
+  return response.data;
+}
+
 //////////////! /emotions
 
 export async function getEmotions(

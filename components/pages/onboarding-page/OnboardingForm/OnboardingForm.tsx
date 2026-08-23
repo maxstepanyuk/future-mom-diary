@@ -9,10 +9,13 @@ import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import css from './OnboardingForm.module.css';
-import { useAuthStore } from '@/lib/store/AuthStore';
+import { useAuthStore } from '@/lib/store/authStore';
+import { updateAvatar, updateMe } from '@/lib/api/clientApi';
+
+import { BabyGender } from '@/types/user';
 
 interface OnboardingValues {
-  babyGender: string;
+  babyGender: BabyGender | '';
   dueDate: string;
 }
 
@@ -37,6 +40,7 @@ export default function OnboardingForm() {
 
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -61,42 +65,20 @@ export default function OnboardingForm() {
     setIsLoading(true);
 
     try {
-      const userResponse = await fetch('/api/users/current', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          babyGender: values.babyGender,
-          dueDate: values.dueDate,
-        }),
-        credentials: 'include',
+      if (!values.babyGender) {
+        return;
+      }
+
+      let currentUser = await updateMe({
+        babyGender: values.babyGender,
+        dueDate: values.dueDate,
       });
 
-      if (!userResponse.ok) {
-        throw new Error('Не вдалося зберегти дані користувача');
-      }
-
-      let currentUserData = await userResponse.json();
-
       if (avatarFile) {
-        const formData = new FormData();
-        formData.append('avatar', avatarFile);
-
-        const avatarResponse = await fetch('/api/users/current/avatars', {
-          method: 'PATCH',
-          body: formData,
-          credentials: 'include',
-        });
-
-        if (!avatarResponse.ok) {
-          throw new Error('Не вдалося завантажити аватар');
-        }
-
-        currentUserData = await avatarResponse.json();
+        currentUser = await updateAvatar(avatarFile);
       }
 
-      setUser(currentUserData);
+      setUser(currentUser);
 
       toast.success('Дані успішно збережено!');
 
@@ -163,6 +145,7 @@ export default function OnboardingForm() {
                     as="select"
                     name="babyGender"
                     className={css.select}
+                    onClick={() => setIsSelectOpen(prev => !prev)}
                     disabled={isLoading}
                   >
                     <option value="" disabled>
@@ -176,7 +159,13 @@ export default function OnboardingForm() {
                     <option value="unknown">Ще не знаю</option>
                   </Field>
 
-                  <svg className={css.selectIcon} width="20" height="20">
+                  <svg
+                    className={`${css.selectIcon} ${
+                      isSelectOpen ? css.selectIconOpen : ''
+                    }`}
+                    width="20"
+                    height="20"
+                  >
                     <use href="/sprite.svg#icon-keyboard_arrow_down" />
                   </svg>
                 </div>

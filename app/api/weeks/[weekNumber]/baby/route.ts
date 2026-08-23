@@ -1,17 +1,20 @@
-export const dynamic = 'force-dynamic';
-
 import { NextResponse } from 'next/server';
+// import { api } from '../../api';
 import { cookies } from 'next/headers';
+// import { logErrorResponse } from '../../_utils/utils';
 import { isAxiosError } from 'axios';
 import { serverApi } from '@/app/api/api';
 import { logErrorResponse } from '@/app/api/_utils/utils';
 
-export async function PATCH(request: Request) {
+type Props = {
+  params: Promise<{ weekNumber: string }>;
+};
+
+export async function GET(request: Request, { params }: Props) {
   try {
     const cookieStore = await cookies();
-    const formData = await request.formData();
-
-    const res = await serverApi.patch('/users/current/avatars', formData, {
+    const { weekNumber } = await params;
+    const res = await serverApi.get(`/weeks/${weekNumber}/baby`, {
       headers: {
         Cookie: cookieStore.toString(),
       },

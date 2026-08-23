@@ -1,20 +1,21 @@
 import {
-  CheckSessionResponse,
   GetDiaryNotesResponse,
   GetEmotionsResponse,
   GetTasksResponse,
+  GetWeeksBabyInfoResponse,
+  GetWeeksMomInfoResponse,
   GetWeeksPregnancyInfoResponse,
 } from '@/types/responses';
 import { nextApi } from './api';
 import { User } from '@/types/user';
 
-export async function checkSessionServer(): Promise<boolean> {
-  const res = await nextApi.get<CheckSessionResponse>('/auth/session', {
+export async function checkSessionServer() {
+  const res = await nextApi.get('/auth/session', {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
-  return res.data.success;
+  return res;
 }
 
 export async function getMeServer(): Promise<User> {
@@ -29,7 +30,7 @@ export async function getMeServer(): Promise<User> {
 export async function getTasksServer(
   page: number,
   perPage: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetTasksResponse> {
   const response = await nextApi.get<GetTasksResponse>('/tasks', {
     params: {
@@ -63,7 +64,7 @@ export async function getEmotionsServer(
 export async function getDiaryNotesServer(
   page: number,
   perPage?: number,
-  sortOrder?: 'asc' | 'dsc'
+  sortOrder?: 'asc' | 'desc'
 ): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {
     params: {
@@ -98,6 +99,27 @@ export async function getWeeksPregnancyInfoPublicServer(): Promise<GetWeeksPregn
         Cookie: cookieStore.toString(),
       },
     }
+  );
+  return response.data;
+}
+
+export async function getWeeksBabyInfoServer(weekNumber: number) {
+  const response = await nextApi.get<GetWeeksBabyInfoResponse>(
+    `/weeks/${weekNumber}/baby`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    }
+  );
+  return response.data;
+}
+
+export async function getWeeksMomInfoServer(
+  weekNumber: number
+): Promise<GetWeeksMomInfoResponse> {
+  const response = await nextApi.get<GetWeeksMomInfoResponse>(
+    `/weeks/${weekNumber}/mom`
   );
   return response.data;
 }

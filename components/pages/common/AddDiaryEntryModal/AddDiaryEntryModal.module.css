@@ -154,26 +154,31 @@
 }
 
 .checkbox {
+  display: flex;
   flex-shrink: 0;
-
-  appearance: none;
-  -webkit-appearance: none;
+  align-items: center;
+  justify-content: center;
 
   width: 18px;
   height: 18px;
-  margin: 0;
 
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: #e8e8e8;
   border: 1px solid transparent;
   border-radius: 4px;
 }
-
-.checkbox:checked {
-  appearance: auto;
-  -webkit-appearance: checkbox;
-
+.checkboxChecked {
   background-color: #000000;
-  accent-color: #000000;
+  border-color: #000000;
+}
+.checkboxIcon {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 :global(.diarySelect__control) {

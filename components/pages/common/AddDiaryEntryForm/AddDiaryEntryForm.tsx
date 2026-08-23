@@ -38,12 +38,21 @@ const validationSchema = Yup.object({
 function EmotionOption(props: OptionProps<Emotion, true>) {
   return (
     <components.Option {...props}>
-      <input
-        className={css.checkbox}
-        type="checkbox"
-        checked={props.isSelected}
-        readOnly
-      />
+      <span
+        className={`${css.checkbox} ${
+          props.isSelected ? css.checkboxChecked : ""
+        }`}
+      >
+        {props.isSelected && (
+          <svg
+            className={css.checkboxIcon}
+            viewBox="0 0 18 18"
+            aria-hidden="true"
+          >
+            <path d="M3.5 9L7.2 12.5L14.5 5" />
+          </svg>
+        )}
+      </span>
 
       {props.label}
     </components.Option>
@@ -194,4 +203,4 @@ export default function AddDiaryEntryForm({
     </Formik>
   );
 }
-// КЛЮЧ ["diary"] виконуэться для кешування даних щоденника
+// КЛЮЧ ["diary"] виконується для кешування даних щоденника

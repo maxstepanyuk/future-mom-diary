@@ -1,5 +1,5 @@
 // import css from './Header.module.css';
-'use client';
+"use client";
 
 import {
   checkSession,
@@ -8,6 +8,8 @@ import {
   getEmotions,
   getMe,
   getTasks,
+  getWeeksBabyInfo,
+  getWeeksMomInfo,
   getWeeksPregnancyInfo,
   getWeeksPregnancyInfoPublic,
   postDiaryNote,
@@ -16,18 +18,18 @@ import {
   updateDiaryNote,
   updateMe,
   updateTaskStatus,
-} from '@/lib/api/clientApi';
-import { login } from '@/lib/api/clientApi';
-import { logout } from '@/lib/api/clientApi';
-import { UserUpdateData } from '@/types/user';
+} from "@/lib/api/clientApi";
+import { login } from "@/lib/api/clientApi";
+import { logout } from "@/lib/api/clientApi";
+import { UserUpdateData } from "@/types/user";
 
-import { useEffect } from 'react';
-
+import { useEffect } from "react";
+//! =========================================================================AUTH================================================================================
 export default function Test() {
   ////////////////////////////////// ! пустой юзэффект для будущих проверок
   useEffect(() => {
     const testHandler = async () => {
-      console.log('TEST useEffect');
+      console.log("TEST useEffect");
     };
     testHandler();
   }, []);
@@ -36,14 +38,14 @@ export default function Test() {
   const registerHandler = async () => {
     // ! пример аргумента для регистрации
     const registerData = {
-      name: 'TEST4',
-      email: 'BC81@gmail.com',
-      password: '12345678',
+      name: "TEST4",
+      email: "BC81@gmail.com",
+      password: "12345678",
     };
     try {
       // ! register ничего не возвращает
       await register(registerData);
-      console.log('register Success: метод register ничего не возвращает');
+      console.log("register Success: метод register ничего не возвращает");
     } catch (error) {
       console.log(`registerError: ${error}`);
     }
@@ -52,12 +54,12 @@ export default function Test() {
   const loginHandler = async () => {
     // ! пример аргумента для логина
     const loginData = {
-      email: 'BC81@gmail.com',
-      password: '12345678',
+      email: "BC81@gmail.com",
+      password: "12345678",
     };
     try {
       const response = await login(loginData);
-      console.log('login Success:', response);
+      console.log("login Success:", response);
     } catch (error) {
       console.log(`loginError: ${error}`);
     }
@@ -68,7 +70,7 @@ export default function Test() {
     try {
       // ! logout ничего не возвращает
       await logout();
-      console.log('logaut success!!');
+      console.log("logaut success!!");
     } catch (error) {
       console.log(`logautError!!: ${error}`);
     }
@@ -81,11 +83,13 @@ export default function Test() {
     try {
       //! при успехе возврщает буль true
       const response = await checkSession();
-      console.log('checkSession:', response);
+      console.log("checkSession:", response);
     } catch (error) {
       console.log(`checkSessionError: ${error}`);
     }
   };
+
+  //! =========================================================================USER================================================================================
 
   ////////////////////////////////// ! проверка юзера getMe
   const getMeHandler = async () => {
@@ -93,7 +97,7 @@ export default function Test() {
 
     try {
       const response = await getMe();
-      console.log('getMe:', response);
+      console.log("getMe:", response);
     } catch (error) {
       console.log(`getMeError: ${error}`);
     }
@@ -111,7 +115,7 @@ export default function Test() {
 
     const userUpdateData: UserUpdateData = {
       //! необходимо как минимум 1 поле для изминения
-      name: 'TEST_UPDATE',
+      name: "TEST_UPDATE",
       // email: string;
       //! дата должна быть между 1 и 41 после текущей даты
       // dueDate: dateToPost,
@@ -120,7 +124,7 @@ export default function Test() {
     //! необходимо добавить логику проверку полей при реализации запроса
     try {
       const response = await updateMe(userUpdateData);
-      console.log('updateMe:', response);
+      console.log("updateMe:", response);
     } catch (error) {
       console.log(`updateMeError: ${error}`);
     }
@@ -129,13 +133,15 @@ export default function Test() {
   ////////////////////////////////// ! проверка обновления аватара updateMe
   const updateAvatarHandler = async () => {};
 
+  //! =========================================================================TASKS================================================================================
+
   ////////////////////////////////// ! проверка тасков getTasks
   const getTasksHandler = async () => {
-    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+    // ! для getTasks 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
 
     try {
       const response = await getTasks(1, 10);
-      console.log('getTasks:', response);
+      console.log("getTasks:", response);
     } catch (error) {
       console.log(`getTasksError: ${error}`);
     }
@@ -147,21 +153,21 @@ export default function Test() {
     // ! пример создания даты:
     const date = new Date();
 
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
 
     const dateToPost = `${date.getFullYear()}-${month}-${day}`;
 
     console.log(dateToPost);
 
     const postTaskData = {
-      name: 'TEST task1',
+      name: "TEST task1",
       date: dateToPost,
     };
 
     try {
       const response = await postTask(postTaskData);
-      console.log('getTasks:', response);
+      console.log("getTasks:", response);
     } catch (error) {
       console.log(`getTasksError: ${error}`);
     }
@@ -179,39 +185,28 @@ export default function Test() {
       //! 3. передаём id таски аргументом
       //! при успехе в ответ приходит булевое true
       const response = await updateTaskStatus(task._id);
-      console.log('updateTaskStatus:', response);
+      console.log("updateTaskStatus:", response);
     } catch (error) {
       console.log(`updateTaskStatusError: ${error}`);
     }
   };
 
-  ////////////////////////////////// ! проверка обновления таска getEmotions
-  const getEmotionsHandler = async () => {
-    // ! пример создания аргумента для getEmotions
-
-    try {
-      // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
-      const response = await getEmotions(1, 10);
-      console.log('getEmotions:', response);
-    } catch (error) {
-      console.log(`getEmotionsError: ${error}`);
-    }
-  };
+  //! =========================================================================DIARY================================================================================
 
   ////////////////////////////////// ! проверка создания нотатки postDiaryNote
   const postDiaryNoteHandler = async () => {
     // ! пример создания аргумента для postDiaryNote
 
     const diaryNote = {
-      title: 'TEST NOTE 4',
-      description: 'DESCRIPTION TEST NOTE 4',
+      title: "TEST NOTE 4",
+      description: "DESCRIPTION TEST NOTE 4",
       //!  массив с ID эмоций
-      emotions: ['6895bd86a5c677999ed2ae16'],
+      emotions: ["6895bd86a5c677999ed2ae16"],
     };
 
     try {
       const response = await postDiaryNote(diaryNote);
-      console.log('postDiaryNote:', response);
+      console.log("postDiaryNote:", response);
     } catch (error) {
       console.log(`postDiaryNoteError: ${error}`);
     }
@@ -219,11 +214,11 @@ export default function Test() {
 
   ////////////////////////////////// ! проверка  getDiaryNotes
   const getDiaryNotesHandler = async () => {
-    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')
+    // ! для getDiaryNotes 3 параметра: page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|desc')
 
     try {
       const response = await getDiaryNotes(1, 10);
-      console.log('getDiaryNotes:', response);
+      console.log("getDiaryNotes:", response);
 
       // console.log('getDiaryNotes нулевая нотатка:', response.diaryNotes[0]);
     } catch (error) {
@@ -234,17 +229,17 @@ export default function Test() {
   ////////////////////////////////// ! проверка обновления таска updateDiaryNote
   const updateDiaryNoteHandler = async () => {
     // ! пример создания аргумента для updateDiaryNote
-    const noteDiaryId = '6a8712c7ddd422d137b22939';
+    const noteDiaryId = "6a8712c7ddd422d137b22939";
     const diaryData = {
-      title: 'TEST updateDiaryNote',
-      description: 'TEST updateDiaryNote Description',
+      title: "TEST updateDiaryNote",
+      description: "TEST updateDiaryNote Description",
       //! треба передати масив с ID эмоций
-      emotions: ['6895bd86a5c677999ed2ae16'],
+      emotions: ["6895bd86a5c677999ed2ae16"],
     };
 
     try {
       const response = await updateDiaryNote(noteDiaryId, diaryData);
-      console.log('updateDiaryNote:', response);
+      console.log("updateDiaryNote:", response);
     } catch (error) {
       console.log(`updateDiaryNoteError: ${error}`);
     }
@@ -263,11 +258,12 @@ export default function Test() {
         ]._id;
 
       const response = await deleteDiaryNote(noteId);
-      console.log('deleteDiaryNote:', response);
+      console.log("deleteDiaryNote:", response);
     } catch (error) {
       console.log(`deleteDiaryNote: ${error}`);
     }
   };
+  //! =========================================================================WEEKS================================================================================
 
   ////////////////////////////////// ! проверка  getWeeksPregnancyInfo
   const getWeeksPregnancyInfoHandler = async () => {
@@ -275,7 +271,7 @@ export default function Test() {
 
     try {
       const response = await getWeeksPregnancyInfo();
-      console.log('getWeeksPregnancyInfo:', response);
+      console.log("getWeeksPregnancyInfo:", response);
     } catch (error) {
       console.log(`getWeeksPregnancyInfoError: ${error}`);
     }
@@ -287,9 +283,54 @@ export default function Test() {
 
     try {
       const response = await getWeeksPregnancyInfoPublic();
-      console.log('getWeeksPregnancyInfoPublic:', response);
+      console.log("getWeeksPregnancyInfoPublic:", response);
     } catch (error) {
       console.log(`getWeeksPregnancyInfoPublicError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getWeeksBabyInfo
+  const getWeeksBabyInfoHandler = async () => {
+    // ! для getWeeksBabyInfo нужен номер недели (от 1 до 41) возмём её из юзера
+
+    try {
+      const user = await getMe();
+      //! проверяем есть ли номер недели если нет, подставляем 1
+      const weekNumber = user.curWeekNumber ?? 1;
+      const response = await getWeeksBabyInfo(weekNumber);
+      console.log("getWeeksBabyInfo:", response);
+    } catch (error) {
+      console.log(`getWeeksBabyInfoError: ${error}`);
+    }
+  };
+
+  ////////////////////////////////// ! проверка  getWeeksMomInfo
+  const getWeeksMomInfoHandler = async () => {
+    // ! для getWeeksMomInfo нужен номер недели (от 1 до 41) возмём её из юзера
+
+    try {
+      const user = await getMe();
+      //! проверяем есть ли номер недели если нет, подставляем 1
+      const weekNumber = user.curWeekNumber ?? 1;
+      const response = await getWeeksMomInfo(weekNumber);
+      console.log("getWeeksMomInfo:", response);
+    } catch (error) {
+      console.log(`getWeeksMomInfoError: ${error}`);
+    }
+  };
+
+  //! =========================================================================EMOTIONS================================================================================
+
+  ////////////////////////////////// ! проверка обновления таска getEmotions
+  const getEmotionsHandler = async () => {
+    // ! пример создания аргумента для getEmotions
+
+    try {
+      // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
+      const response = await getEmotions(1, 10);
+      console.log("getEmotions:", response);
+    } catch (error) {
+      console.log(`getEmotionsError: ${error}`);
     }
   };
 
@@ -320,6 +361,8 @@ export default function Test() {
       <button onClick={getWeeksPregnancyInfoPublicHandler}>
         getWeeksPregnancyInfoPublic
       </button>
+      <button onClick={getWeeksBabyInfoHandler}>getWeeksBabyInfo</button>
+      <button onClick={getWeeksMomInfoHandler}>getWeeksMomInfo</button>
 
       <button onClick={getEmotionsHandler}>getEmotions</button>
     </>
