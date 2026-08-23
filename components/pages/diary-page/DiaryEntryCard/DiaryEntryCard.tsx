@@ -1,5 +1,4 @@
-import React from 'react';
-import { DiaryNote } from '@/types/diary';
+import { DiaryNote } from '@/types/diaryNote';
 import styles from './DiaryEntryCard.module.css';
 
 interface DiaryEntryCardProps {
@@ -8,11 +7,11 @@ interface DiaryEntryCardProps {
   onClick: () => void;
 }
 
-export const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
+export const DiaryEntryCard = ({
   note,
   isSelected = false,
   onClick,
-}) => {
+}: DiaryEntryCardProps) => {
   const cardClassName = `${styles.card} ${isSelected ? styles.selected : ''}`;
 
   return (
@@ -25,7 +24,7 @@ export const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
       <ul className={styles.emotionsList}>
         {note.emotions?.map((emotion) => (
           <li key={emotion._id} className={styles.emotionBadge}>
-            {emotion.title}
+            {emotion.name}
           </li>
         ))}
       </ul>

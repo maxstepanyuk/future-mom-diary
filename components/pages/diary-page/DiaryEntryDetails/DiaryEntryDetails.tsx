@@ -1,5 +1,4 @@
-import React from 'react';
-import { DiaryNote } from '@/types/diary';
+import { DiaryNote } from '@/types/diaryNote';
 import styles from './DiaryEntryDetails.module.css';
 
 interface DiaryEntryDetailsProps {
@@ -8,11 +7,11 @@ interface DiaryEntryDetailsProps {
   onDelete?: (id: string) => void;
 }
 
-export const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
+export const DiaryEntryDetails = ({
   note,
   onEdit,
   onDelete,
-}) => {
+}: DiaryEntryDetailsProps) => {
   if (!note) {
     return (
       <div className={styles.placeholder}>
@@ -32,7 +31,9 @@ export const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
             onClick={() => onEdit?.(note)}
             aria-label="Редагувати запис"
           >
-            ✏️
+            <svg width={24} height={24} className={styles.icon}>
+              <use href="/sprite.svg#icon-edit_square" />
+            </svg>
           </button>
           <button
             type="button"
@@ -40,7 +41,9 @@ export const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
             onClick={() => onDelete?.(note._id)}
             aria-label="Видалити запис"
           >
-            🗑️
+            <svg width={24} height={24} className={styles.icon}>
+              <use href="/sprite.svg#icon-delete_forever" />
+            </svg>
           </button>
         </div>
       </header>
@@ -52,7 +55,7 @@ export const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       <ul className={styles.emotionsList}>
         {note.emotions?.map((emotion) => (
           <li key={emotion._id} className={styles.emotionBadge}>
-            {emotion.title}
+            {emotion.name}
           </li>
         ))}
       </ul>
