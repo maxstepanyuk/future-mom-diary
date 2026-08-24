@@ -73,4 +73,5 @@
 .weekActive {
   border-color: rgba(0, 0, 0, 0.15);
   background: var(--color-scheme-accent);
+  opacity: 1 !important;
 }
