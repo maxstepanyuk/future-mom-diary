@@ -8,19 +8,24 @@ import { useMenuStore } from "@/lib/store/menuStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import UserBar from "../UserBar/UserBar";
 
-const navItems = [
-  { label: "Мій день", href: "/", icon: "icon-today" },
-  { label: "Подорож", href: "/journey", icon: "icon-conversion_path" },
-  { label: "Щоденник", href: "/diary", icon: "icon-book_2" },
-  { label: "Профіль", href: "/profile", icon: "icon-account_circle" },
-];
-
 export default function Sidebar() {
   const { isOpen, close } = useMenuStore();
   const pathname = usePathname();
   const { user, isAuthenticated } = useAuthStore();
+  const currentWeek = user?.curWeekNumber ?? 1;
   const isAuthPage = pathname.startsWith("/auth");
   if (isAuthPage) return null;
+
+  const navItems = [
+    { label: "Мій день", href: "/", icon: "icon-today" },
+    {
+      label: "Подорож",
+      href: `/journey/${currentWeek}`,
+      icon: "icon-conversion_path",
+    },
+    { label: "Щоденник", href: "/diary", icon: "icon-book_2" },
+    { label: "Профіль", href: "/profile", icon: "icon-account_circle" },
+  ];
   return (
     <>
       {isOpen && <div className={css.overlay} onClick={close} />}
@@ -46,7 +51,9 @@ export default function Sidebar() {
           <nav>
             <ul className={css.navList}>
               {navItems.map(({ label, href, icon }) => {
-                const isActive = pathname === href;
+                const isActive = href.startsWith("/journey")
+                  ? pathname.startsWith("/journey")
+                  : pathname === href;
                 return (
                   <li key={label}>
                     <Link

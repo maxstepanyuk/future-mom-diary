@@ -6,6 +6,9 @@ import Icon from "@/components/common/Icon/Icon";
 import ConfirmationModal from "@/components/pages/common/ConfirmationModal/ConfirmationModal";
 import css from "./UserBar.module.css";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { logout } from "@/lib/api/clientApi";
 
 type UserBarProps = {
   name: string;
@@ -16,10 +19,19 @@ type UserBarProps = {
 export default function UserBar({ name, email, avatarUrl }: UserBarProps) {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { clearIsAuthenticated } = useAuthStore();
-
-  const handleConfirmLogout = () => {
-    clearIsAuthenticated();
-    setIsLogoutModalOpen(false);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const handleConfirmLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearIsAuthenticated();
+      queryClient.clear();
+      setIsLogoutModalOpen(false);
+      router.push("/");
+    }
   };
 
   return (

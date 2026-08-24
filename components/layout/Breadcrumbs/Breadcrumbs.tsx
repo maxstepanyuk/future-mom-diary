@@ -18,14 +18,14 @@ export default function Breadcrumbs() {
   if (pathname.startsWith("/auth")) return null;
 
   const segments = pathname.split("/").filter(Boolean);
-
+  const filteredSegments = segments.filter((segment) => !/^\d+$/.test(segment));
   const crumbs = [
     { label: "Лелека", href: "/" },
-    ...(segments.length === 0
+    ...(filteredSegments.length === 0
       ? [{ label: labels[""], href: "/" }]
-      : segments.map((segment, index) => ({
+      : filteredSegments.map((segment, index) => ({
           label: labels[segment] ?? segment,
-          href: "/" + segments.slice(0, index + 1).join("/"),
+          href: "/" + filteredSegments.slice(0, index + 1).join("/"),
         }))),
   ];
 
