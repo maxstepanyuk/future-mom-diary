@@ -1,3 +1,8 @@
+.loaderWrapper {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .taskListWrapper {
   max-height: 601px;
   overflow: auto;

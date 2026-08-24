@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '@/components/common/Modal/Modal';
 import AddTaskModal from '../AddTaskModal/AddTaskModal';
 import Loader from '@/components/common/Loader/Loader';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function TaskReminderCard() {
   const isAuthenticated = useAuthStore(store => store.isAuthenticated);
@@ -28,6 +29,7 @@ export default function TaskReminderCard() {
     isFetchingNextPage,
     isLoading,
     isError,
+    isFetched,
   } = useInfiniteQuery({
     queryKey: ['tasks'],
     queryFn: async ({ pageParam }) => {
@@ -45,7 +47,8 @@ export default function TaskReminderCard() {
 
       return await getTasks({
         page: pageParam,
-        perPage: 100,
+        // Рендерю максимальное число, так как прилетают дублю
+        perPage: 11,
         sortOrder: 'desc',
       });
     },
@@ -65,8 +68,7 @@ export default function TaskReminderCard() {
 
   const tasks = data?.tasks ?? [];
 
-  if (isError) {
-  }
+  const router = useRouter();
 
   // console.log(data);
   // console.log(tasks);
@@ -87,7 +89,11 @@ export default function TaskReminderCard() {
   //   // refetchOnMount: false,
   // });
 
-  const router = useRouter();
+  // const notify = () => toast.error('Here is your toast.');
+
+  if (isError) {
+    toast.error('Помилка завантаження завданнь');
+  }
 
   function addbuttonClickHandler() {
     if (!isAuthenticated) {
@@ -102,6 +108,7 @@ export default function TaskReminderCard() {
 
   return (
     <>
+      <Toaster />
       {isModal && (
         <Modal onClose={modalCloseHandler}>
           <AddTaskModal onClose={modalCloseHandler} />
@@ -118,7 +125,7 @@ export default function TaskReminderCard() {
               onClick={addbuttonClickHandler}
               aria-label="Додати завдання"
             >
-              <svg className={css.iconButton} width={18} height={18}>
+              <svg className={css.iconButton} width={24} height={24}>
                 <use
                   href="/sprite.svg#icon-add_circle"
                   aria-hidden="true"
@@ -126,7 +133,8 @@ export default function TaskReminderCard() {
               </svg>
             </button>
           </div>
-          {isError && <p>Some Error...</p>}
+
+          {/* {isError && <p>Some Error...</p>} */}
           {isLoading && (
             <div className={css.loaderWrapper}>
               <Loader />
@@ -134,35 +142,44 @@ export default function TaskReminderCard() {
           )}
           <div className={css.taskContentWrapper}>
             <div className={css.taskContent}>
-              {tasks && tasks.length > 0 ? (
+              {isError && (
+                <p className={css.errorLoading}>
+                  Помилка завантаження завдань...
+                </p>
+              )}
+              {!isLoading && isFetched && !isError && (
                 <>
-                  <TaskList
-                    tasks={tasks}
-                    getMoreTasks={fetchNextPage}
-                    hasNextPage={hasNextPage}
-                    isFetchingNextPage={isFetchingNextPage}
-                  />
-                  {/* <button onClick={() => fetchNextPage()}> FETCH</button> */}
+                  {tasks && tasks.length > 0 ? (
+                    <>
+                      <TaskList
+                        tasks={tasks}
+                        getMoreTasks={fetchNextPage}
+                        hasNextPage={hasNextPage}
+                        isFetchingNextPage={isFetchingNextPage}
+                      />
+                      {/* <button onClick={() => fetchNextPage()}> FETCH</button> */}
+                    </>
+                  ) : (
+                    <div className={css.taskDefaultContent}>
+                      <div className={css.taskDefaultContentTextWrapper}>
+                        <p className={css.taskDefaultContentTextBold}>
+                          Наразі немає жодних завдань
+                        </p>
+                        <p className={css.taskDefaultContentText}>
+                          Створіть мершій нове завдання!
+                        </p>
+                      </div>
+                      <button
+                        className={css.addButtonDefault}
+                        type="button"
+                        onClick={addbuttonClickHandler}
+                        aria-label="Додати завдання"
+                      >
+                        Створити завдання
+                      </button>
+                    </div>
+                  )}
                 </>
-              ) : (
-                <div className={css.taskDefaultContent}>
-                  <div className={css.taskDefaultContentTextWrapper}>
-                    <p className={css.taskDefaultContentTextBold}>
-                      Наразі немає жодних завдань
-                    </p>
-                    <p className={css.taskDefaultContentText}>
-                      Створіть мершій нове завдання!
-                    </p>
-                  </div>
-                  <button
-                    className={css.addButtonDefault}
-                    type="button"
-                    onClick={addbuttonClickHandler}
-                    aria-label="Додати завдання"
-                  >
-                    Створити завдання
-                  </button>
-                </div>
               )}
             </div>
           </div>

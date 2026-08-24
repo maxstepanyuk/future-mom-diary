@@ -11,6 +11,8 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
+import Loader from '@/components/common/Loader/Loader';
 
 // interface InfiniteQueryObserverResult {
 //   tasks: Task[];
@@ -44,6 +46,10 @@ export default function TaskList({
       queryClient.invalidateQueries({
         queryKey: ['tasks'],
       });
+      toast.success('Статус завдання оновленно');
+    },
+    onError: () => {
+      toast.error('Помилка оновлення статусу завдання');
     },
   });
 
@@ -123,6 +129,11 @@ export default function TaskList({
           );
         })}
         {/* <button onClick={() => getMoreTasks()}> FETCH</button> */}
+        {isFetchingNextPage && (
+          <div className={css.loaderWrapper}>
+            <Loader />
+          </div>
+        )}
         <li ref={loadMoreRef} aria-hidden={true}></li>
       </ul>
     </div>

@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { postTask } from '@/lib/api/clientApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import toast from 'react-hot-toast';
 interface AddTaskModalProps {
   onClose: () => void;
 }
@@ -53,7 +54,11 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
       {
         onSuccess: () => {
           actions.resetForm();
+          toast.success('Завдання додано');
           onClose();
+        },
+        onError: () => {
+          toast.success('Помилка додавання завдання');
         },
       }
     );
