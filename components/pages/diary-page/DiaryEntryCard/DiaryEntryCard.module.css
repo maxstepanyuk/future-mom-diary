@@ -9,6 +9,7 @@
   gap: 12px;
   border: none;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .card:hover,
@@ -17,7 +18,6 @@
 }
 
 .selected {
-  /* Якщо знадобиться додаткова акцентуація для вибраної картки */
   opacity: 1;
 }
 
@@ -65,4 +65,11 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--color-scheme-text, #000000);
+}
+
+/* (768px – 1439px) */
+@media (min-width: 768px) and (max-width: 1439px) {
+  .card {
+    min-height: 91px;
+  }
 }
