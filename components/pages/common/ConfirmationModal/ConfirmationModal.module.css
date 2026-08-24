@@ -1,0 +1,108 @@
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 335px;
+  min-height: 413px;
+  padding: 64px 20px;
+
+  background: #ffffff;
+  border-radius: 40px;
+}
+
+/* Кнопка закриття (хрестик) */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
+}
+
+/* Заголовок модалки */
+.title {
+  margin: 0;
+
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 120%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000000;
+}
+
+/* Блок для кнопок */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Загальні стилі для кнопок дій */
+.btnCancel,
+.btnConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 268px;
+  height: 42px;
+  padding: 10px 24px;
+
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+
+  border-radius: 100px;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    opacity 0.2s ease;
+}
+
+.btnCancel:active,
+.btnConfirm:active {
+  transform: scale(0.98);
+}
+
+/* Кнопка "Ні" (скасування) */
+.btnCancel {
+  background: #ffdae0;
+  border: none;
+  border-bottom: 4px solid #ffcbd3;
+  color: #000000;
+}
+
+/* Кнопка "Так" (підтвердження) */
+.btnConfirm {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  color: #000000;
+}
