@@ -65,6 +65,9 @@ export default function TaskReminderCard() {
 
   const tasks = data?.tasks ?? [];
 
+  if (isError) {
+  }
+
   // console.log(data);
   // console.log(tasks);
   // console.log(data?.pageParams);
