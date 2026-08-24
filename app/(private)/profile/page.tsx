@@ -1,7 +1,13 @@
-import ProfilePage from '@/components/pages/profile-page/ProfilePage';
+import ProfileAvatar from "@/components/pages/profile-page/ProfileAvatar/ProfileAvatar";
+import ProfileEditForm from "@/components/pages/profile-page/ProfileEditForm/ProfileEditForm";
 
-const Page = () => {
-  return <ProfilePage />;
-};
+import css from "./ProfilePage.module.css";
 
-export default Page;
+export default function ProfilePage() {
+  return (
+    <div className={css.container}>
+      <ProfileAvatar />
+      <ProfileEditForm />
+    </div>
+  );
+}
