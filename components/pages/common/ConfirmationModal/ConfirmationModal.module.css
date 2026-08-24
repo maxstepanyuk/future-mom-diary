@@ -246,3 +246,36 @@
     max-width: none;
   }
 }
+
+/* ==========================================
+   Десктопні стилі (Desktop: від 1440px)
+   ========================================== */
+
+@media screen and (min-width: 1440px) {
+  .content {
+    max-width: 768px;
+    min-height: 338px;
+    padding: 64px;
+  }
+
+  .title {
+    width: 100%;
+    max-width: 640px;
+    min-height: 116px;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 104px;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .btnCancel,
+  .btnConfirm {
+    width: 268px;
+    height: 46px;
+    flex: none;
+  }
+}
