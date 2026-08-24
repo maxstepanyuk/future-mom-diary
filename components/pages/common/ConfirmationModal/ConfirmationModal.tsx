@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Modal from '@/components/common/Modal/Modal';
-import Button from '@/components/common/Button/Button';
-import Icon from '@/components/common/Icon/Icon';
-import css from './ConfirmationModal.module.css';
+import React from "react";
+import Modal from "@/components/common/Modal/Modal";
+import Icon from "@/components/common/Icon/Icon";
+import css from "./ConfirmationModal.module.css";
 
 interface ConfirmationModalProps {
   title: string;
@@ -36,12 +35,12 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         <h2 className={css.title}>{title}</h2>
 
         <div className={css.actions}>
-          <Button variant="cancel" onClick={onCancel} className={css.btnCancel}>
+          <button type="button" onClick={onCancel} className={css.btnCancel}>
             {cancelButtonText}
-          </Button>
-          <Button variant="confirm" onClick={onConfirm} className={css.btnConfirm}>
+          </button>
+          <button type="button" onClick={onConfirm} className={css.btnConfirm}>
             {confirmButtonText}
-          </Button>
+          </button>
         </div>
       </div>
     </Modal>
