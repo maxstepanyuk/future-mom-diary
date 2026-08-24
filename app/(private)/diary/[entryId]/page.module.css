@@ -3,7 +3,11 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  height: auto; 
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  height: auto;
 }
 
 .backBtn {
@@ -12,17 +16,24 @@
   color: #666666;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   align-self: flex-start;
-  padding: 4px 0;
+  padding: 8px 0;
+  transition: opacity 0.2s ease;
+}
+
+.backBtn:hover {
+  opacity: 0.7;
 }
 
 .detailsContainer {
   width: 100%;
 }
 
-@media (min-width: 1024px) {
+/* Планшет*/
+@media (min-width: 768px) {
   .wrapper {
-    max-width: 704px;
-    margin: 0 auto;
+    max-width: 768px;
+    padding: 0 32px;
   }
 }
