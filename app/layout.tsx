@@ -46,14 +46,6 @@ export const metadata: Metadata = {
     title: 'Лелека',
     description: 'Лелека - щоденник майбутньої матусі',
     url: process.env.NEXT_PUBLIC_API_URL,
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_API_URL}/images/leleka.jpg`,
-        width: 720,
-        height: 900,
-        alt: 'Лелека логотип',
-      },
-    ],
     type: 'article',
   },
 };
