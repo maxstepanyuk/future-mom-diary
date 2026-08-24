@@ -1,0 +1,76 @@
+.selector {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 0;
+
+  /* сховати скрол: */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* сховати скрол в Chrome/Safari/Edge */
+.selector::-webkit-scrollbar {
+  display: none;
+}
+
+/* картка тижня */
+.week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 97px;
+  height: 87px;
+  padding: 16px;
+  border: 4px solid transparent;
+  border-radius: 32px;
+  background: var(--color-scheme-foreground);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+/* номер тижня */
+.weekNumber {
+  font-family: var(--font-comfortaa);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--foreground);
+}
+
+/* текст Тиждень */
+.weekLabel {
+  font-family: var(--font-comfortaa);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+/* пройдений тиждень */
+.weekPast {
+  background: var(--color-scheme-foreground);
+}
+
+/* майбутній тиждень */
+.weekFuture {
+  background: var(--color-neutral-lightest, #f2f2f2);
+}
+
+/* майбутній (неактивний) */
+.week:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* активний тиждень */
+.weekActive {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: var(--color-scheme-accent);
+}

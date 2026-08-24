@@ -1,5 +1,7 @@
 import JourneyDetails from "@/components/pages/journey-page/JourneyDetails/JourneyDetails";
 import css from "./JourneyPage.module.css";
+import WeekSelector from "@/components/pages/journey-page/WeekSelector/WeekSelector";
+import GreetingBlock from "@/components/pages/common/GreetingBlock/GreetingBlock";
 import { Metadata } from "next";
 
 interface JourneyPageProps {
@@ -19,6 +21,8 @@ export default async function JourneyPage({ params }: JourneyPageProps) {
 
   return (
     <div className={css.page}>
+      <GreetingBlock />
+      <WeekSelector activeWeek={week} />
       <JourneyDetails weekNumber={week} />
     </div>
   );
