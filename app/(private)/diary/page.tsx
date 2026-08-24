@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import GreetingBlock from '@/components/pages/common/GreetingBlock/GreetingBlock';
 import { DiaryList } from '@/components/pages/diary-page/DiaryList';
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
 import AddDiaryEntryModal from '@/components/pages/common/AddDiaryEntryModal/AddDiaryEntryModal';
@@ -22,7 +23,7 @@ export default function DiaryPage() {
     queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
   });
 
-  const notes: DiaryNote[] = data?.diaryNotes  ?? [];
+  const notes: DiaryNote[] = data?.diaryNotes ?? [];
 
   const selectedNote: DiaryNote | null =
     notes.find((n) => n._id === activeIdFromQuery) || notes[0] || null;
@@ -40,6 +41,9 @@ export default function DiaryPage() {
   return (
     <div className={styles.pageContainer}>
       {error && <div className={styles.errorAlert}>{errorMessage}</div>}
+
+      {}
+      <GreetingBlock />
 
       {isLoading ? (
         <div className={styles.loader}>Завантаження нотаток...</div>
