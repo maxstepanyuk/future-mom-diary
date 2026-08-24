@@ -5,23 +5,68 @@ import clsx from 'clsx';
 
 import { updateTaskStatus } from '@/lib/api/clientApi';
 import { Task } from '@/types/task';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteQueryObserverResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+
+// interface InfiniteQueryObserverResult {
+//   tasks: Task[];
+//   pages: GetTasksResponse[];
+//   pageParams: number[];
+// }
 
 interface TaskListProps {
   tasks: Task[];
+  getMoreTasks: () => Promise<InfiniteQueryObserverResult>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
 }
 
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({
+  tasks,
+  getMoreTasks,
+  hasNextPage,
+  isFetchingNextPage,
+}: TaskListProps) {
   const queryClient = useQueryClient();
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef<HTMLLIElement>(null);
 
   const { mutate } = useMutation({
     mutationFn: updateTaskStatus,
 
     onSuccess: () => {
       //   console.log('success');
-      queryClient.invalidateQueries({ queryKey: ['tasks', 1] });
+      queryClient.invalidateQueries({
+        queryKey: ['tasks'],
+      });
     },
   });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          getMoreTasks();
+        }
+      },
+      {
+        root: wrapperRef.current,
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [getMoreTasks, hasNextPage, isFetchingNextPage]);
 
   async function checkboxChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
@@ -36,7 +81,7 @@ export default function TaskList({ tasks }: TaskListProps) {
     });
   }
   return (
-    <div className={css.taskListWrapper}>
+    <div ref={wrapperRef} className={css.taskListWrapper}>
       <ul className={css.taskList}>
         {tasks.map(task => {
           return (
@@ -77,6 +122,8 @@ export default function TaskList({ tasks }: TaskListProps) {
             </li>
           );
         })}
+        {/* <button onClick={() => getMoreTasks()}> FETCH</button> */}
+        <li ref={loadMoreRef} aria-hidden={true}></li>
       </ul>
     </div>
   );

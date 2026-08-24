@@ -39,7 +39,7 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
     mutationFn: postTask,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks', 1] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 

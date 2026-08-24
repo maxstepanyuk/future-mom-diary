@@ -2,7 +2,11 @@
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './TasksReminderCard.module.css';
 import { useState } from 'react';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from '@tanstack/react-query';
 import { getTasks } from '@/lib/api/clientApi';
 import TaskList from './TaskList/TaskList';
 import { useRouter } from 'next/navigation';
@@ -13,23 +17,65 @@ export default function TaskReminderCard() {
   const isAuthenticated = useAuthStore(store => store.isAuthenticated);
   //   console.log(isAuthenticated);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [isModal, setIsModal] = useState(false);
 
-  const {
-    data: tasksData,
-    isError,
-    isSuccess,
-    isLoading,
-  } = useQuery({
-    queryKey: ['tasks', currentPage],
-    queryFn: () => {
-      return getTasks({ page: 1, perPage: 11, sortOrder: 'desc' });
-    },
-    enabled: isAuthenticated,
-    placeholderData: keepPreviousData,
-    // refetchOnMount: false,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['tasks'],
+      queryFn: async ({ pageParam }) => {
+        console.log('REQUEST:', pageParam);
+        const response = await getTasks({
+          page: pageParam,
+          perPage: 11,
+          sortOrder: 'asc',
+        });
+        console.log('RESPONSE:', {
+          page: response.page,
+          totalPages: response.totalPages,
+          ids: response.tasks.map(task => task._id),
+        });
+
+        return await getTasks({
+          page: pageParam,
+          perPage: 11,
+          sortOrder: 'asc',
+        });
+      },
+      initialPageParam: 1,
+      getNextPageParam: lastResponse => {
+        const nextPage = lastResponse.page + 1;
+        return nextPage <= lastResponse.totalPages ? nextPage : undefined;
+      },
+      enabled: isAuthenticated,
+      select: data => {
+        return {
+          ...data,
+          tasks: data.pages.flatMap(page => page.tasks),
+        };
+      },
+    });
+
+  const tasks = data?.tasks ?? [];
+
+  // console.log(data);
+  // console.log(tasks);
+  // console.log(data?.pageParams);
+
+  // const {
+  //   data: tasksData,
+  //   isError,
+  //   isSuccess,
+  //   isLoading,
+  // } = useQuery({
+  //   queryKey: ['tasks'],
+  //   queryFn: () => {
+  //     return getTasks({ page: 1, perPage: 11, sortOrder: 'desc' });
+  //   },
+  //   enabled: isAuthenticated,
+  //   placeholderData: keepPreviousData,
+  //   // refetchOnMount: false,
+  // });
 
   const router = useRouter();
 
@@ -51,8 +97,8 @@ export default function TaskReminderCard() {
           <AddTaskModal onClose={modalCloseHandler} />
         </Modal>
       )}
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Some Error...</p>}
+      {/* {isLoading && <p>Loading...</p>}
+      {isError && <p>Some Error...</p>} */}
       <div className={css.container}>
         <section className={css.section}>
           <div className={css.headingWrapper}>
@@ -74,8 +120,16 @@ export default function TaskReminderCard() {
 
           <div className={css.taskContentWrapper}>
             <div className={css.taskContent}>
-              {tasksData && tasksData.tasks.length > 0 ? (
-                <TaskList tasks={tasksData.tasks} />
+              {tasks && tasks.length > 0 ? (
+                <>
+                  <TaskList
+                    tasks={tasks}
+                    getMoreTasks={fetchNextPage}
+                    hasNextPage={hasNextPage}
+                    isFetchingNextPage={isFetchingNextPage}
+                  />
+                  {/* <button onClick={() => fetchNextPage()}> FETCH</button> */}
+                </>
               ) : (
                 <div className={css.taskDefaultContent}>
                   <div className={css.taskDefaultContentTextWrapper}>
