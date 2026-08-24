@@ -1,10 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import css from "./AddTaskModal.module.css";
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import * as Yup from "yup";
-import { postTask } from "@/lib/api/clientApi";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import css from './AddTaskModal.module.css';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
+import { postTask } from '@/lib/api/clientApi';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import toast from 'react-hot-toast';
 interface AddTaskModalProps {
   onClose: () => void;
 }
@@ -14,23 +15,23 @@ interface OrderFormValues {
 }
 
 const date = new Date();
-const defaultDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+const defaultDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 console.log(defaultDate);
 
 const initialValues: OrderFormValues = {
-  taskName: "",
+  taskName: '',
   taskDate: defaultDate,
 };
 
 const taskFormSchema = Yup.object().shape({
   taskName: Yup.string()
-    .min(1, "Назва натотки повинна мати щонайменше 1 символ")
-    .max(96, "Назва натотки повинна бути не більше 96 символів")
-    .required("Назва нотатки обов’язкова"),
+    .min(1, 'Назва натотки повинна мати щонайменше 1 символ')
+    .max(96, 'Назва натотки повинна бути не більше 96 символів')
+    .required('Назва нотатки обов’язкова'),
   taskDate: Yup.date()
-    .min(defaultDate, "Дата має бути більшою або рівною поточній")
-    .required("Дата обов’язкова"),
+    .min(defaultDate, 'Дата має бути більшою або рівною поточній')
+    .required('Дата обов’язкова'),
 });
 
 export default function AddTaskModal({ onClose }: AddTaskModalProps) {
@@ -40,21 +41,27 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
     mutationFn: postTask,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks", 1] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 
   function submitHandler(
     values: OrderFormValues,
-    actions: FormikHelpers<OrderFormValues>,
+    actions: FormikHelpers<OrderFormValues>
   ) {
+    console.log(values.taskDate);
     postTaskMutation.mutate(
       { name: values.taskName, date: values.taskDate },
       {
         onSuccess: () => {
           actions.resetForm();
+          toast.success('Завдання додано');
+          onClose();
         },
-      },
+        onError: () => {
+          toast.error('Помилка додавання завдання');
+        },
+      }
     );
     actions.resetForm();
   }
@@ -73,7 +80,7 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
       </button>
       <div className={css.contentWrapper}>
         <h2 className={css.contentHeading}>
-          Нове{" "}
+          Нове{' '}
           <span className={css.headingDivider}>
             <br />
           </span>
@@ -109,10 +116,17 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                 <div className={css.dateWrapper}>
                   <DatePicker
                     selected={
-                      values.taskDate ? new Date(values.taskDate) : null
+                      values.taskDate
+                        ? new Date(values.taskDate)
+                        : new Date(defaultDate)
                     }
                     onChange={(data: Date | null) =>
-                      setFieldValue("taskDate", data)
+                      setFieldValue(
+                        'taskDate',
+                        data
+                          ? `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, '0')}-${String(data.getDate()).padStart(2, '0')}`
+                          : defaultDate
+                      )
                     }
                     className={`${css.taskField} ${css.dataFile}`}
                     dateFormat="yyyy.MM.dd"
