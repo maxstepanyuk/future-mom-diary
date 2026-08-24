@@ -1,0 +1,51 @@
+'use client';
+
+import React from 'react';
+import Modal from '@/components/common/Modal/Modal';
+import Button from '@/components/common/Button/Button';
+import Icon from '@/components/common/Icon/Icon';
+import css from './ConfirmationModal.module.css';
+
+interface ConfirmationModalProps {
+  title: string;
+  confirmButtonText: string;
+  cancelButtonText: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+  title,
+  confirmButtonText,
+  cancelButtonText,
+  onConfirm,
+  onCancel,
+}) => {
+  return (
+    <Modal onClose={onCancel}>
+      <div className={css.content}>
+        <button
+          type="button"
+          className={css.closeButton}
+          onClick={onCancel}
+          aria-label="Закрити модальне вікно"
+        >
+          <Icon name="icon-close" size={20} />
+        </button>
+
+        <h2 className={css.title}>{title}</h2>
+
+        <div className={css.actions}>
+          <Button variant="cancel" onClick={onCancel} className={css.btnCancel}>
+            {cancelButtonText}
+          </Button>
+          <Button variant="confirm" onClick={onConfirm} className={css.btnConfirm}>
+            {confirmButtonText}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default ConfirmationModal;

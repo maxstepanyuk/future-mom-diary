@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
+<<<<<<< Updated upstream
 export default function ProfilePage() {
   return (
     <div className={css.container}>
@@ -20,3 +21,7 @@ export default function ProfilePage() {
     </div>
   );
 }
+=======
+export default Page;
+
+>>>>>>> Stashed changes

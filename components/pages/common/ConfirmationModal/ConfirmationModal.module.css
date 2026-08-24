@@ -1,0 +1,24 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 16px;
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-lato), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
