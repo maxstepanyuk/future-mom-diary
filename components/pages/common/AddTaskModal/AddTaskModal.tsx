@@ -53,6 +53,7 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
       {
         onSuccess: () => {
           actions.resetForm();
+          onClose();
         },
       }
     );

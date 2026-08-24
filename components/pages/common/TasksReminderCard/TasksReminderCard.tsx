@@ -12,6 +12,7 @@ import TaskList from './TaskList/TaskList';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/common/Modal/Modal';
 import AddTaskModal from '../AddTaskModal/AddTaskModal';
+import Loader from '@/components/common/Loader/Loader';
 
 export default function TaskReminderCard() {
   const isAuthenticated = useAuthStore(store => store.isAuthenticated);
@@ -20,41 +21,47 @@ export default function TaskReminderCard() {
   // const [currentPage, setCurrentPage] = useState(1);
   const [isModal, setIsModal] = useState(false);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['tasks'],
-      queryFn: async ({ pageParam }) => {
-        // console.log('REQUEST:', pageParam);
-        // const response = await getTasks({
-        //   page: pageParam,
-        //   perPage: 11,
-        //   sortOrder: 'asc',
-        // });
-        // console.log('RESPONSE:', {
-        //   page: response.page,
-        //   totalPages: response.totalPages,
-        //   ids: response.tasks.map(task => task._id),
-        // });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = useInfiniteQuery({
+    queryKey: ['tasks'],
+    queryFn: async ({ pageParam }) => {
+      // console.log('REQUEST:', pageParam);
+      // const response = await getTasks({
+      //   page: pageParam,
+      //   perPage: 11,
+      //   sortOrder: 'asc',
+      // });
+      // console.log('RESPONSE:', {
+      //   page: response.page,
+      //   totalPages: response.totalPages,
+      //   ids: response.tasks.map(task => task._id),
+      // });
 
-        return await getTasks({
-          page: pageParam,
-          perPage: 11,
-          sortOrder: 'desc',
-        });
-      },
-      initialPageParam: 1,
-      getNextPageParam: lastResponse => {
-        const nextPage = lastResponse.page + 1;
-        return nextPage <= lastResponse.totalPages ? nextPage : undefined;
-      },
-      enabled: isAuthenticated,
-      select: data => {
-        return {
-          ...data,
-          tasks: data.pages.flatMap(page => page.tasks),
-        };
-      },
-    });
+      return await getTasks({
+        page: pageParam,
+        perPage: 100,
+        sortOrder: 'desc',
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: lastResponse => {
+      const nextPage = lastResponse.page + 1;
+      return nextPage <= lastResponse.totalPages ? nextPage : undefined;
+    },
+    enabled: isAuthenticated,
+    select: data => {
+      return {
+        ...data,
+        tasks: data.pages.flatMap(page => page.tasks),
+      };
+    },
+  });
 
   const tasks = data?.tasks ?? [];
 
@@ -97,8 +104,7 @@ export default function TaskReminderCard() {
           <AddTaskModal onClose={modalCloseHandler} />
         </Modal>
       )}
-      {/* {isLoading && <p>Loading...</p>}
-      {isError && <p>Some Error...</p>} */}
+
       <div className={css.container}>
         <section className={css.section}>
           <div className={css.headingWrapper}>
@@ -117,7 +123,12 @@ export default function TaskReminderCard() {
               </svg>
             </button>
           </div>
-
+          {isError && <p>Some Error...</p>}
+          {isLoading && (
+            <div className={css.loaderWrapper}>
+              <Loader />
+            </div>
+          )}
           <div className={css.taskContentWrapper}>
             <div className={css.taskContent}>
               {tasks && tasks.length > 0 ? (
