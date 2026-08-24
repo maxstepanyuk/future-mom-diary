@@ -3,7 +3,8 @@ import css from './AddTaskModal.module.css';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { postTask } from '@/lib/api/clientApi';
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 interface AddTaskModalProps {
   onClose: () => void;
 }
@@ -84,39 +85,52 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
           onSubmit={submitHandler}
           validationSchema={taskFormSchema}
         >
-          <Form className={css.form}>
-            <label className={css.label}>
-              <legend className={css.labelTitle}>Нове завдання</legend>
-              <Field
-                type="text"
-                name="taskName"
-                className={css.taskField}
-                placeholder="Назва завдання"
-              />
+          {({ values, setFieldValue }) => (
+            <Form className={css.form}>
+              <label className={css.label}>
+                <legend className={css.labelTitle}>Нове завдання</legend>
+                <Field
+                  type="text"
+                  name="taskName"
+                  className={css.taskField}
+                  placeholder="Назва завдання"
+                />
 
-              <ErrorMessage
-                name="taskName"
-                component="span"
-                className={css.error}
-              />
-            </label>
+                <ErrorMessage
+                  name="taskName"
+                  component="span"
+                  className={css.error}
+                />
+              </label>
 
-            <label className={css.label}>
-              <legend className={css.labelTitle}>Дата</legend>
+              <label className={css.label}>
+                <legend className={css.labelTitle}>Дата</legend>
 
-              <Field type="date" name="taskDate" className={css.taskField} />
+                <div className={css.dateWrapper}>
+                  <DatePicker
+                    selected={
+                      values.taskDate ? new Date(values.taskDate) : null
+                    }
+                    onChange={(data: Date | null) =>
+                      setFieldValue('taskDate', data)
+                    }
+                    className={`${css.taskField} ${css.dataFile}`}
+                    dateFormat="yyyy.MM.dd"
+                    wrapperClassName={css.datePickerWrapper}
+                  />
+                  <ErrorMessage
+                    name="taskDate"
+                    component="span"
+                    className={css.error}
+                  />
+                </div>
+              </label>
 
-              <ErrorMessage
-                name="taskDate"
-                component="span"
-                className={css.error}
-              />
-            </label>
-
-            <button type="submit" className={css.submitButton}>
-              Зберегти
-            </button>
-          </Form>
+              <button type="submit" className={css.submitButton}>
+                Зберегти
+              </button>
+            </Form>
+          )}
         </Formik>
       </div>
     </section>

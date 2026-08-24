@@ -4,6 +4,9 @@ import Image from "next/image";
 import Icon from "@/components/common/Icon/Icon";
 import css from "./UserBar.module.css";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { logout } from "@/lib/api/clientApi";
 
 type UserBarProps = {
   name: string;
@@ -13,8 +16,18 @@ type UserBarProps = {
 
 export default function UserBar({ name, email, avatarUrl }: UserBarProps) {
   const { clearIsAuthenticated } = useAuthStore();
-  const handleLogout = () => {
-    clearIsAuthenticated();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearIsAuthenticated();
+      queryClient.clear();
+      router.push("/");
+    }
   };
 
   return (

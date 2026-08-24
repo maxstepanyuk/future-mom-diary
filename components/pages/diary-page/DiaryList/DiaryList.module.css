@@ -83,3 +83,35 @@
 .list > li {
   width: 100%;
 }
+
+/* (< 768px) */
+@media (max-width: 767px) {
+  .container {
+    width: 100%;
+    max-width: 335px;
+    height: auto;
+    padding: 32px 20px;
+    border-radius: 24px;
+    margin: 0 auto;
+  }
+
+  .list {
+    overflow-y: visible;
+  }
+}
+
+/* (768px – 1439px) */
+@media (min-width: 768px) and (max-width: 1439px) {
+  .container {
+    width: 100%;
+    max-width: 704px;
+    height: auto;
+    padding: 32px 20px;
+    border-radius: 24px;
+    margin: 0 auto;
+  }
+
+  .list {
+    overflow-y: visible;
+  }
+}

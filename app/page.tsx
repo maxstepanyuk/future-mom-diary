@@ -8,6 +8,14 @@ import Header from "@/components/layout/Header/Header";
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
 import GreetingBlock from "@/components/pages/common/GreetingBlock/GreetingBlock";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Мій день - Лелека",
+  openGraph: {
+    title: "Мій день - Лелека",
+  },
+};
 
 export default function DashboardPage() {
   return (
