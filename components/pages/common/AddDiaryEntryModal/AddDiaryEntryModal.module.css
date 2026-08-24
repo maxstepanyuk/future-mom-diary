@@ -91,7 +91,7 @@
 .textarea {
   box-sizing: border-box;
   width: 100%;
-
+  font-family: var(--font-lato), sans-serif;
   color: #000000;
   background-color: #f3f3f3;
 
@@ -117,7 +117,7 @@
 .input,
 .categories,
 .textarea {
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 
 .input::placeholder,
@@ -129,12 +129,14 @@
 .input:focus,
 .textarea:focus {
   border-color: #ffcbd3;
+  border-width: 2px;
   outline: none;
 }
 
 .invalid,
 .invalid:focus {
   border-color: #c60000;
+  border-width: 1px;
 }
 
 .error {
