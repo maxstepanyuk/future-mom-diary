@@ -8,6 +8,7 @@ import { getDiaryNotes } from '@/lib/api/clientApi';
 import { DiaryNote } from '@/types/diaryNote';
 import styles from './page.module.css';
 
+
 export default function DiaryDetailPage() {
   const params = useParams();
   const entryId = params.entryId as string;
