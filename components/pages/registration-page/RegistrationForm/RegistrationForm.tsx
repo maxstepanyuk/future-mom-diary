@@ -165,6 +165,7 @@ export default function RegistrationForm() {
         alt="Stork's family"
         width={720}
         height={900}
+        preload={true}
       />
     </div>
   );
