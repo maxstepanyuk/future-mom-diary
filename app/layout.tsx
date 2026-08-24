@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     url: process.env.NEXT_PUBLIC_API_URL,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_API_URL}/images/leleka.jpg`,
+        url: "https://future-mom-diary-mu.vercel.app/images/leleka.jpg",
         width: 720,
         height: 900,
         alt: 'Лелека логотип',
