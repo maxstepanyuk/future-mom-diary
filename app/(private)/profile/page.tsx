@@ -1,7 +1,5 @@
-import ProfilePage from '@/components/pages/profile-page/ProfilePage';
+import ProfilePage from "@/components/pages/profile-page/ProfilePage";
 
-const Page = () => {
+export default function Page() {
   return <ProfilePage />;
-};
-
-export default Page;
+}
