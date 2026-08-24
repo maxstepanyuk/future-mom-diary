@@ -1,15 +1,18 @@
-import ProfilePage from "@/components/pages/profile-page/ProfilePage";
-import { Metadata } from "next";
+import ProfileAvatar from "@/components/pages/profile-page/ProfileAvatar/ProfileAvatar";
+import ProfileEditForm from "@/components/pages/profile-page/ProfileEditForm/ProfileEditForm";
+import { Metadata } from "next"; 
+
+import css from "./ProfilePage.module.css"; 
 
 export const metadata: Metadata = {
-  title: "Профіль - Лелека",
-  openGraph: {
-    title: "Профіль - Лелека",
-  },
-};
+title: "Профіль - Лелека",
+openGraph: {
+title: "Профіль - Лелека",
+},
+}; 
 
-const Page = () => {
-  return <ProfilePage />;
-};
+export default function ProfilePage() {
+return ( 
 
-export default Page;
+);
+}
