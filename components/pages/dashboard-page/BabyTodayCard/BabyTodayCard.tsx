@@ -36,6 +36,7 @@ export default async function BabyTodayCard() {
               alt="plant"
               width={287}
               height={216}
+              preload={true}
             />
             <div className={css.textDescription}>
               <p className={css.text}>
