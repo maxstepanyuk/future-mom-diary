@@ -2,35 +2,28 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 100%;          
-  max-width: 335px;     
-  margin: 0 auto;      
+  width: 100%;
+  max-width: 335px;
+  margin: 0 auto;
 }
 
-/* планшет */
+/* планшет  */
 @media (min-width: 768px) {
   .container {
-    max-width: 704px;   
-}
+    max-width: 704px;
+  }
 }
 
-/* десктоп */
+/* десктоп  */
 @media (min-width: 1440px) {
   .container {
-    max-width: 1064px;   
+    max-width: 1128px;
   }
 }
 
-/* ТАБИ */
+/* ТАБИ малюк-мама */
 .content {
   padding: 16px 0;
-}
-
-/* планшет */
-@media (min-width: 768px) {
-  .content {
-    padding: 16px 0;
-  }
 }
 
 /* десктоп */
@@ -93,15 +86,31 @@
   margin-bottom: 24px;
 }
 
+@media (min-width: 768px) {
+  .block {
+    width: 100%;
+    max-width: 704px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .block {
+    width: 650px;
+    max-height: 322px;
+    overflow-y: auto;
+  }
+}
+
 .blockTitle {
   font-size: 18px;
   font-weight: 700;
-  color: var(--foreground);;
+  color: var(--foreground);
 }
 
 /* СТАНИ */
 .statesList {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   list-style: none;
   padding: 0;
@@ -117,13 +126,51 @@
   line-height: 1.6;
 }
 
+.momLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.momBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* десктоп — на два стовпці (блоки зліва, TasksReminderCard справа) */
+@media (min-width: 1440px) {
+  .momLayout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .momBlocks {
+    flex: 1;
+  }
+  .momSidebar {
+    flex-shrink: 0;
+    width: 390px;
+  }
+}
+
 /* ПОРАДИ */
 .tipsList {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-justify-content: flex-start;
+  justify-content: flex-start;
   gap: 8px;
+}
+
+.tipHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tipIcon {
+  width: 19px;
+  height: 21px;
 }
 
 .tipItem {
@@ -132,11 +179,10 @@ justify-content: flex-start;
   gap: 4px;
 }
 
-
 .tipCategory {
   font-size: 14px;
   font-weight: 700;
-   line-height: 1.6;
+  line-height: 1.6;
   color: var(--foreground);
 }
 
@@ -144,7 +190,8 @@ justify-content: flex-start;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
-  color:  var(--foreground);
+  color: var(--foreground);
+  padding-left: 27px;
 }
 
 .tabs {
@@ -202,4 +249,3 @@ justify-content: flex-start;
 .tabActive:focus {
   outline: none;
 }
-
