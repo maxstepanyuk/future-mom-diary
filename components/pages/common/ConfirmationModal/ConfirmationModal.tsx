@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Modal from "@/components/common/Modal/Modal";
 import Icon from "@/components/common/Icon/Icon";
 import css from "./ConfirmationModal.module.css";
@@ -13,13 +12,13 @@ interface ConfirmationModalProps {
   onCancel: () => void;
 }
 
-export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+export default function ConfirmationModal({
   title,
   confirmButtonText,
   cancelButtonText,
   onConfirm,
   onCancel,
-}) => {
+}: ConfirmationModalProps) {
   return (
     <Modal onClose={onCancel}>
       <div className={css.content}>
@@ -45,6 +44,4 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       </div>
     </Modal>
   );
-};
-
-export default ConfirmationModal;
+}
