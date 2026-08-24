@@ -49,6 +49,7 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
     values: OrderFormValues,
     actions: FormikHelpers<OrderFormValues>
   ) {
+    console.log(values.taskDate);
     postTaskMutation.mutate(
       { name: values.taskName, date: values.taskDate },
       {
@@ -58,7 +59,7 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
           onClose();
         },
         onError: () => {
-          toast.success('Помилка додавання завдання');
+          toast.error('Помилка додавання завдання');
         },
       }
     );
@@ -115,10 +116,17 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                 <div className={css.dateWrapper}>
                   <DatePicker
                     selected={
-                      values.taskDate ? new Date(values.taskDate) : null
+                      values.taskDate
+                        ? new Date(values.taskDate)
+                        : new Date(defaultDate)
                     }
                     onChange={(data: Date | null) =>
-                      setFieldValue('taskDate', data)
+                      setFieldValue(
+                        'taskDate',
+                        data
+                          ? `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, '0')}-${String(data.getDate()).padStart(2, '0')}`
+                          : defaultDate
+                      )
                     }
                     className={`${css.taskField} ${css.dataFile}`}
                     dateFormat="yyyy.MM.dd"
