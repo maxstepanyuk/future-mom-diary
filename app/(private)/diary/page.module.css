@@ -1,7 +1,6 @@
 .pageContainer {
   width: 100%;
   max-width: 375px;
-  margin-top: 32px;
   box-sizing: border-box;
 }
 
@@ -13,6 +12,9 @@
 }
 
 .listSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
 }
 
@@ -37,14 +39,14 @@
   margin-bottom: 16px;
 }
 
-/* Планшет*/
+/* Планшет */
 @media (min-width: 768px) and (max-width: 1439px) {
   .pageContainer {
     max-width: 768px;
   }
 }
 
-/* 1440px+*/
+/* Десктоп (1440px+) */
 @media (min-width: 1440px) {
   .pageContainer {
     max-width: 1440px;
@@ -60,4 +62,45 @@
   .detailsSection {
     display: block;
   }
+}
+.greeting {
+  padding: 0;
+  padding-top: 0px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-comfortaa);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-scheme-text, #000000);
+  margin: 0;
+}
+
+/* Мобільні пристрої (< 768px) */
+@media (max-width: 767px) {
+  .greeting {
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}
+
+/* Планшети (768px – 1439px) */
+@media (min-width: 768px) and (max-width: 1439px) {
+  .greeting {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}
+.layout {
+  padding-top: 32px;
 }
