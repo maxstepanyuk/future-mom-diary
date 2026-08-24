@@ -142,6 +142,7 @@ export default function LoginForm() {
         alt="Stork's eggs"
         width={720}
         height={900}
+        preload={true}
       />
     </div>
   );
