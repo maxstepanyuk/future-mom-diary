@@ -3,9 +3,9 @@ import { useAuthStore } from '@/lib/store/authStore';
 import css from './TasksReminderCard.module.css';
 import { useState } from 'react';
 import {
-  keepPreviousData,
+  // keepPreviousData,
   useInfiniteQuery,
-  useQuery,
+  // useQuery,
 } from '@tanstack/react-query';
 import { getTasks } from '@/lib/api/clientApi';
 import TaskList from './TaskList/TaskList';
@@ -24,22 +24,22 @@ export default function TaskReminderCard() {
     useInfiniteQuery({
       queryKey: ['tasks'],
       queryFn: async ({ pageParam }) => {
-        console.log('REQUEST:', pageParam);
-        const response = await getTasks({
-          page: pageParam,
-          perPage: 11,
-          sortOrder: 'asc',
-        });
-        console.log('RESPONSE:', {
-          page: response.page,
-          totalPages: response.totalPages,
-          ids: response.tasks.map(task => task._id),
-        });
+        // console.log('REQUEST:', pageParam);
+        // const response = await getTasks({
+        //   page: pageParam,
+        //   perPage: 11,
+        //   sortOrder: 'asc',
+        // });
+        // console.log('RESPONSE:', {
+        //   page: response.page,
+        //   totalPages: response.totalPages,
+        //   ids: response.tasks.map(task => task._id),
+        // });
 
         return await getTasks({
           page: pageParam,
           perPage: 11,
-          sortOrder: 'asc',
+          sortOrder: 'desc',
         });
       },
       initialPageParam: 1,
