@@ -87,7 +87,7 @@ export default function TaskList({
           return (
             <li key={task._id} className={css.taskItem}>
               <p className={css.taskDate}>
-                {task.date.slice(5).replaceAll('-', '.')}
+                {task.date.split('-').reverse().slice(0, 2).join('.')}
               </p>
 
               <label className={css.checkboxLabel}>
