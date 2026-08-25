@@ -160,7 +160,7 @@ export interface GetDiaryNotesParams {
 
 export async function getDiaryNotes({
   page = 1,
-  limit,
+  limit= 10,
   sortOrder,
 }: GetDiaryNotesParams = {}): Promise<GetDiaryNotesResponse> {
   const response = await nextApi.get<GetDiaryNotesResponse>('/diary', {

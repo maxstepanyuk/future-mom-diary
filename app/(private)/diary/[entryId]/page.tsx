@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
@@ -22,12 +22,16 @@ export default function DiaryDetailPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['diary'],
-    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+  const infiniteData = queryClient.getQueryData<{ pages: { diaryNotes: DiaryNote[] }[] }>(['diary']);
+  const cachedNotes: DiaryNote[] = infiniteData?.pages.flatMap((page) => page.diaryNotes) ?? [];
+
+  const { data: fallbackData, isLoading } = useQuery({
+    queryKey: ['diary-fallback'],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 100, sortOrder: 'asc' }),
+    enabled: cachedNotes.length === 0, 
   });
 
-  const notes: DiaryNote[] = data?.diaryNotes ?? [];
+  const notes: DiaryNote[] = cachedNotes.length > 0 ? cachedNotes : (fallbackData?.diaryNotes ?? []);
   const selectedNote = notes.find((n) => n._id === entryId) || null;
 
   const deleteMutation = useMutation({
@@ -43,11 +47,11 @@ export default function DiaryDetailPage() {
     },
   });
 
-  if (isLoading) {
+  if (isLoading && cachedNotes.length === 0) {
     return <div className={styles.loader}>Завантаження нотатки...</div>;
   }
 
-  if (error || !selectedNote) {
+  if (!selectedNote) {
     return (
       <div className={styles.errorContainer}>
         <p>Запис не знайдено</p>
