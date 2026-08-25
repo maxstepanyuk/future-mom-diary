@@ -54,22 +54,37 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
             {babyQuery.isError && <p>Не вдалося завантажити дані.</p>}
             {babyQuery.data && (
               <div className={css.babyContent}>
-                {babyQuery.data.image && (
-                  <Image
-                    src={babyQuery.data.image}
-                    alt="Розвиток малюка"
-                    width={300}
-                    height={300}
-                    className={css.image}
-                  />
-                )}
-                <p className={css.analogy}>{babyQuery.data.analogy}</p>
-                {babyQuery.data.description.map((text, index) => (
-                  <p key={index} className={css.text}>
-                    {text}
-                  </p>
-                ))}
-                <p className={css.fact}>{babyQuery.data.interestingFact}</p>
+                <div className={css.babyLeft}>
+                  {babyQuery.data.image && (
+                    <Image
+                      src={babyQuery.data.image}
+                      alt="Розвиток малюка"
+                      width={656}
+                      height={379}
+                      className={css.image}
+                    />
+                  )}
+                  <p className={css.analogy}>{babyQuery.data.analogy}</p>
+                </div>
+                <div className={css.babyRight}>
+                  {babyQuery.data.description.map((text, index) => (
+                    <p key={index} className={css.text}>
+                      {text}
+                    </p>
+                  ))}
+
+                  <div className={css.fact}>
+                    <div className={css.factHeader}>
+                      <svg className={css.factIcon} aria-hidden="true">
+                        <use href="/sprite.svg#icon-star_shine" />
+                      </svg>
+                      <h4 className={css.factTitle}>Цікавий факт тижня</h4>
+                    </div>
+                    <p className={css.factText}>
+                      {babyQuery.data.interestingFact}
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
           </>

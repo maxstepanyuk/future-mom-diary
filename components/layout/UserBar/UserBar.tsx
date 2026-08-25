@@ -18,7 +18,7 @@ type UserBarProps = {
 
 export default function UserBar({ name, email, avatarUrl }: UserBarProps) {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const { clearIsAuthenticated } = useAuthStore();
+  const clearIsAuthenticated = useAuthStore((store) => store.clearIsAuthenticated);
   const router = useRouter();
   const queryClient = useQueryClient();
   const handleConfirmLogout = async () => {

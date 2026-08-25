@@ -6,6 +6,7 @@ import { postTask } from '@/lib/api/clientApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
+import clsx from 'clsx';
 interface AddTaskModalProps {
   onClose: () => void;
 }
@@ -16,8 +17,6 @@ interface OrderFormValues {
 
 const date = new Date();
 const defaultDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-
-console.log(defaultDate);
 
 const initialValues: OrderFormValues = {
   taskName: '',
@@ -63,7 +62,6 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
         },
       }
     );
-    actions.resetForm();
   }
 
   return (
@@ -92,15 +90,21 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
           onSubmit={submitHandler}
           validationSchema={taskFormSchema}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, errors, touched, setFieldTouched }) => (
             <Form className={css.form}>
-              <label className={css.label}>
-                <legend className={css.labelTitle}>Нове завдання</legend>
+              <div className={css.fieldWrapper}>
+                <label className={css.label} htmlFor="taskName">
+                  Нове завдання
+                </label>
                 <Field
+                  id={'taskName'}
                   type="text"
                   name="taskName"
-                  className={css.taskField}
-                  placeholder="Назва завдання"
+                  className={clsx(
+                    css.taskField,
+                    touched.taskName && errors.taskName && css.fieldError
+                  )}
+                  placeholder="Додайте назву завдання"
                 />
 
                 <ErrorMessage
@@ -108,39 +112,57 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                   component="span"
                   className={css.error}
                 />
-              </label>
+              </div>
 
-              <label className={css.label}>
-                <legend className={css.labelTitle}>Дата</legend>
-
+              <div className={css.fieldWrapper}>
+                <label htmlFor="taskModalDatepicker" className={css.label}>
+                  Дата
+                </label>
                 <div className={css.dateWrapper}>
                   <DatePicker
+                    id="taskModalDatepicker"
                     selected={
                       values.taskDate
                         ? new Date(values.taskDate)
                         : new Date(defaultDate)
                     }
-                    onChange={(data: Date | null) =>
-                      setFieldValue(
+                    onChange={async (data: Date | null) => {
+                      await setFieldValue(
                         'taskDate',
                         data
                           ? `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, '0')}-${String(data.getDate()).padStart(2, '0')}`
                           : defaultDate
-                      )
-                    }
-                    className={`${css.taskField} ${css.dataFile}`}
-                    dateFormat="yyyy.MM.dd"
+                      );
+                      await setFieldTouched('taskDate', true);
+                    }}
+                    className={clsx(
+                      css.taskField,
+                      touched.taskDate && errors.taskDate && css.fieldError
+                    )}
+                    dateFormat="dd.MM.yyyy"
                     wrapperClassName={css.datePickerWrapper}
-                  />
-                  <ErrorMessage
-                    name="taskDate"
-                    component="span"
-                    className={css.error}
+                    minDate={date}
                   />
                 </div>
-              </label>
+                <ErrorMessage
+                  name="taskDate"
+                  component="span"
+                  className={css.error}
+                />
+              </div>
 
-              <button type="submit" className={css.submitButton}>
+              <button
+                disabled={Boolean(errors.taskDate || errors.taskName)}
+                type="submit"
+                className={css.submitButton}
+
+                // className={clsx(
+                //   css.submitButton,
+                //   ((touched.taskName && errors.taskName) ||
+                //     (touched.taskDate && errors.taskDate && css.fieldError)) &&
+                //     css.submitButtonDisabled
+                // )}
+              >
                 Зберегти
               </button>
             </Form>

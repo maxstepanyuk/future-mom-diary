@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { DiaryNote } from '@/types/diaryNote';
 import { DiaryEntryCard } from '../DiaryEntryCard/DiaryEntryCard';
 import styles from './DiaryList.module.css';
@@ -9,6 +11,9 @@ interface DiaryListProps {
   selectedNoteId?: string;
   onSelectNote: (note: DiaryNote) => void;
   onOpenAddModal?: () => void;
+  onLoadMore?: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
 }
 
 export const DiaryList = ({
@@ -16,7 +21,46 @@ export const DiaryList = ({
   selectedNoteId,
   onSelectNote,
   onOpenAddModal,
+  onLoadMore,
+  hasNextPage,
+  isFetchingNextPage,
 }: DiaryListProps) => {
+  const [scrollRoot, setScrollRoot] = useState<HTMLUListElement | null>(null);
+  const isLockedRef = useRef(false);
+
+  const setListRef = useCallback((node: HTMLUListElement | null) => {
+    if (node !== null) {
+      if (window.innerWidth >= 1440) {
+        setScrollRoot(node);
+      } else {
+        setScrollRoot(null);
+      }
+    }
+  }, []);
+
+  const { ref: triggerRef, inView } = useInView({
+    root: scrollRoot, 
+    rootMargin: '100px', 
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    if (
+      inView &&
+      hasNextPage &&
+      !isFetchingNextPage &&
+      !isLockedRef.current &&
+      onLoadMore
+    ) {
+      isLockedRef.current = true;
+      onLoadMore();
+
+      setTimeout(() => {
+        isLockedRef.current = false;
+      }, 800);
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, onLoadMore]);
+
   return (
     <section className={styles.container} aria-label="Список записів">
       <header className={styles.title}>
@@ -37,13 +81,12 @@ export const DiaryList = ({
         </div>
       </header>
 
-      {}
       {notes.length === 0 ? (
         <p className={styles.emptyText}>Наразі записи у щоденнику відсутні</p>
       ) : (
-        <ul className={styles.list}>
-          {notes.map((note) => (
-            <li key={note._id}>
+        <ul ref={setListRef} className={styles.list}>
+          {notes.map((note, index) => (
+            <li key={`${note._id}-${index}`}>
               <DiaryEntryCard
                 note={note}
                 isSelected={note._id === selectedNoteId}
@@ -51,6 +94,12 @@ export const DiaryList = ({
               />
             </li>
           ))}
+
+          <li ref={triggerRef} className={styles.triggerItem}>
+            {isFetchingNextPage && (
+              <p className={styles.loadingText}>Завантаження ще 10 записів...</p>
+            )}
+          </li>
         </ul>
       )}
     </section>

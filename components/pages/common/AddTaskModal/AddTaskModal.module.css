@@ -5,10 +5,11 @@
   position: relative;
 
   @media only screen and (min-width: 768px) {
-    width: 768px;
+    width: 704px;
   }
 
   @media only screen and (min-width: 1440px) {
+    width: 768px;
   }
 }
 
@@ -34,6 +35,13 @@
   fill: black;
   stroke: black;
 }
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
+}
+
 .contentHeading {
   align-self: center;
   font-weight: 700;
@@ -42,6 +50,7 @@
   letter-spacing: 0.01em;
   text-align: center;
   color: #000;
+
   @media only screen and (min-width: 1440px) {
     font-size: 48px;
     line-height: 58px;
@@ -54,25 +63,19 @@
   }
 }
 
-.contentWrapper {
-  display: flex;
-  flex-direction: column;
-  row-gap: 48px;
-}
-
 .form {
   display: flex;
   flex-direction: column;
   row-gap: 24px;
 }
 
-.label {
+.fieldWrapper {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
 }
 
-.labelTitle {
+.label {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
@@ -93,8 +96,43 @@
   border-radius: 12px;
   padding: 8px 12px;
   height: 37px;
+  width: 100%;
+  cursor: pointer;
 
   background: rgba(0, 0, 0, 0.05);
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+
+  @media only screen and (min-width: 1440px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.taskField:focus {
+  border-color: #ffcbd3;
+  outline: none;
+}
+
+.fieldError {
+  color: #c60000;
+  border: 2px solid #c60000;
+}
+
+.fieldError::placeholder {
+  color: #c60000;
+}
+
+.dateWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.datePickerWrapper {
+  display: block;
+  width: 100%;
 }
 
 .error {
@@ -125,22 +163,16 @@
   color: #000;
 }
 
-.taskField {
-  width: 100%;
-  padding-right: 40px;
-  box-sizing: border-box;
-  cursor: pointer;
+.submitButton:disabled {
+  opacity: 0.3;
 }
 
-.taskField:focus {
-  border-color: #ffcbd3;
-  outline: none;
+.submitButton:not(:disabled):hover,
+.submitButton:not(:disabled):focus {
+  background: #fff;
 }
-.datePickerWrapper {
-  display: block;
-  width: 100%;
-}
-.dateWrapper {
-  position: relative;
-  width: 100%;
+
+.submitButton:not(:disabled):active {
+  background: #b2b2b2;
+  border-bottom: none;
 }

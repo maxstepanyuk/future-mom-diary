@@ -1,6 +1,22 @@
-/*!Макс,глянь чи ці падінги потрібні,без них вроді краще+як в макеті  */
 .greeting {
-  padding: 16px 0 0 12px;
+  padding: 0px 0 0 12px;
+  width: 100%;
+  max-width: 335px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .greeting {
+    max-width: 704px;
+    padding: 0px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .greeting {
+    max-width: none;
+    /* padding-left: 32px;  або який треба? */
+  }
 }
 
 .title {

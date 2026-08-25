@@ -6,43 +6,34 @@ import clsx from 'clsx';
 import { updateTaskStatus } from '@/lib/api/clientApi';
 import { Task } from '@/types/task';
 import {
-  InfiniteQueryObserverResult,
+  // InfiniteQueryObserverResult,
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
-import Loader from '@/components/common/Loader/Loader';
 
-// interface InfiniteQueryObserverResult {
-//   tasks: Task[];
-//   pages: GetTasksResponse[];
-//   pageParams: number[];
-// }
+// import { useEffect, useRef } from 'react';
+// import Loader from '@/components/common/Loader/Loader';
 
 interface TaskListProps {
   tasks: Task[];
-  getMoreTasks: () => Promise<InfiniteQueryObserverResult>;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
+  // getMoreTasks: () => Promise<InfiniteQueryObserverResult>;
+  // hasNextPage: boolean;
+  // isFetchingNextPage: boolean;
 }
 
 export default function TaskList({
   tasks,
-  getMoreTasks,
-  hasNextPage,
-  isFetchingNextPage,
+  // getMoreTasks,
+  // hasNextPage,
+  // isFetchingNextPage,
 }: TaskListProps) {
   const queryClient = useQueryClient();
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const loadMoreRef = useRef<HTMLLIElement>(null);
 
   const { mutate } = useMutation({
     mutationFn: updateTaskStatus,
 
     onSuccess: () => {
-      //   console.log('success');
       queryClient.invalidateQueries({
         queryKey: ['tasks'],
       });
@@ -52,48 +43,51 @@ export default function TaskList({
       toast.error('Помилка оновлення статусу завдання');
     },
   });
+  //! ================================= infinite PAgination ===========================================
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          getMoreTasks();
-        }
-      },
-      {
-        root: wrapperRef.current,
-      }
-    );
+  // const wrapperRef = useRef<HTMLDivElement>(null);
+  // const loadMoreRef = useRef<HTMLLIElement>(null);
 
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+  //         getMoreTasks();
+  //       }
+  //     },
+  //     {
+  //       root: wrapperRef.current,
+  //     }
+  //   );
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [getMoreTasks, hasNextPage, isFetchingNextPage]);
+  //   if (loadMoreRef.current) {
+  //     observer.observe(loadMoreRef.current);
+  //   }
+
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, [getMoreTasks, hasNextPage, isFetchingNextPage]);
+
+  //! ================================= infinite PAgination ===========================================
 
   async function checkboxChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    // console.log(event.target);
-    // console.log(event.target.name);
-    // console.log(event.target.checked);
-
     mutate({
       taskId: event.target.name,
       isDone: event.target.checked,
     });
   }
   return (
-    <div ref={wrapperRef} className={css.taskListWrapper}>
+    // <div ref={wrapperRef} className={css.taskListWrapper}>
+    <div className={css.taskListWrapper}>
       <ul className={css.taskList}>
         {tasks.map(task => {
           return (
             <li key={task._id} className={css.taskItem}>
               <p className={css.taskDate}>
-                {task.date.slice(5).replaceAll('-', '.')}
+                {task.date.split('-').reverse().slice(0, 2).join('.')}
               </p>
 
               <label className={css.checkboxLabel}>
@@ -102,7 +96,6 @@ export default function TaskList({
                     className={css.checkbox}
                     type="checkbox"
                     name={task._id}
-                    //   value={`${task.isDone}`}
                     onChange={checkboxChangeHandler}
                     checked={task.isDone}
                   />
@@ -128,13 +121,7 @@ export default function TaskList({
             </li>
           );
         })}
-        {/* <button onClick={() => getMoreTasks()}> FETCH</button> */}
-        {isFetchingNextPage && (
-          <div className={css.loaderWrapper}>
-            <Loader />
-          </div>
-        )}
-        <li ref={loadMoreRef} aria-hidden={true}></li>
+        {/* <li ref={loadMoreRef} aria-hidden={true}></li> */}
       </ul>
     </div>
   );

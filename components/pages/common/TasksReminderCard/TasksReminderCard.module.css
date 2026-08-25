@@ -47,6 +47,18 @@
   align-items: center;
 }
 
+.heading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+
+  @media only screen and (min-width: 1440px) {
+    font-size: 24px;
+    line-height: 34px;
+  }
+}
+
 .addButton {
   display: flex;
   justify-content: center;
@@ -101,4 +113,14 @@
   font-size: 14px;
   line-height: 22px;
   color: #000;
+}
+
+.addButtonDefault:hover,
+.addButtonDefault:focus {
+  background: #fff;
+}
+
+.addButtonDefault:active {
+  background: #b2b2b2;
+  border-bottom: none;
 }

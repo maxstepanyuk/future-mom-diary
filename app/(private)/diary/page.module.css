@@ -1,21 +1,27 @@
 .pageContainer {
   width: 100%;
   max-width: 375px;
+  margin: 0 auto;
   box-sizing: border-box;
+  padding: 0 16px;
 }
 
 .layout {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  padding-top: 32px;
   width: 100%;
 }
 
 .listSection {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
   width: 100%;
+  max-width: 100%;
 }
 
 .detailsSection {
@@ -39,30 +45,6 @@
   margin-bottom: 16px;
 }
 
-/* Планшет */
-@media (min-width: 768px) and (max-width: 1439px) {
-  .pageContainer {
-    max-width: 768px;
-  }
-}
-
-/* Десктоп (1440px+) */
-@media (min-width: 1440px) {
-  .pageContainer {
-    max-width: 1440px;
-  }
-
-  .layout {
-    display: grid;
-    grid-template-columns: 389px 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-
-  .detailsSection {
-    display: block;
-  }
-}
 .greeting {
   padding: 0;
   padding-top: 0px;
@@ -91,8 +73,12 @@
   }
 }
 
-/* Планшети (768px – 1439px) */
+/* Планшет (768px – 1439px) */
 @media (min-width: 768px) and (max-width: 1439px) {
+  .pageContainer {
+    max-width: 768px;
+  }
+
   .greeting {
     margin-bottom: 20px;
   }
@@ -101,6 +87,22 @@
     font-size: 24px;
   }
 }
-.layout {
-  padding-top: 32px;
+
+/* Десктоп (1440px+) */
+@media (min-width: 1440px) {
+  .pageContainer {
+    max-width: 1440px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    align-items: start;
+    gap: 32px;
+  }
+
+  .detailsSection {
+    display: block;
+  }
 }

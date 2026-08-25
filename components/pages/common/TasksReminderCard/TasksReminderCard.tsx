@@ -4,8 +4,8 @@ import css from './TasksReminderCard.module.css';
 import { useState } from 'react';
 import {
   // keepPreviousData,
-  useInfiniteQuery,
-  // useQuery,
+  // useInfiniteQuery,
+  useQuery,
 } from '@tanstack/react-query';
 import { getTasks } from '@/lib/api/clientApi';
 import TaskList from './TaskList/TaskList';
@@ -17,79 +17,61 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function TaskReminderCard() {
   const isAuthenticated = useAuthStore(store => store.isAuthenticated);
-  //   console.log(isAuthenticated);
 
-  // const [currentPage, setCurrentPage] = useState(1);
   const [isModal, setIsModal] = useState(false);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
-    isFetched,
-  } = useInfiniteQuery({
-    queryKey: ['tasks'],
-    queryFn: async ({ pageParam }) => {
-      // console.log('REQUEST:', pageParam);
-      // const response = await getTasks({
-      //   page: pageParam,
-      //   perPage: 11,
-      //   sortOrder: 'asc',
-      // });
-      // console.log('RESPONSE:', {
-      //   page: response.page,
-      //   totalPages: response.totalPages,
-      //   ids: response.tasks.map(task => task._id),
-      // });
-
-      return await getTasks({
-        page: pageParam,
-        // Рендерю максимальное число, так как прилетают дублю
-        perPage: 11,
-        sortOrder: 'desc',
-      });
-    },
-    initialPageParam: 1,
-    getNextPageParam: lastResponse => {
-      const nextPage = lastResponse.page + 1;
-      return nextPage <= lastResponse.totalPages ? nextPage : undefined;
-    },
-    enabled: isAuthenticated,
-    select: data => {
-      return {
-        ...data,
-        tasks: data.pages.flatMap(page => page.tasks),
-      };
-    },
-  });
-
-  const tasks = data?.tasks ?? [];
-
-  const router = useRouter();
-
-  // console.log(data);
-  // console.log(tasks);
-  // console.log(data?.pageParams);
+  //! Закоментил бесконечную пагинацию, так как не понятно как работает бэкэнд
+  //! ////////////////////////////////////////////////// Infinite Pagination
 
   // const {
-  //   data: tasksData,
-  //   isError,
-  //   isSuccess,
+  //   data,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetchingNextPage,
   //   isLoading,
-  // } = useQuery({
+  //   isError,
+  //   isFetched,
+  // } = useInfiniteQuery({
   //   queryKey: ['tasks'],
-  //   queryFn: () => {
-  //     return getTasks({ page: 1, perPage: 11, sortOrder: 'desc' });
+  //   queryFn: async ({ pageParam }) => {
+  //     return await getTasks({
+  //       page: pageParam,
+
+  //       perPage: 11,
+  //       sortOrder: 'desc',
+  //     });
+  //   },
+  //   initialPageParam: 1,
+  //   getNextPageParam: lastResponse => {
+  //     const nextPage = lastResponse.page + 1;
+  //     return nextPage <= lastResponse.totalPages ? nextPage : undefined;
   //   },
   //   enabled: isAuthenticated,
-  //   placeholderData: keepPreviousData,
-  //   // refetchOnMount: false,
+  //   select: data => {
+  //     return {
+  //       ...data,
+  //       tasks: data.pages.flatMap(page => page.tasks),
+  //     };
+  //   },
   // });
 
-  // const notify = () => toast.error('Here is your toast.');
+  // const tasks = data?.tasks ?? [];
+
+  //! ////////////////////////////////////////////////// Infinite Pagination
+
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ['tasks'],
+    queryFn: () => {
+      return getTasks({ page: 1, perPage: 100, sortOrder: 'desc' });
+    },
+    enabled: isAuthenticated,
+    // placeholderData: keepPreviousData,
+    // refetchOnMount: false,
+  });
+
+  const tasks = data?.tasks;
+
+  const router = useRouter();
 
   if (isError) {
     toast.error('Помилка завантаження завданнь');
@@ -97,7 +79,7 @@ export default function TaskReminderCard() {
 
   function addbuttonClickHandler() {
     if (!isAuthenticated) {
-      router.push('/auth/login');
+      router.push('/auth/register');
     }
     setIsModal(true);
   }
@@ -134,7 +116,6 @@ export default function TaskReminderCard() {
             </button>
           </div>
 
-          {/* {isError && <p>Some Error...</p>} */}
           {isLoading && (
             <div className={css.loaderWrapper}>
               <Loader />
@@ -147,17 +128,16 @@ export default function TaskReminderCard() {
                   Помилка завантаження завдань...
                 </p>
               )}
-              {!isLoading && isFetched && !isError && (
+              {!isLoading && !isError && (
                 <>
                   {tasks && tasks.length > 0 ? (
                     <>
                       <TaskList
                         tasks={tasks}
-                        getMoreTasks={fetchNextPage}
-                        hasNextPage={hasNextPage}
-                        isFetchingNextPage={isFetchingNextPage}
+                        // getMoreTasks={fetchNextPage}
+                        // hasNextPage={hasNextPage}
+                        // isFetchingNextPage={isFetchingNextPage}
                       />
-                      {/* <button onClick={() => fetchNextPage()}> FETCH</button> */}
                     </>
                   ) : (
                     <div className={css.taskDefaultContent}>
