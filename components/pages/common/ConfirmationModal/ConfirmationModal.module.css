@@ -1,3 +1,7 @@
+/* ==========================================
+   Мобільні стилі та стани кнопок
+   ========================================== */
+
 .content {
   position: relative;
   display: flex;
@@ -15,7 +19,6 @@
   border-radius: 40px;
 }
 
-/* Кнопка закриття (хрестик) */
 .closeButton {
   position: absolute;
   top: 20px;
@@ -39,7 +42,6 @@
   opacity: 0.7;
 }
 
-/* Заголовок модалки */
 .title {
   margin: 0;
 
@@ -52,7 +54,6 @@
   color: #000000;
 }
 
-/* Блок для кнопок */
 .actions {
   display: flex;
   flex-direction: column;
@@ -61,7 +62,6 @@
   align-items: center;
 }
 
-/* Загальні стилі для кнопок дій */
 .btnCancel,
 .btnConfirm {
   display: flex;
@@ -78,31 +78,138 @@
   font-weight: 700;
   font-size: 16px;
   text-align: center;
+  color: #000000;
 
   border-radius: 100px;
   cursor: pointer;
+
   transition:
-    transform 0.1s ease,
-    opacity 0.2s ease;
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.1s ease;
 }
 
-.btnCancel:active,
-.btnConfirm:active {
-  transform: scale(0.98);
-}
-
-/* Кнопка "Ні" (скасування) */
+/* --- Кнопка "Ні" (btnCancel) --- */
 .btnCancel {
   background: #ffdae0;
   border: none;
   border-bottom: 4px solid #ffcbd3;
-  color: #000000;
 }
 
-/* Кнопка "Так" (підтвердження) */
+.btnCancel:hover,
+.btnCancel:focus-visible {
+  background: #fff4f6;
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.btnCancel:active {
+  background: #ffcbd3;
+  border-bottom: none;
+  transform: scale(0.98);
+}
+
+.btnCancel:disabled {
+  background: #ffdae0;
+  border-bottom: 4px solid #ffcbd3;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* --- Кнопка "Так" (btnConfirm) --- */
 .btnConfirm {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   border-bottom: 4px solid rgba(0, 0, 0, 0.15);
-  color: #000000;
+}
+
+.btnConfirm:hover,
+.btnConfirm:focus-visible {
+  background: #ffffff;
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.btnConfirm:active {
+  background: #b2b2b2;
+  border-bottom: none;
+  transform: scale(0.98);
+}
+
+.btnConfirm:disabled {
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   2. Планшетні стилі (Tablet: від 768px)
+   ========================================== */
+
+@media screen and (min-width: 768px) {
+  .content {
+    max-width: 704px;
+    min-height: 261px;
+    padding: 64px 32px;
+  }
+
+  .closeButton {
+    top: 24px;
+    right: 24px;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .btnCancel,
+  .btnConfirm {
+    flex: 1;
+    max-width: none;
+  }
+}
+
+/* ==========================================
+   Десктопні стилі (Desktop: від 1440px)
+   ========================================== */
+
+@media screen and (min-width: 1440px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    max-width: 768px;
+    min-height: 338px;
+    padding: 64px;
+    gap: 64px;
+  }
+
+  .title {
+    width: 100%;
+    max-width: 440px;
+    min-height: auto;
+    margin: 0;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .btnCancel,
+  .btnConfirm {
+    width: 268px;
+    height: 46px;
+    flex: none;
+  }
 }
