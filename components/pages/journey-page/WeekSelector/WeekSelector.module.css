@@ -3,6 +3,7 @@
   gap: 16px;
   overflow-x: auto;
   padding: 8px 0;
+  width: 100%;
 
   /* сховати скрол: */
   scrollbar-width: none;

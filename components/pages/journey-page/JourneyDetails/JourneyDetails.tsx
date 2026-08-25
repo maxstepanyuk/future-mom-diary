@@ -69,7 +69,18 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                     {text}
                   </p>
                 ))}
-                <p className={css.fact}>{babyQuery.data.interestingFact}</p>
+
+                <div className={css.fact}>
+                  <div className={css.factHeader}>
+                    <svg className={css.factIcon} aria-hidden="true">
+                      <use href="/sprite.svg#icon-star_shine" />
+                    </svg>
+                    <h4 className={css.factTitle}>Цікавий факт тижня</h4>
+                  </div>
+                  <p className={css.factText}>
+                    {babyQuery.data.interestingFact}
+                  </p>
+                </div>
               </div>
             )}
           </>

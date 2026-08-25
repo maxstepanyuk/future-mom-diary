@@ -1,18 +1,6 @@
 .page {
-  max-width: 335px;
-  margin: 0 auto;
   width: 100%;
-}
-
-@media (min-width: 768px) {
-  .page {
-    max-width: 704px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .page {
-    max-width: none;
-    padding: 0 32px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
