@@ -1,5 +1,5 @@
 /* ==========================================
-   Мобільні стилі та стани кнопок
+   1. Мобільні стилі та стани кнопок (до 767px)
    ========================================== */
 
 .content {
@@ -62,6 +62,7 @@
   align-items: center;
 }
 
+/* Спільні базові стилі для кнопок */
 .btnCancel,
 .btnConfirm {
   display: flex;
@@ -80,66 +81,67 @@
   text-align: center;
   color: #000000;
 
+  border: 0;
+  border-style: solid;
+  border-width: 0 0 4px 0;
   border-radius: 100px;
   cursor: pointer;
 
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    opacity 0.25s ease,
+  transition: 
+    background-color 0.2s ease, 
+    border-color 0.2s ease, 
+    opacity 0.2s ease, 
     transform 0.1s ease;
 }
 
-/* --- Кнопка "Ні" (btnCancel) --- */
+/* --- Кнопка "Ні" (btnCancel - Рожева) --- */
 .btnCancel {
-  background: #ffdae0;
-  border: none;
-  border-bottom: 4px solid #ffcbd3;
+  background-color: #ffdae0;
+  border-bottom-color: #ffcbd3;
 }
 
 .btnCancel:hover,
 .btnCancel:focus-visible {
-  background: #fff4f6;
+  background-color: #ffffff;
   border-bottom-color: rgba(0, 0, 0, 0.15);
   outline: none;
 }
 
 .btnCancel:active {
-  background: #ffcbd3;
-  border-bottom: none;
-  transform: scale(0.98);
+  background-color: #b2b2b2;
+  border-bottom-color: transparent;
+  transform: translateY(2px);
 }
 
 .btnCancel:disabled {
-  background: #ffdae0;
-  border-bottom: 4px solid #ffcbd3;
+  background-color: #ffdae0;
+  border-bottom-color: #ffcbd3;
   opacity: 0.3;
   cursor: not-allowed;
 }
 
-/* --- Кнопка "Так" (btnConfirm) --- */
+/* --- Кнопка "Так" (btnConfirm - Сіра) --- */
 .btnConfirm {
-  background: rgba(0, 0, 0, 0.05);
-  border: none;
-  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
 }
 
 .btnConfirm:hover,
 .btnConfirm:focus-visible {
-  background: #ffffff;
+  background-color: #fff4f6;
   border-bottom-color: rgba(0, 0, 0, 0.15);
   outline: none;
 }
 
 .btnConfirm:active {
-  background: #b2b2b2;
-  border-bottom: none;
-  transform: scale(0.98);
+  background-color: #b2b2b2;
+  border-bottom-color: transparent;
+  transform: translateY(2px);
 }
 
 .btnConfirm:disabled {
-  background: rgba(0, 0, 0, 0.05);
-  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
   opacity: 0.3;
   cursor: not-allowed;
 }
@@ -160,6 +162,10 @@
     right: 24px;
   }
 
+  .title {
+    max-width: 440px;
+  }
+
   .actions {
     flex-direction: row;
     justify-content: center;
@@ -176,15 +182,11 @@
 }
 
 /* ==========================================
-   Десктопні стилі (Desktop: від 1440px)
+   3. Десктопні стилі (Desktop: від 1440px)
    ========================================== */
 
 @media screen and (min-width: 1440px) {
   .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
     max-width: 768px;
     min-height: 338px;
     padding: 64px;
@@ -192,10 +194,7 @@
   }
 
   .title {
-    width: 100%;
     max-width: 440px;
-    min-height: auto;
-    margin: 0;
   }
 
   .actions {
