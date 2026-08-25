@@ -48,7 +48,7 @@ export default function TaskReminderCard() {
       return await getTasks({
         page: pageParam,
         // Рендерю максимальное число, так как прилетают дублю
-        perPage: 11,
+        perPage: 100,
         sortOrder: 'desc',
       });
     },
