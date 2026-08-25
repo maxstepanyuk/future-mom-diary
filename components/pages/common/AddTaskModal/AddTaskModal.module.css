@@ -34,6 +34,13 @@
   fill: black;
   stroke: black;
 }
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
+}
+
 .contentHeading {
   align-self: center;
   font-weight: 700;
@@ -54,25 +61,19 @@
   }
 }
 
-.contentWrapper {
-  display: flex;
-  flex-direction: column;
-  row-gap: 48px;
-}
-
 .form {
   display: flex;
   flex-direction: column;
   row-gap: 24px;
 }
 
-.label {
+.fieldWrapper {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
 }
 
-.labelTitle {
+.label {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
@@ -93,8 +94,34 @@
   border-radius: 12px;
   padding: 8px 12px;
   height: 37px;
+  width: 100%;
+  cursor: pointer;
 
   background: rgba(0, 0, 0, 0.05);
+}
+
+.taskField:focus {
+  border-color: #ffcbd3;
+  outline: none;
+}
+
+.fieldError {
+  color: #c60000;
+  border: 2px solid #c60000;
+}
+
+.fieldError::placeholder {
+  color: #c60000;
+}
+
+.dateWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.datePickerWrapper {
+  display: block;
+  width: 100%;
 }
 
 .error {
@@ -123,24 +150,4 @@
   font-size: 14px;
   line-height: 22px;
   color: #000;
-}
-
-.taskField {
-  width: 100%;
-  padding-right: 40px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.taskField:focus {
-  border-color: #ffcbd3;
-  outline: none;
-}
-.datePickerWrapper {
-  display: block;
-  width: 100%;
-}
-.dateWrapper {
-  position: relative;
-  width: 100%;
 }
