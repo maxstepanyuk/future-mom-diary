@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 import GreetingBlock from '@/components/pages/common/GreetingBlock/GreetingBlock';
@@ -23,31 +23,49 @@ export default function DiaryPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<DiaryNote | undefined>(undefined);
-  
   const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+  } = useInfiniteQuery({
     queryKey: ['diary'],
-    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+    queryFn: ({ pageParam = 1 }) =>
+      getDiaryNotes({ page: pageParam, limit: 10, sortOrder: 'asc' }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.totalPages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
   });
 
-  const notes: DiaryNote[] = data?.diaryNotes ?? [];
+  const rawNotes: DiaryNote[] =
+    data?.pages.flatMap((page) => page.diaryNotes) ?? [];
+  const notes: DiaryNote[] = Array.from(
+    new Map(rawNotes.map((note) => [note._id, note])).values()
+  );
 
   const selectedNote: DiaryNote | null =
     notes.find((n) => n._id === activeIdFromQuery) || notes[0] || null;
 
-const deleteMutation = useMutation({
-  mutationFn: (id: string) => deleteDiaryNote(id),
-  onSuccess: () => {
-    toast.success('Запис успішно видалено');
-    queryClient.invalidateQueries({ queryKey: ['diary'] });
-    setDeletingNoteId(null);
-    router.replace('/diary', { scroll: false });
-  },
-  onError: () => {
-    toast.error('Не вдалося видалити запис');
-  },
-});
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteDiaryNote(id),
+    onSuccess: () => {
+      toast.success('Запис успішно видалено');
+      queryClient.invalidateQueries({ queryKey: ['diary'] });
+      setDeletingNoteId(null);
+      router.replace('/diary', { scroll: false });
+    },
+    onError: () => {
+      toast.error('Не вдалося видалити запис');
+    },
+  });
 
   const handleSelectNote = (note: DiaryNote) => {
     if (window.innerWidth < 1440) {
@@ -57,28 +75,9 @@ const deleteMutation = useMutation({
     }
   };
 
-  const handleOpenAddModal = () => {
-    setEditingNote(undefined);
-    setIsModalOpen(true);
-  };
-
-  const handleOpenEditModal = (noteToEdit?: DiaryNote) => {
-    setEditingNote(noteToEdit || selectedNote || undefined);
-    setIsModalOpen(true);
-  };
-
-  // Підтвердження видалення
-  const handleConfirmDelete = () => {
-    if (deletingNoteId) {
-      deleteMutation.mutate(deletingNoteId);
-    }
-  };
-
-  const errorMessage = error instanceof Error ? error.message : 'Сталася помилка при завантаженні';
-
   return (
     <div className={styles.pageContainer}>
-      {error && <div className={styles.errorAlert}>{errorMessage}</div>}
+      {error && <div className={styles.errorAlert}>Помилка завантаження</div>}
 
       <GreetingBlock />
 
@@ -91,21 +90,29 @@ const deleteMutation = useMutation({
               notes={notes}
               selectedNoteId={selectedNote?._id}
               onSelectNote={handleSelectNote}
-              onOpenAddModal={handleOpenAddModal}
+              onOpenAddModal={() => {
+                setEditingNote(undefined);
+                setIsModalOpen(true);
+              }}
+              onLoadMore={fetchNextPage}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
             />
           </section>
 
           <section className={styles.detailsSection}>
             <DiaryEntryDetails
               note={selectedNote}
-              onEdit={handleOpenEditModal}
+              onEdit={(note) => {
+                setEditingNote(note);
+                setIsModalOpen(true);
+              }}
               onDelete={(id) => setDeletingNoteId(id)}
             />
           </section>
         </main>
       )}
 
-      {/* Модалка створення/редагування */}
       {isModalOpen && (
         <AddDiaryEntryModal
           diaryNote={editingNote}
@@ -113,13 +120,12 @@ const deleteMutation = useMutation({
         />
       )}
 
-      {/* Модалка підтвердження видалення */}
       {deletingNoteId && (
         <ConfirmationModal
           title="Ви впевнені, що хочете видалити цей запис?"
-          confirmButtonText={deleteMutation.isPending ? "Видалення..." : "Видалити"}
+          confirmButtonText={deleteMutation.isPending ? 'Видалення...' : 'Видалити'}
           cancelButtonText="Скасувати"
-          onConfirm={handleConfirmDelete}
+          onConfirm={() => deleteMutation.mutate(deletingNoteId)}
           onCancel={() => setDeletingNoteId(null)}
         />
       )}

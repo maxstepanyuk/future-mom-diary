@@ -6,9 +6,8 @@
 
 .layout {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+  justify-content: center;
+  gap: 32px;
 }
 
 .listSection {
@@ -54,9 +53,9 @@
 
   .layout {
     display: grid;
-    grid-template-columns: 389px 1fr;
-    gap: 24px;
-    align-items: start;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 32px;
   }
 
   .detailsSection {
