@@ -46,16 +46,45 @@
   background: var(--color-scheme-foreground); /* ← рожевий фон! */
 }
 
+@media (min-width: 1440px) {
+  .babyContent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .babyLeft {
+    flex-shrink: 0;
+    max-width: 461px; /* ширина лівої (фото) */
+  }
+  .babyRight {
+    flex: 1; /* права займає решту */
+  }
+}
+
+.babyLeft,
+.babyRight {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 /* картинка */
 .image {
   width: 100%;
-  max-width: 335px;
+  max-width: 656px;
   height: auto;
   border: 1px solid var(--color-scheme-border, rgba(0, 0, 0, 0.15));
   border-radius: 24px;
   object-fit: cover;
-  align-self: center;
+  /* align-self: center; */
 }
+
+/* @media (min-width: 768px) {
+  .image {
+    width: 656px;
+    height: 379px;
+  }
+} */
 
 /* аналогія розміру */
 .analogy {
