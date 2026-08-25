@@ -44,6 +44,8 @@
   border-radius: 32px; /* заокруглення як блоки */
   padding: 24px; /* внутрішні відступи */
   background: var(--color-scheme-foreground); /* ← рожевий фон! */
+  max-width: 1072px; /* 650 + 390 + 32 (gap) */
+  margin: auto;
 }
 
 @media (min-width: 1440px) {
