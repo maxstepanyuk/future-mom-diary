@@ -26,18 +26,21 @@ export const DiaryList = ({
   isFetchingNextPage,
 }: DiaryListProps) => {
   const [scrollRoot, setScrollRoot] = useState<HTMLUListElement | null>(null);
-  
   const isLockedRef = useRef(false);
 
   const setListRef = useCallback((node: HTMLUListElement | null) => {
     if (node !== null) {
-      setScrollRoot(node);
+      if (window.innerWidth >= 1440) {
+        setScrollRoot(node);
+      } else {
+        setScrollRoot(null);
+      }
     }
   }, []);
 
   const { ref: triggerRef, inView } = useInView({
-    root: scrollRoot,
-    rootMargin: '20px', 
+    root: scrollRoot, 
+    rootMargin: '100px', 
     threshold: 0.1,
   });
 
@@ -49,7 +52,7 @@ export const DiaryList = ({
       !isLockedRef.current &&
       onLoadMore
     ) {
-      isLockedRef.current = true; 
+      isLockedRef.current = true;
       onLoadMore();
 
       setTimeout(() => {
