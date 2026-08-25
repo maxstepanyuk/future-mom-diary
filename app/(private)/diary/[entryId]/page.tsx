@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
-import { getDiaryNotes } from '@/lib/api/clientApi';
-import { DiaryNote } from '@/types/diaryNote';
-import styles from './page.module.css';
-
+import React from "react";
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { DiaryEntryDetails } from "@/components/pages/diary-page/DiaryEntryDetails";
+import { getDiaryNotes } from "@/lib/api/clientApi";
+import { DiaryNote } from "@/types/diaryNote";
+import styles from "./page.module.css";
 
 export default function DiaryDetailPage() {
   const params = useParams();
   const entryId = params.entryId as string;
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['diary'],
-    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+    queryKey: ["diary"],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: "asc" }),
   });
 
   const notes: DiaryNote[] = data?.diaryNotes ?? [];

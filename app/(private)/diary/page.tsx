@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import GreetingBlock from '@/components/pages/common/GreetingBlock/GreetingBlock';
-import { DiaryList } from '@/components/pages/diary-page/DiaryList';
-import { DiaryEntryDetails } from '@/components/pages/diary-page/DiaryEntryDetails';
-import AddDiaryEntryModal from '@/components/pages/common/AddDiaryEntryModal/AddDiaryEntryModal';
-import { DiaryNote } from '@/types/diaryNote';
-import { getDiaryNotes } from '@/lib/api/clientApi';
-import styles from './page.module.css';
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import GreetingBlock from "@/components/pages/common/GreetingBlock/GreetingBlock";
+import { DiaryList } from "@/components/pages/diary-page/DiaryList";
+import { DiaryEntryDetails } from "@/components/pages/diary-page/DiaryEntryDetails";
+import AddDiaryEntryModal from "@/components/pages/common/AddDiaryEntryModal/AddDiaryEntryModal";
+import { DiaryNote } from "@/types/diaryNote";
+import { getDiaryNotes } from "@/lib/api/clientApi";
+import styles from "./page.module.css";
 
 export default function DiaryPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const activeIdFromQuery = searchParams.get('entryId');
+  const activeIdFromQuery = searchParams.get("entryId");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['diary'],
-    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: 'asc' }),
+    queryKey: ["diary"],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: "asc" }),
   });
 
   const notes: DiaryNote[] = data?.diaryNotes ?? [];
@@ -36,7 +36,8 @@ export default function DiaryPage() {
     }
   };
 
-  const errorMessage = error instanceof Error ? error.message : 'Сталася помилка при завантаженні';
+  const errorMessage =
+    error instanceof Error ? error.message : "Сталася помилка при завантаженні";
 
   return (
     <div className={styles.pageContainer}>
