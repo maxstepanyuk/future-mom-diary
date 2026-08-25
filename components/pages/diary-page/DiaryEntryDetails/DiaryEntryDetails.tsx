@@ -30,6 +30,18 @@ export const DiaryEntryDetails = ({
     );
   }
 
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit(note);
+    }
+  };
+
+  const handleDelete = () => {
+    if (onDelete && note._id) {
+      onDelete(note._id);
+    }
+  };
+
   return (
     <article className={styles.container}>
       <header className={styles.header}>
@@ -38,7 +50,7 @@ export const DiaryEntryDetails = ({
           <button
             type="button"
             className={styles.iconBtn}
-            onClick={() => onEdit?.(note)}
+            onClick={handleEdit}
             aria-label="Редагувати запис"
           >
             <svg width={24} height={24} className={styles.icon}>
@@ -54,7 +66,7 @@ export const DiaryEntryDetails = ({
           <button
             type="button"
             className={styles.iconBtn}
-            onClick={() => onDelete?.(note._id)}
+            onClick={handleDelete}
             aria-label="Видалити запис"
           >
             <svg width={24} height={24} className={styles.icon}>
