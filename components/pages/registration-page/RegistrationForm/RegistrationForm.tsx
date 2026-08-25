@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 import css from './RegistrationForm.module.css';
 import { register } from '@/lib/api/clientApi';
@@ -55,14 +56,16 @@ export default function RegistrationForm() {
       await register(values);
 
       toast.success('Реєстрація успішна!');
-
       actions.resetForm();
 
       router.push('/auth/register/onboarding');
     } catch (error) {
-      console.error(error);
-
-      toast.error('Не вдалося зареєструватися. Спробуйте ще раз.');
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        toast.error('Користувач з такими даними вже існує');
+      } else {
+        console.error(error);
+        toast.error('Не вдалося зареєструватися. Спробуйте ще раз.');
+      }
     } finally {
       setIsLoading(false);
     }
