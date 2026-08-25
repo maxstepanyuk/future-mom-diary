@@ -139,9 +139,9 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                       css.taskField,
                       touched.taskDate && errors.taskDate && css.fieldError
                     )}
-                    // dateFormat="yyyy.MM.dd"
                     dateFormat="dd.MM.yyyy"
                     wrapperClassName={css.datePickerWrapper}
+                    minDate={date}
                   />
                 </div>
                 <ErrorMessage
