@@ -4,6 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import css from "./Breadcrumbs.module.css";
 import Icon from "@/components/common/Icon/Icon";
+import { useQuery } from "@tanstack/react-query";
+import { getDiaryNotes } from "@/lib/api/clientApi";
+import { DiaryNote } from "@/types/diaryNote";
 
 const labels: Record<string, string> = {
   "": "Мій день",
@@ -11,22 +14,40 @@ const labels: Record<string, string> = {
   diary: "Щоденник",
   profile: "Профіль",
 };
-
+function isEntryId(segment: string) {
+  return /^[a-f0-9]{24}$/i.test(segment);
+}
 export default function Breadcrumbs() {
   const pathname = usePathname();
-
-  if (pathname.startsWith("/auth")) return null;
-
   const segments = pathname.split("/").filter(Boolean);
+  const lastSegment = segments[segments.length - 1];
+  const isDiaryEntryPage = segments[0] === "diary" && isEntryId(lastSegment);
+  const { data } = useQuery({
+    queryKey: ["diary"],
+    queryFn: () => getDiaryNotes({ page: 1, limit: 10, sortOrder: "asc" }),
+    enabled: isDiaryEntryPage,
+  });
+  if (pathname.startsWith("/auth")) return null;
+  const notes: DiaryNote[] = data?.diaryNotes ?? [];
+  const selectedNote = isDiaryEntryPage
+    ? notes.find((note) => note._id === lastSegment)
+    : null;
   const filteredSegments = segments.filter((segment) => !/^\d+$/.test(segment));
   const crumbs = [
     { label: "Лелека", href: "/" },
     ...(filteredSegments.length === 0
       ? [{ label: labels[""], href: "/" }]
-      : filteredSegments.map((segment, index) => ({
-          label: labels[segment] ?? segment,
-          href: "/" + filteredSegments.slice(0, index + 1).join("/"),
-        }))),
+      : filteredSegments.map((segment, index) => {
+          const isLastSegment = index === filteredSegments.length - 1;
+          const label =
+            isLastSegment && isDiaryEntryPage
+              ? (selectedNote?.title ?? "Завантаження...")
+              : (labels[segment] ?? segment);
+          return {
+            label,
+            href: "/" + filteredSegments.slice(0, index + 1).join("/"),
+          };
+        })),
   ];
 
   return (
