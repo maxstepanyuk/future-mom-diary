@@ -17,6 +17,7 @@ export default function DiaryPage() {
   const activeIdFromQuery = searchParams.get('entryId');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingNote, setEditingNote] = useState<DiaryNote | undefined>(undefined);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['diary'],
@@ -36,13 +37,23 @@ export default function DiaryPage() {
     }
   };
 
+  const handleOpenAddModal = () => {
+    setEditingNote(undefined);
+    setIsModalOpen(true);
+  };
+
+  //РЕДАГУВАННЯ
+  const handleOpenEditModal = (noteToEdit?: DiaryNote) => {
+    setEditingNote(noteToEdit || selectedNote || undefined);
+    setIsModalOpen(true);
+  };
+
   const errorMessage = error instanceof Error ? error.message : 'Сталася помилка при завантаженні';
 
   return (
     <div className={styles.pageContainer}>
       {error && <div className={styles.errorAlert}>{errorMessage}</div>}
 
-      {}
       <GreetingBlock />
 
       {isLoading ? (
@@ -54,18 +65,24 @@ export default function DiaryPage() {
               notes={notes}
               selectedNoteId={selectedNote?._id}
               onSelectNote={handleSelectNote}
-              onOpenAddModal={() => setIsModalOpen(true)}
+              onOpenAddModal={handleOpenAddModal}
             />
           </section>
 
           <section className={styles.detailsSection}>
-            <DiaryEntryDetails note={selectedNote} />
+            <DiaryEntryDetails
+              note={selectedNote}
+              onEdit={handleOpenEditModal}
+            />
           </section>
         </main>
       )}
 
       {isModalOpen && (
-        <AddDiaryEntryModal onClose={() => setIsModalOpen(false)} />
+        <AddDiaryEntryModal
+          diaryNote={editingNote}
+          onClose={() => setIsModalOpen(false)}
+        />
       )}
     </div>
   );
