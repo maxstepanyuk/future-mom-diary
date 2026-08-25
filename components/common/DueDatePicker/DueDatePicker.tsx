@@ -21,6 +21,7 @@ export default function DueDatePicker({ isLoading }: DueDatePickerProps) {
       placeholderText="Оберіть дату"
       disabled={isLoading}
       className={css.input}
+      minDate={new Date()}
     />
   );
 }
