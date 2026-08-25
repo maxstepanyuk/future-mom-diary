@@ -6,6 +6,7 @@ import TanStackProvider from '@/components/providers/TanStackProvider/TanStackPr
 import AuthProvider from '@/components/providers/AuthProvider/AuthProvider';
 
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
 const comfortaa = Comfortaa({
   variable: '--font-comfortaa',
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${comfortaa.variable} ${lato}`}>
         <TanStackProvider>
           <AuthProvider>{children}</AuthProvider>
+          <Toaster position="top-right" />
         </TanStackProvider>
       </body>
     </html>
