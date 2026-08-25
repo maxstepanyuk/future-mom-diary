@@ -36,6 +36,9 @@ const genderOptions: GenderOption[] = [
   { value: 'unknown', label: 'Ще не знаю' },
 ];
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const validationSchema = Yup.object({
   name: Yup.string()
     .trim()
@@ -56,6 +59,10 @@ const validationSchema = Yup.object({
 
   dueDate: Yup.date()
     .nullable()
+    .min(
+      today,
+      'Дата пологів не може бути в минулому'
+    )
     .required('Оберіть планову дату пологів'),
 });
 
@@ -314,6 +321,16 @@ function ProfileEditForm() {
                 }}
                 onCalendarClose={() => {
                   setIsDateOpen(false);
+                }}
+                minDate={today}
+                filterDate={(date) => {
+                  const currentDate = new Date(date);
+                  currentDate.setHours(0, 0, 0, 0);
+
+                  return currentDate >= today;
+                }}
+                onKeyDown={(event) => {
+                  event.preventDefault();
                 }}
                 dateFormat="dd.MM.yyyy"
                 className={`${css.input} ${css.dateInput}`}
