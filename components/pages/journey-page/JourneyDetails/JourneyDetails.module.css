@@ -17,7 +17,8 @@
 /* десктоп  */
 @media (min-width: 1440px) {
   .container {
-    max-width: 1128px;
+    max-width: none;
+    padding: 0 32px;
   }
 }
 
@@ -27,19 +28,22 @@
 }
 
 /* десктоп */
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .content {
-    max-height: 1064px; /* уточнити */
+    max-height: 2590px; 
     overflow-y: auto;
     padding-right: 8px;
   }
-}
+} */
 
 /* РОЗВИТОК МАЛЮКА */
 .babyContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border-radius: 32px; /* заокруглення як блоки */
+  padding: 24px; /* внутрішні відступи */
+  background: var(--color-scheme-foreground); /* ← рожевий фон! */
 }
 
 /* картинка */
@@ -47,7 +51,8 @@
   width: 100%;
   max-width: 335px;
   height: auto;
-  border-radius: 16px;
+  border: 1px solid var(--color-scheme-border, rgba(0, 0, 0, 0.15));
+  border-radius: 24px;
   object-fit: cover;
   align-self: center;
 }
@@ -56,7 +61,6 @@
 .analogy {
   font-size: 16px;
   font-weight: 500;
-  text-align: center;
 }
 
 /* ОПИС */
@@ -68,10 +72,41 @@
 
 /* ЦІКАВИЙ ФАКТ */
 .fact {
-  background: var(--color-scheme-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--color-scheme-foreground-alt);
   border-radius: 12px;
   padding: 16px;
+}
+
+/* іконка + текст */
+.factHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* іконка star_shine */
+.factIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* заголовок "Цікавий факт тижня" */
+.factTitle {
+  font-family: var(--font-family, "Lato", sans-serif);
   font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.factText {
+  font-family: var(--font-family, "Lato", sans-serif);
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--foreground);
 }
@@ -95,7 +130,7 @@
 
 @media (min-width: 1440px) {
   .block {
-    width: 650px;
+    width: 100%;
     max-height: 322px;
     overflow-y: auto;
   }
@@ -138,14 +173,21 @@
   gap: 16px;
 }
 
-/* десктоп — на два стовпці (блоки зліва, TasksReminderCard справа) */
+/* ДЕСКТОП — на два стовпці (блоки зліва, TasksReminderCard справа) */
 @media (min-width: 1440px) {
   .momLayout {
+    display: flex;
     flex-direction: row;
+    gap: 32px;
     align-items: flex-start;
+    max-width: 1072px; /* 650 + 390 + 32 (gap) */
+    margin: 0 auto; /* по центру */
   }
+
   .momBlocks {
-    flex: 1;
+    /* flex: 1; */
+    width: 650px; /* фіксована ширина колонки */
+    flex-shrink: 0; /* не стискати */
   }
   .momSidebar {
     flex-shrink: 0;
