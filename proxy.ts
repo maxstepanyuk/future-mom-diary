@@ -4,7 +4,7 @@ import { parseSetCookie } from "cookie";
 import { checkSessionServer } from "./lib/api/serverApi";
 
 const privateRoutes = ["/profile", "/diary", "/journey"];
-const publicRoutes = ["/login", "/register"];
+const publicRoutes = ["/auth"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -64,7 +64,7 @@ export async function proxy(request: NextRequest) {
 
     // приватний маршрут — редірект на сторінку входу
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }
 
@@ -84,7 +84,6 @@ export const config = {
     "/profile/:path*",
     "/diary/:path*",
     "/journey/:path*",
-    "/login/:path*",
-    "/register/:path*",
+    "/auth/:path*",
   ],
 };
