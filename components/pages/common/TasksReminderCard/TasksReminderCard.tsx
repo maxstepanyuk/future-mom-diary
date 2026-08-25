@@ -79,7 +79,7 @@ export default function TaskReminderCard() {
 
   function addbuttonClickHandler() {
     if (!isAuthenticated) {
-      router.push('/auth/login');
+      router.push('/auth/register');
     }
     setIsModal(true);
   }
