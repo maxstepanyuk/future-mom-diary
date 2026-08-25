@@ -47,6 +47,18 @@
   align-items: center;
 }
 
+.heading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+
+  @media only screen and (min-width: 1440px) {
+    font-size: 24px;
+    line-height: 34px;
+  }
+}
+
 .addButton {
   display: flex;
   justify-content: center;

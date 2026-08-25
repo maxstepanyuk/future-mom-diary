@@ -18,8 +18,6 @@ interface OrderFormValues {
 const date = new Date();
 const defaultDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-console.log(defaultDate);
-
 const initialValues: OrderFormValues = {
   taskName: '',
   taskDate: defaultDate,
@@ -141,7 +139,8 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                       css.taskField,
                       touched.taskDate && errors.taskDate && css.fieldError
                     )}
-                    dateFormat="yyyy.MM.dd"
+                    // dateFormat="yyyy.MM.dd"
+                    dateFormat="dd.MM.yyyy"
                     wrapperClassName={css.datePickerWrapper}
                   />
                 </div>
