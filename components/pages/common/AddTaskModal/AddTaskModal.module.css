@@ -152,3 +152,17 @@
   line-height: 22px;
   color: #000;
 }
+
+.submitButton:disabled {
+  opacity: 0.3;
+}
+
+.submitButton:not(:disabled):hover,
+.submitButton:not(:disabled):focus {
+  background: #fff;
+}
+
+.submitButton:not(:disabled):active {
+  background: #b2b2b2;
+  border-bottom: none;
+}

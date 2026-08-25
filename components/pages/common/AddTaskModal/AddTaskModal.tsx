@@ -144,15 +144,26 @@ export default function AddTaskModal({ onClose }: AddTaskModalProps) {
                     dateFormat="yyyy.MM.dd"
                     wrapperClassName={css.datePickerWrapper}
                   />
-                  <ErrorMessage
-                    name="taskDate"
-                    component="span"
-                    className={css.error}
-                  />
                 </div>
+                <ErrorMessage
+                  name="taskDate"
+                  component="span"
+                  className={css.error}
+                />
               </div>
 
-              <button type="submit" className={css.submitButton}>
+              <button
+                disabled={Boolean(errors.taskDate || errors.taskName)}
+                type="submit"
+                className={css.submitButton}
+
+                // className={clsx(
+                //   css.submitButton,
+                //   ((touched.taskName && errors.taskName) ||
+                //     (touched.taskDate && errors.taskDate && css.fieldError)) &&
+                //     css.submitButtonDisabled
+                // )}
+              >
                 Зберегти
               </button>
             </Form>

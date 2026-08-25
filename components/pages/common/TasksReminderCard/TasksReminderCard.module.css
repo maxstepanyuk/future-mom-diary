@@ -102,3 +102,13 @@
   line-height: 22px;
   color: #000;
 }
+
+.addButtonDefault:hover,
+.addButtonDefault:focus {
+  background: #fff;
+}
+
+.addButtonDefault:active {
+  background: #b2b2b2;
+  border-bottom: none;
+}
