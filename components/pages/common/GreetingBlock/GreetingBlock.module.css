@@ -15,7 +15,7 @@
 @media (min-width: 1440px) {
   .greeting {
     max-width: none;
-    /* padding-left: 32px;  або який треба? */
+    /* padding-left: 32px;  */
   }
 }
 

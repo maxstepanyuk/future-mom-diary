@@ -30,7 +30,6 @@
   width: 100%;
 }
 
-/* Планшет*/
 @media (min-width: 768px) {
   .wrapper {
     max-width: 768px;

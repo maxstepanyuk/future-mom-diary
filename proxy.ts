@@ -26,8 +26,8 @@ export async function proxy(request: NextRequest) {
 
   if (!accessToken) {
     if (refreshToken) {
-      // Якщо accessToken відсутній, але є refreshToken — потрібно перевірити сесію навіть для публічного маршруту,
-      // адже сесія може залишатися активною, і тоді потрібно заборонити доступ до публічного маршруту.
+      // If accessToken is missing but refreshToken exists — the session needs to be checked even for a public route,
+      // since the session may still be active, in which case access to the public route must be blocked.
       const data = await checkSessionServer();
       // console.log(data);
       const setCookie = data.headers["set-cookie"];
@@ -41,8 +41,8 @@ export async function proxy(request: NextRequest) {
             cookieStore.set(parsed.name, parsed.value, parsed);
           }
         }
-        // Якщо сесія все ще активна:
-        // для публічного маршруту — виконуємо редірект на головну.
+        // If the session is still active:
+        // for a public route — redirect to the home page.
         if (isPublicRoute) {
           return NextResponse.redirect(new URL("/", request.url), {
             headers: {
@@ -50,7 +50,7 @@ export async function proxy(request: NextRequest) {
             },
           });
         }
-        // для приватного маршруту — дозволяємо доступ
+        // for a private route — allow access
         if (isPrivateRoute) {
           console.log(cookieStore.toString());
           return NextResponse.next({
@@ -61,24 +61,24 @@ export async function proxy(request: NextRequest) {
         }
       }
     }
-    // Якщо refreshToken або сесії немає:
-    // публічний маршрут — дозволяємо доступ
+    // If there is no refreshToken or no session:
+    // public route — allow access
     if (isPublicRoute) {
       return NextResponse.next();
     }
 
-    // приватний маршрут — редірект на сторінку входу
+    // private route — redirect to the login page
     if (isPrivateRoute) {
       return NextResponse.redirect(new URL("/auth/register", request.url));
     }
   }
 
-  // Якщо accessToken існує:
-  // публічний маршрут — виконуємо редірект на головну
+  // If accessToken exists:
+  // public route — redirect to the home page
   if (isPublicRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  // приватний маршрут — дозволяємо доступ
+  // private route — allow access
   if (isPrivateRoute) {
     return NextResponse.next();
   }

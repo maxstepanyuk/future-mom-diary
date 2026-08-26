@@ -20,7 +20,7 @@ export default function TaskReminderCard() {
 
   const [isModal, setIsModal] = useState(false);
 
-  //! Закоментил бесконечную пагинацию, так как не понятно как работает бэкэнд
+  //! Commented out permanent pagination because it's not clear how the backend works
   //! ////////////////////////////////////////////////// Infinite Pagination
 
   // const {
