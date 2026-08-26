@@ -13,15 +13,14 @@ export default function Sidebar() {
   const pathname = usePathname();
   const isAuthenticated = useAuthStore((store) => store.isAuthenticated);
   const user = useAuthStore((store) => store.user);
-  const currentWeek = user?.curWeekNumber ?? 1;
+
   const isAuthPage = pathname.startsWith("/auth");
-  if (isAuthPage) return null;
 
   const navItems = [
     { label: "Мій день", href: "/", icon: "icon-today" },
     {
       label: "Подорож",
-      href: `/journey/${currentWeek}`,
+      href: `/journey/${user?.curWeekNumber ?? 1}`,
       icon: "icon-conversion_path",
     },
     { label: "Щоденник", href: "/diary", icon: "icon-book_2" },
@@ -29,58 +28,62 @@ export default function Sidebar() {
   ];
   return (
     <>
-      {isOpen && <div className={css.overlay} onClick={close} />}
+      {!isAuthPage && (
+        <>
+          {isOpen && <div className={css.overlay} onClick={close} />}
 
-      <aside className={`${css.sidebar} ${isOpen ? css.open : ""}`}>
-        <div className={css.topBar}>
-          <div className={css.topMenu}>
-            <Link className={css.topLogo} href="/" onClick={close}>
-              <svg width={105} height={45}>
-                <use href="/sprite.svg#icon-Logo" />
-              </svg>
-            </Link>
-            <button
-              type="button"
-              className={css.closeBtn}
-              onClick={close}
-              aria-label="Закрити меню"
-            >
-              <Icon name="icon-close" size={32} />
-            </button>
-          </div>
+          <aside className={`${css.sidebar} ${isOpen ? css.open : ""}`}>
+            <div className={css.topBar}>
+              <div className={css.topMenu}>
+                <Link className={css.topLogo} href="/" onClick={close}>
+                  <svg width={105} height={45}>
+                    <use href="/sprite.svg#icon-Logo" />
+                  </svg>
+                </Link>
+                <button
+                  type="button"
+                  className={css.closeBtn}
+                  onClick={close}
+                  aria-label="Закрити меню"
+                >
+                  <Icon name="icon-close" size={32} />
+                </button>
+              </div>
 
-          <nav>
-            <ul className={css.navList}>
-              {navItems.map(({ label, href, icon }) => {
-                const isActive = href.startsWith("/journey")
-                  ? pathname.startsWith("/journey")
-                  : pathname === href;
-                return (
-                  <li key={label}>
-                    <Link
-                      href={isAuthenticated ? href : "/auth/login"}
-                      className={`${css.navLink} ${isActive ? css.active : ""}`}
-                      onClick={close}
-                    >
-                      <Icon name={icon} size={24} />
-                      <span className={css.navText}>{label}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </div>
-        {isAuthenticated && user ? (
-          <UserBar
-            name={user.name}
-            email={user.email}
-            avatarUrl={user.avatarUrl}
-          />
-        ) : (
-          <AuthBar />
-        )}
-      </aside>
+              <nav>
+                <ul className={css.navList}>
+                  {navItems.map(({ label, href, icon }) => {
+                    const isActive = href.startsWith("/journey")
+                      ? pathname.startsWith("/journey")
+                      : pathname === href;
+                    return (
+                      <li key={label}>
+                        <Link
+                          href={isAuthenticated ? href : "/auth/login"}
+                          className={`${css.navLink} ${isActive ? css.active : ""}`}
+                          onClick={close}
+                        >
+                          <Icon name={icon} size={24} />
+                          <span className={css.navText}>{label}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </div>
+            {isAuthenticated && user ? (
+              <UserBar
+                name={user.name}
+                email={user.email}
+                avatarUrl={user.avatarUrl}
+              />
+            ) : (
+              <AuthBar />
+            )}
+          </aside>
+        </>
+      )}
     </>
   );
 }
