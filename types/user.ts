@@ -18,3 +18,18 @@ export interface UserUpdateData {
   dueDate?: string;
   babyGender?: BabyGender;
 }
+
+export type GenderOption = {
+  value: BabyGender | '';
+  label: string;
+};
+
+export type ProfileFormValues = Omit<
+  UserUpdateData,
+  'dueDate' | 'babyGender'
+> & {
+  name: string;
+  email: string;
+  babyGender: BabyGender | '';
+  dueDate: Date | null;
+};
