@@ -12,11 +12,21 @@ import css from "./AddDiaryEntryModal.module.css";
 interface AddDiaryEntryModalProps {
   onClose: () => void;
   diaryNote?: DiaryNote;
+  onSuccess?: () => void;
 }
+
 export default function AddDiaryEntryModal({
   onClose,
   diaryNote,
+  onSuccess,
 }: AddDiaryEntryModalProps) {
+  const handleSuccess = () => {
+    if (onSuccess) {
+      onSuccess();
+    }
+    onClose();
+  };
+
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -31,12 +41,10 @@ export default function AddDiaryEntryModal({
     };
 
     document.addEventListener("keydown", handleKeyDown);
-
     document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-
       document.body.style.overflow = "";
     };
   }, [onClose]);
@@ -54,7 +62,7 @@ export default function AddDiaryEntryModal({
           {diaryNote ? "Редагувати запис" : "Новий запис"}
         </h2>
 
-        <AddDiaryEntryForm diaryNote={diaryNote} onSuccess={onClose} />
+        <AddDiaryEntryForm diaryNote={diaryNote} onSuccess={handleSuccess} />
       </div>
     </div>,
     document.body,

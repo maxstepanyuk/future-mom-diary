@@ -102,10 +102,18 @@ export default function AddDiaryEntryForm({
       return postDiaryNote(diaryData);
     },
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["diary"],
+        refetchType: "all",
       });
+
+      if (diaryNote?._id) {
+        await queryClient.invalidateQueries({
+          queryKey: ["diaryNote", diaryNote._id],
+          refetchType: "all",
+        });
+      }
 
       onSuccess();
     },
