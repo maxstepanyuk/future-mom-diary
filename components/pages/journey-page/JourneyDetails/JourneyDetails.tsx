@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { getWeeksBabyInfo, getWeeksMomInfo } from "@/lib/api/clientApi";
 import css from "./JourneyDetails.module.css";
 import TaskReminderCard from "../../common/TasksReminderCard/TasksReminderCard";
@@ -17,7 +17,17 @@ type TabType = "baby" | "mom";
 const icons = ["icon-fork_spoon", "icon-fitness_center", "icon-chair"];
 
 export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("baby");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const activeTab = (searchParams.get("tab") as TabType) || "baby";
+
+  const setActiveTab = (tab: TabType) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", tab);
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   const babyQuery = useQuery({
     queryKey: ["week", weekNumber, "baby"],
@@ -52,7 +62,9 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
         {activeTab === "baby" && (
           <>
             {babyQuery.isFetching ? (
-              <Loader />
+              <div className={css.loaderWrapper}>
+                <Loader />
+              </div>
             ) : babyQuery.isError ? (
               <p>Не вдалося завантажити дані.</p>
             ) : babyQuery.data ? (
@@ -97,7 +109,9 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
         {activeTab === "mom" && (
           <>
             {momQuery.isFetching ? (
-              <Loader />
+              <div className={css.loaderWrapper}>
+                <Loader />
+              </div>
             ) : momQuery.isError ? (
               <p>Не вдалося завантажити дані.</p>
             ) : momQuery.data ? (
