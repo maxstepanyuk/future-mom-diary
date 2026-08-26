@@ -322,3 +322,9 @@
 .tabActive:focus {
   outline: none;
 }
+
+.loaderWrapper {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}

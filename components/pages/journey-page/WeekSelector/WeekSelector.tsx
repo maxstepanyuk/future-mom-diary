@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useSearchParams } from "next/navigation";
 import css from "./WeekSelector.module.css";
 
 interface WeekSelectorProps {
@@ -13,6 +14,7 @@ const TOTAL_WEEKS = 42;
 
 export default function WeekSelector({ activeWeek }: WeekSelectorProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const user = useAuthStore((state) => state.user);
   const currentWeek = user?.curWeekNumber ?? 1;
 
@@ -25,7 +27,8 @@ export default function WeekSelector({ activeWeek }: WeekSelectorProps) {
 
   const handleWeekClick = (week: number) => {
     if (week > currentWeek) return;
-    router.push(`/journey/${week}`);
+    const tab = searchParams.get("tab") || "baby";
+    router.push(`/journey/${week}?tab=${tab}`);
   };
 
   useEffect(() => {

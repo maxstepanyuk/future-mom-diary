@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { getWeeksBabyInfo, getWeeksMomInfo } from "@/lib/api/clientApi";
 import css from "./JourneyDetails.module.css";
 import TaskReminderCard from "../../common/TasksReminderCard/TasksReminderCard";
+import Loader from "@/components/common/Loader/Loader";
 
 interface JourneyDetailsProps {
   weekNumber: number;
@@ -16,7 +17,17 @@ type TabType = "baby" | "mom";
 const icons = ["icon-fork_spoon", "icon-fitness_center", "icon-chair"];
 
 export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("baby");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const activeTab = (searchParams.get("tab") as TabType) || "baby";
+
+  const setActiveTab = (tab: TabType) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", tab);
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   const babyQuery = useQuery({
     queryKey: ["week", weekNumber, "baby"],
@@ -50,9 +61,13 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
         {/* ТАБ: Розвиток малюка */}
         {activeTab === "baby" && (
           <>
-            {babyQuery.isLoading && <p>Завантаження...</p>}
-            {babyQuery.isError && <p>Не вдалося завантажити дані.</p>}
-            {babyQuery.data && (
+            {babyQuery.isFetching ? (
+              <div className={css.loaderWrapper}>
+                <Loader />
+              </div>
+            ) : babyQuery.isError ? (
+              <p>Не вдалося завантажити дані.</p>
+            ) : babyQuery.data ? (
               <div className={css.babyContent}>
                 <div className={css.babyLeft}>
                   {babyQuery.data.image && (
@@ -86,16 +101,20 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </>
         )}
 
         {/* ТАБ: Тіло мами */}
         {activeTab === "mom" && (
           <>
-            {momQuery.isLoading && <p>Завантаження...</p>}
-            {momQuery.isError && <p>Не вдалося завантажити дані.</p>}
-            {momQuery.data && (
+            {momQuery.isFetching ? (
+              <div className={css.loaderWrapper}>
+                <Loader />
+              </div>
+            ) : momQuery.isError ? (
+              <p>Не вдалося завантажити дані.</p>
+            ) : momQuery.data ? (
               <div className={css.momLayout}>
                 <div className={css.momBlocks}>
                   {/* Блок "Як ви можете почуватись" */}
@@ -140,7 +159,7 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                   <TaskReminderCard />
                 </div>
               </div>
-            )}
+            ) : null}
           </>
         )}
       </div>
