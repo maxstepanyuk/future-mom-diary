@@ -11,7 +11,8 @@ import UserBar from "../UserBar/UserBar";
 export default function Sidebar() {
   const { isOpen, close } = useMenuStore();
   const pathname = usePathname();
-  const { user, isAuthenticated } = useAuthStore();
+  const isAuthenticated = useAuthStore((store) => store.isAuthenticated);
+  const user = useAuthStore((store) => store.user);
   const currentWeek = user?.curWeekNumber ?? 1;
   const isAuthPage = pathname.startsWith("/auth");
   if (isAuthPage) return null;

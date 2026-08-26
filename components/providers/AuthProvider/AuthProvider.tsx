@@ -1,39 +1,62 @@
 'use client';
 
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+
 import { checkSession, getMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import { useEffect } from 'react';
 
 type Props = {
   children: React.ReactNode;
 };
 
-const AuthProvider = ({ children }: Props) => {
-  const setUser = useAuthStore(state => state.setUser);
+function AuthProvider({ children }: Props) {
+  const pathname = usePathname();
+
+  const setUser = useAuthStore(
+    state => state.setUser
+  );
+
   const clearIsAuthenticated = useAuthStore(
     state => state.clearIsAuthenticated
   );
 
   useEffect(() => {
     const fetchUser = async () => {
-      // Перевіряємо сесію
-      const isAuthenticated = await checkSession();
-      if (isAuthenticated) {
-        // Якщо сесія валідна — отримуємо користувача
-        const user = await getMe();
-        if (user) {
-          // Записуємо користувача у глобальний стан
-          setUser(user);
+      try {
+        // Перевіряємо сесію при кожній зміні маршруту
+        const isAuthenticated =
+          await checkSession();
+
+        if (isAuthenticated) {
+          const user = await getMe();
+
+          if (user) {
+            setUser(user);
+          }
+
+          return;
         }
-      } else {
-        // Якщо сесія невалідна — чистимо стан
+
+        clearIsAuthenticated();
+      } catch (error) {
+        console.error(
+          'Auth check failed:',
+          error
+        );
+
         clearIsAuthenticated();
       }
     };
+
     fetchUser();
-  }, [setUser, clearIsAuthenticated]);
+  }, [
+    pathname,
+    setUser,
+    clearIsAuthenticated,
+  ]);
 
   return children;
-};
+}
 
 export default AuthProvider;

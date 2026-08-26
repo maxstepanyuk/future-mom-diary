@@ -1,6 +1,10 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import Select, { components, type OptionProps } from "react-select";
@@ -34,7 +38,6 @@ const validationSchema = Yup.object({
   description: Yup.string().trim().required("Введіть текст запису"),
 });
 
-// створюємо кастомний компонент для відображення опцій в селекті з чекбоксами
 function EmotionOption(props: OptionProps<Emotion, true>) {
   return (
     <components.Option {...props}>
@@ -64,10 +67,25 @@ export default function AddDiaryEntryForm({
   onSuccess,
 }: AddDiaryEntryFormProps) {
   const queryClient = useQueryClient();
-  const { data, isPending: isLoadingEmotions } = useQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending: isLoadingEmotions,
+  } = useInfiniteQuery({
     queryKey: ["emotions"],
-    queryFn: () => getEmotions(1, 100),
+    queryFn: ({ pageParam }) => getEmotions(pageParam, 10),
+    initialPageParam: 1,
+
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.page + 1;
+
+      return nextPage <= lastPage.totalPages ? nextPage : undefined;
+    },
   });
+
+  const emotions = data?.pages.flatMap((page) => page.emotions) ?? [];
 
   const mutation = useMutation({
     mutationFn: (values: DiaryFormValues) => {
@@ -140,16 +158,17 @@ export default function AddDiaryEntryForm({
           <div className={css.field}>
             <span className={css.label}>Категорії</span>
 
-   <Select<Emotion, true> //!true означає що можна вибрати кілька категорій
-              options={data?.emotions ?? []} //!список емоцій отриманих з бекенду
-              value={values.emotions} //!вибрана емоція(ї) в селекті
+            <Select<Emotion, true>
+              options={emotions}
+              value={values.emotions}
               isMulti
-              isClearable={false} //!щоб не можна було очистити вибрані опції
-              isSearchable={false} //!щоб не можна було шукати опції
+              isClearable={false}
+              isSearchable={false}
               isLoading={isLoadingEmotions}
-              closeMenuOnSelect={false} //!щоб меню не закривалось після вибору опції
+              closeMenuOnSelect={false}
               blurInputOnSelect={false}
-              hideSelectedOptions={false} //!щоб вибрані опції не ховались з меню
+              captureMenuScroll={true}
+              hideSelectedOptions={false}
               maxMenuHeight={204}
               placeholder="Оберіть категорію"
               noOptionsMessage={() => "Категорій немає"}
@@ -159,15 +178,14 @@ export default function AddDiaryEntryForm({
               }
               getOptionLabel={(emotion) => emotion.title}
               getOptionValue={(emotion) => emotion._id}
-              onChange={(emotions) => {
-                setFieldValue("emotions", [...emotions]);
+              onChange={(emotions) => setFieldValue("emotions", [...emotions])}
+              onBlur={() => setFieldTouched("emotions", true)}
+              onMenuScrollToBottom={() => {
+                if (hasNextPage && !isFetchingNextPage) {
+                  fetchNextPage();
+                }
               }}
-              onBlur={() => {
-                setFieldTouched("emotions", true);
-              }}
-              components={{
-                Option: EmotionOption,
-              }}
+              components={{ Option: EmotionOption }}
             />
 
             <ErrorMessage
@@ -211,4 +229,3 @@ export default function AddDiaryEntryForm({
     </Formik>
   );
 }
-// КЛЮЧ ["diary"] виконується для кешування даних щоденника
