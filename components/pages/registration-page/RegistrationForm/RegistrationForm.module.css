@@ -15,9 +15,10 @@
   }
 
   @media only screen and (min-width: 1440px) {
-    max-width: 1440px;
     padding-left: 64px;
     padding-right: 64px;
+    width: 50%;
+    max-width: 720px;
   }
 }
 .wrapper {
@@ -25,6 +26,9 @@
   }
   @media (min-width: 1440px) {
     display: flex;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 }
 .wrapperForm {
@@ -161,7 +165,8 @@ input:focus {
 
   @media only screen and (min-width: 1440px) {
     display: block;
-    width: 720px;
+    max-width: 720px;
+    width: 50%;
     height: auto;
   }
 }

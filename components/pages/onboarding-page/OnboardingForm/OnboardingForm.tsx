@@ -13,6 +13,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { updateAvatar, updateMe } from '@/lib/api/clientApi';
 
 import { BabyGender } from '@/types/user';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import DueDatePicker from '@/components/common/DueDatePicker/DueDatePicker';
 
@@ -181,9 +182,7 @@ export default function OnboardingForm() {
 
               <label className={css.label}>
                 <span className={css.labelTitle}>Планова дата пологів</span>
-
                 <DueDatePicker isLoading={isLoading} />
-
                 <ErrorMessage
                   name="dueDate"
                   component="span"

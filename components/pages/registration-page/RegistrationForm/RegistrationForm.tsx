@@ -10,7 +10,8 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 import css from './RegistrationForm.module.css';
-import { register } from '@/lib/api/clientApi';
+import { getMe, register } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 
 interface RegisterValues {
   name: string;
@@ -45,6 +46,7 @@ export default function RegistrationForm() {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+  const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (
     values: RegisterValues,
@@ -54,6 +56,8 @@ export default function RegistrationForm() {
 
     try {
       await register(values);
+      const user = await getMe();
+      setUser(user);
 
       toast.success('Реєстрація успішна!');
       actions.resetForm();
