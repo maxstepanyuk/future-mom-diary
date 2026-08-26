@@ -10,7 +10,7 @@ import Select, {
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { updateMe } from '@/lib/api/clientApi';
+import { getMe, updateMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
 import type {
   GenderOption,
@@ -205,10 +205,9 @@ function ProfileEditForm() {
               ),
           };
 
-          const updatedUser =
-            await updateMe(updateData);
-
-          setUser(updatedUser);
+          const updatedUser = await updateMe(updateData);
+          const currentUser = await getMe(); // because updateMe does not return `curWeekNumber` 
+          setUser({...updatedUser, ...currentUser});
 
           actions.resetForm({
             values: {
