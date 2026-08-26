@@ -22,23 +22,26 @@ function AuthProvider({ children }: Props) {
   );
 
   useEffect(() => {
-    const fetchUser = async () => {
+    
+    if (pathname.startsWith('/auth')) {
+      return;
+    }
+
+    async function fetchUser() {
       try {
-        // Перевіряємо сесію при кожній зміні маршруту
         const isAuthenticated =
           await checkSession();
 
-        if (isAuthenticated) {
-          const user = await getMe();
-
-          if (user) {
-            setUser(user);
-          }
-
+        if (!isAuthenticated) {
+          clearIsAuthenticated();
           return;
         }
 
-        clearIsAuthenticated();
+        const user = await getMe();
+
+        if (user) {
+          setUser(user);
+        }
       } catch (error) {
         console.error(
           'Auth check failed:',
@@ -47,7 +50,7 @@ function AuthProvider({ children }: Props) {
 
         clearIsAuthenticated();
       }
-    };
+    }
 
     fetchUser();
   }, [
