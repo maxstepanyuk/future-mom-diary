@@ -23,22 +23,25 @@ export default function DiaryDetailPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const infiniteData = queryClient.getQueryData<{ pages: { diaryNotes: DiaryNote[] }[] }>(['diary']);
-  const cachedNotes: DiaryNote[] = infiniteData?.pages.flatMap((page) => page.diaryNotes) ?? [];
+  const initialNote = infiniteData?.pages
+    .flatMap((page) => page.diaryNotes)
+    .find((n) => n._id === entryId);
 
-  const { data: fallbackData, isLoading } = useQuery({
-    queryKey: ['diary-fallback'],
-    queryFn: () => getDiaryNotes({ page: 1, limit: 100, sortOrder: 'asc' }),
-    enabled: cachedNotes.length === 0, 
+  const { data: selectedNote, isLoading } = useQuery({
+    queryKey: ['diaryNote', entryId],
+    queryFn: async () => {
+      const res = await getDiaryNotes({ page: 1, limit: 100, sortOrder: 'asc' });
+      return res.diaryNotes.find((n) => n._id === entryId) || null;
+    },
+    initialData: initialNote, 
   });
-
-  const notes: DiaryNote[] = cachedNotes.length > 0 ? cachedNotes : (fallbackData?.diaryNotes ?? []);
-  const selectedNote = notes.find((n) => n._id === entryId) || null;
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteDiaryNote(id),
     onSuccess: () => {
       toast.success('Запис успішно видалено');
       queryClient.invalidateQueries({ queryKey: ['diary'] });
+      queryClient.removeQueries({ queryKey: ['diaryNote', entryId] });
       setIsDeleteModalOpen(false);
       router.push('/diary'); 
     },
@@ -47,7 +50,7 @@ export default function DiaryDetailPage() {
     },
   });
 
-  if (isLoading && cachedNotes.length === 0) {
+  if (isLoading && !selectedNote) {
     return <div className={styles.loader}>Завантаження нотатки...</div>;
   }
 

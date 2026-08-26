@@ -84,10 +84,18 @@ export default function AddDiaryEntryForm({
       return postDiaryNote(diaryData);
     },
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["diary"],
+        refetchType: "all",
       });
+
+      if (diaryNote?._id) {
+        await queryClient.invalidateQueries({
+          queryKey: ["diaryNote", diaryNote._id],
+          refetchType: "all",
+        });
+      }
 
       onSuccess();
     },
@@ -132,7 +140,7 @@ export default function AddDiaryEntryForm({
           <div className={css.field}>
             <span className={css.label}>Категорії</span>
 
-            <Select<Emotion, true> //!true означає що можна вибрати кілька категорій
+   <Select<Emotion, true> //!true означає що можна вибрати кілька категорій
               options={data?.emotions ?? []} //!список емоцій отриманих з бекенду
               value={values.emotions} //!вибрана емоція(ї) в селекті
               isMulti
