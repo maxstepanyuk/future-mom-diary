@@ -7,7 +7,6 @@ import Icon from "@/components/common/Icon/Icon";
 import { useMenuStore } from "@/lib/store/menuStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import UserBar from "../UserBar/UserBar";
-import { useState } from "react";
 
 export default function Sidebar() {
   const { isOpen, close } = useMenuStore();
