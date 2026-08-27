@@ -1,4 +1,4 @@
-# Leleka
+# Leleka (Future Mom Diary)
 
 A web application that supports women throughout their entire pregnancy.
 
