@@ -90,7 +90,6 @@ export default function TaskReminderCard() {
 
   return (
     <>
-      <Toaster />
       {isModal && (
         <Modal onClose={modalCloseHandler}>
           <AddTaskModal onClose={modalCloseHandler} />
