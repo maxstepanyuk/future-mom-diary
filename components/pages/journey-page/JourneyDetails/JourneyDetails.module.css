@@ -16,7 +16,6 @@
 @media (min-width: 1440px) {
   .container {
     max-width: none;
-    padding: 0 32px;
   }
 }
 
@@ -194,7 +193,7 @@
   .momLayout {
     display: flex;
     flex-direction: row;
-    gap: 32px;
+    gap: 24px;
     align-items: flex-start;
     max-width: 1072px; /* 650 + 390 + 32 (gap) */
     margin: 0 auto;
