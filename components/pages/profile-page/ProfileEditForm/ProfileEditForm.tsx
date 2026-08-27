@@ -9,8 +9,9 @@ import Select, {
 } from 'react-select';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 
-import { getMe, updateMe } from '@/lib/api/clientApi';
+import { updateMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
 import type {
   GenderOption,
@@ -35,12 +36,20 @@ today.setHours(0, 0, 0, 0);
 const validationSchema = Yup.object({
   name: Yup.string()
     .trim()
-    .min(2, 'Ім’я має містити щонайменше 2 символи')
-    .max(50, 'Ім’я має містити не більше 50 символів')
+    .min(
+      2,
+      'Ім’я має містити щонайменше 2 символи'
+    )
+    .max(
+      50,
+      'Ім’я має містити не більше 50 символів'
+    )
     .required('Введіть ім’я'),
 
   email: Yup.string()
-    .email('Некоректна адреса електронної пошти')
+    .email(
+      'Некоректна адреса електронної пошти'
+    )
     .required('Email обов’язковий'),
 
   babyGender: Yup.string()
@@ -56,7 +65,9 @@ const validationSchema = Yup.object({
       today,
       'Дата пологів не може бути в минулому'
     )
-    .required('Оберіть планову дату пологів'),
+    .required(
+      'Оберіть планову дату пологів'
+    ),
 });
 
 function ArrowIcon({
@@ -153,30 +164,40 @@ function ProfileEditForm() {
   const initialValues: ProfileFormValues = {
     name: user.name ?? '',
     email: user.email ?? '',
-    babyGender: user.babyGender ?? '',
-    dueDate: parseDueDate(user.dueDate),
+    babyGender:
+      user.babyGender ?? '',
+    dueDate: parseDueDate(
+      user.dueDate
+    ),
   };
 
   return (
     <Formik<ProfileFormValues>
       enableReinitialize
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validationSchema={
+        validationSchema
+      }
       onSubmit={async (
         values,
         actions
       ) => {
         if (
-          values.babyGender !== 'girl' &&
-          values.babyGender !== 'boy' &&
-          values.babyGender !== 'unknown'
+          values.babyGender !==
+            'girl' &&
+          values.babyGender !==
+            'boy' &&
+          values.babyGender !==
+            'unknown'
         ) {
           actions.setFieldError(
             'babyGender',
             'Оберіть стать дитини'
           );
 
-          actions.setSubmitting(false);
+          actions.setSubmitting(
+            false
+          );
 
           return;
         }
@@ -187,48 +208,65 @@ function ProfileEditForm() {
             'Оберіть планову дату пологів'
           );
 
-          actions.setSubmitting(false);
+          actions.setSubmitting(
+            false
+          );
 
           return;
         }
 
         try {
-          actions.setStatus(undefined);
+          actions.setStatus(
+            undefined
+          );
 
-          const updateData: UserUpdateData = {
-            name: values.name.trim(),
-            babyGender:
-              values.babyGender,
-            dueDate:
-              formatDueDate(
-                values.dueDate
-              ),
-          };
+          const updateData: UserUpdateData =
+            {
+              name: values.name.trim(),
+              babyGender:
+                values.babyGender,
+              dueDate:
+                formatDueDate(
+                  values.dueDate
+                ),
+            };
 
-          const updatedUser = await updateMe(updateData);
-          const currentUser = await getMe(); // because updateMe does not return `curWeekNumber` 
-          setUser({...updatedUser, ...currentUser});
+          const updatedUser =
+            await updateMe(
+              updateData
+            );
+
+          setUser(updatedUser);
 
           actions.resetForm({
             values: {
               name:
-                updatedUser.name ?? '',
+                updatedUser.name ??
+                '',
               email:
-                updatedUser.email ?? '',
+                updatedUser.email ??
+                '',
               babyGender:
-                updatedUser.babyGender ?? '',
+                updatedUser.babyGender ??
+                '',
               dueDate:
                 parseDueDate(
                   updatedUser.dueDate
                 ),
             },
           });
+
+          toast.success(
+            'Зміни успішно збережено'
+          );
         } catch {
           actions.setStatus(
             'Не вдалося зберегти зміни. Спробуйте ще раз.'
           );
         } finally {
-          actions.setSubmitting(false);
+          actions.setSubmitting(
+            false
+          );
         }
       }}
     >
@@ -262,7 +300,9 @@ function ProfileEditForm() {
               name="name"
               type="text"
               value={values.name}
-              onChange={handleChange}
+              onChange={
+                handleChange
+              }
               onBlur={handleBlur}
               className={css.input}
             />
@@ -270,7 +310,9 @@ function ProfileEditForm() {
             {touched.name &&
               errors.name && (
                 <p
-                  className={css.error}
+                  className={
+                    css.error
+                  }
                 >
                   {errors.name}
                 </p>
@@ -318,7 +360,9 @@ function ProfileEditForm() {
             >
               instanceId="profile-gender"
               inputId="babyGender"
-              options={genderOptions}
+              options={
+                genderOptions
+              }
               value={
                 genderOptions.find(
                   (option) =>
@@ -332,7 +376,8 @@ function ProfileEditForm() {
               ) => {
                 setFieldValue(
                   'babyGender',
-                  option?.value ?? ''
+                  option?.value ??
+                    ''
                 );
               }}
               onBlur={() => {
@@ -342,12 +387,18 @@ function ProfileEditForm() {
                 );
               }}
               onMenuOpen={() => {
-                setIsGenderOpen(true);
+                setIsGenderOpen(
+                  true
+                );
               }}
               onMenuClose={() => {
-                setIsGenderOpen(false);
+                setIsGenderOpen(
+                  false
+                );
               }}
-              menuIsOpen={isGenderOpen}
+              menuIsOpen={
+                isGenderOpen
+              }
               isSearchable={false}
               classNamePrefix="profileSelect"
               components={{
@@ -359,7 +410,9 @@ function ProfileEditForm() {
             {touched.babyGender &&
               errors.babyGender && (
                 <p
-                  className={css.error}
+                  className={
+                    css.error
+                  }
                 >
                   {
                     errors.babyGender
@@ -391,7 +444,8 @@ function ProfileEditForm() {
                   values.dueDate
                 }
                 onChange={(
-                  date: Date | null
+                  date:
+                    Date | null
                 ) => {
                   setFieldValue(
                     'dueDate',
@@ -405,15 +459,23 @@ function ProfileEditForm() {
                   );
                 }}
                 onCalendarOpen={() => {
-                  setIsDateOpen(true);
+                  setIsDateOpen(
+                    true
+                  );
                 }}
                 onCalendarClose={() => {
-                  setIsDateOpen(false);
+                  setIsDateOpen(
+                    false
+                  );
                 }}
                 minDate={today}
-                filterDate={(date) => {
+                filterDate={(
+                  date
+                ) => {
                   const currentDate =
-                    new Date(date);
+                    new Date(
+                      date
+                    );
 
                   currentDate.setHours(
                     0,
@@ -423,10 +485,13 @@ function ProfileEditForm() {
                   );
 
                   return (
-                    currentDate >= today
+                    currentDate >=
+                    today
                   );
                 }}
-                onKeyDown={(event) => {
+                onKeyDown={(
+                  event
+                ) => {
                   event.preventDefault();
                 }}
                 dateFormat="dd.MM.yyyy"
@@ -445,7 +510,9 @@ function ProfileEditForm() {
                 }
               >
                 <ArrowIcon
-                  isOpen={isDateOpen}
+                  isOpen={
+                    isDateOpen
+                  }
                 />
               </div>
             </div>
@@ -453,7 +520,9 @@ function ProfileEditForm() {
             {touched.dueDate &&
               errors.dueDate && (
                 <p
-                  className={css.error}
+                  className={
+                    css.error
+                  }
                 >
                   {errors.dueDate}
                 </p>
@@ -470,7 +539,9 @@ function ProfileEditForm() {
           )}
 
           <div
-            className={css.actions}
+            className={
+              css.actions
+            }
           >
             <button
               type="button"
@@ -481,11 +552,14 @@ function ProfileEditForm() {
                 resetForm({
                   values: {
                     name:
-                      user.name ?? '',
+                      user.name ??
+                      '',
                     email:
-                      user.email ?? '',
+                      user.email ??
+                      '',
                     babyGender:
-                      user.babyGender ?? '',
+                      user.babyGender ??
+                      '',
                     dueDate:
                       parseDueDate(
                         user.dueDate
@@ -493,10 +567,21 @@ function ProfileEditForm() {
                   },
                 });
 
-                setIsGenderOpen(false);
-                setIsDateOpen(false);
+                setIsGenderOpen(
+                  false
+                );
+
+                setIsDateOpen(
+                  false
+                );
+
+                toast(
+                  'Зміни скасовано'
+                );
               }}
-              disabled={isSubmitting}
+              disabled={
+                isSubmitting
+              }
             >
               Відмінити зміни
             </button>
@@ -506,7 +591,9 @@ function ProfileEditForm() {
               className={
                 css.saveButton
               }
-              disabled={isSubmitting}
+              disabled={
+                isSubmitting
+              }
             >
               {isSubmitting
                 ? 'Збереження...'

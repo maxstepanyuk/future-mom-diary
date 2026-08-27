@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { postTask } from '@/lib/api/clientApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'; 
 import clsx from 'clsx';
 interface AddTaskModalProps {
   onClose: () => void;
