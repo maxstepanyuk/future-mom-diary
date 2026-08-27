@@ -60,7 +60,11 @@ export default function Breadcrumbs() {
               {isLast ? (
                 <span className={css.current}>{crumb.label}</span>
               ) : (
-                <Link href={crumb.href} className={css.link}>
+                <Link
+                  href={crumb.href}
+                  className={css.link}
+                  aria-label={crumb.label}
+                >
                   {crumb.label}
                 </Link>
               )}

@@ -101,7 +101,7 @@ export default function OnboardingForm() {
   return (
     <div className={css.wrapper}>
       <div className={css.container}>
-        <Link href="/" className={css.logoLink}>
+        <Link href="/" className={css.logoLink} aria-label="Перейти на головну">
           <svg className={css.logoMain} width="105" height="45">
             <use href="/logo.svg#logoMain" />
           </svg>

@@ -78,7 +78,7 @@ export default function RegistrationForm() {
   return (
     <div className={css.wrapper}>
       <div className={css.container}>
-        <Link href="/" className={css.logoLink}>
+        <Link href="/" className={css.logoLink} aria-label="Перейти на головну">
           <svg className={css.logoMain} width="105" height="45">
             <use href="/logo.svg#logoMain" />
           </svg>
@@ -159,7 +159,7 @@ export default function RegistrationForm() {
 
           <p className={css.text}>
             Вже маєте аккаунт?
-            <Link className={css.login} href="/auth/login">
+            <Link className={css.login} href="/auth/login" aria-label="Увійти">
               Увійти
             </Link>
           </p>

@@ -35,7 +35,12 @@ export default function Sidebar() {
           <aside className={`${css.sidebar} ${isOpen ? css.open : ""}`}>
             <div className={css.topBar}>
               <div className={css.topMenu}>
-                <Link className={css.topLogo} href="/" onClick={close}>
+                <Link
+                  className={css.topLogo}
+                  href="/"
+                  onClick={close}
+                  aria-label="Перейти на головну"
+                >
                   <svg width={105} height={45}>
                     <use href="/sprite.svg#icon-Logo" />
                   </svg>
@@ -62,6 +67,7 @@ export default function Sidebar() {
                           href={isAuthenticated ? href : "/auth/login"}
                           className={`${css.navLink} ${isActive ? css.active : ""}`}
                           onClick={close}
+                          aria-label={label}
                         >
                           <Icon name={icon} size={24} />
                           <span className={css.navText}>{label}</span>
