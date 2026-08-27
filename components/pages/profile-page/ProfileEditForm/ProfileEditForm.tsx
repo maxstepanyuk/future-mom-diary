@@ -11,7 +11,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 
-import { updateMe } from "@/lib/api/clientApi";
+import { getMe, updateMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import type {
   GenderOption,
@@ -152,8 +152,8 @@ function ProfileEditForm() {
           };
 
           const updatedUser = await updateMe(updateData);
-
-          setUser(updatedUser);
+          const currentUser = await getMe(); // because updateMe does not return `curWeekNumber` 
+          setUser({...updatedUser, ...currentUser});
 
           actions.resetForm({
             values: {
