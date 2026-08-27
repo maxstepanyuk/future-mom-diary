@@ -64,7 +64,7 @@ export default function LoginForm() {
   return (
     <div className={css.wrapper}>
       <div className={css.container}>
-        <Link href="/" className={css.logoLink}>
+        <Link href="/" className={css.logoLink} aria-label="Перейти на головну">
           <svg className={css.logoMain} width="105" height="45">
             <use href="/logo.svg#logoMain"></use>
           </svg>
@@ -128,8 +128,12 @@ export default function LoginForm() {
           </Formik>
 
           <p className={css.text}>
-            Немає аккаунту?{' '}
-            <Link className={css.login} href="/auth/register">
+            Немає аккаунту?{" "}
+            <Link
+              className={css.login}
+              href="/auth/register"
+              aria-label="Зареєструватися"
+            >
               Зареєструватися
             </Link>
           </p>
