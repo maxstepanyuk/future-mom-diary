@@ -1,6 +1,4 @@
-/* ==========================================
-   1. Мобільні стилі та стани кнопок (до 767px)
-   ========================================== */
+
 
 .content {
   position: relative;
@@ -62,7 +60,6 @@
   align-items: center;
 }
 
-/* Спільні базові стилі для кнопок */
 .btnCancel,
 .btnConfirm {
   display: flex;
@@ -94,7 +91,6 @@
     transform 0.1s ease;
 }
 
-/* --- Кнопка "Ні" (btnCancel - Рожева) --- */
 .btnCancel {
   background-color: #ffdae0;
   border-bottom-color: #ffcbd3;
@@ -120,7 +116,6 @@
   cursor: not-allowed;
 }
 
-/* --- Кнопка "Так" (btnConfirm - Сіра) --- */
 .btnConfirm {
   background-color: rgba(0, 0, 0, 0.05);
   border-bottom-color: rgba(0, 0, 0, 0.15);
@@ -146,9 +141,7 @@
   cursor: not-allowed;
 }
 
-/* ==========================================
-   2. Планшетні стилі (Tablet: від 768px)
-   ========================================== */
+
 
 @media screen and (min-width: 768px) {
   .content {
@@ -181,9 +174,6 @@
   }
 }
 
-/* ==========================================
-   3. Десктопні стилі (Desktop: від 1440px)
-   ========================================== */
 
 @media screen and (min-width: 1440px) {
   .content {

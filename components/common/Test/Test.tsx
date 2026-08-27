@@ -27,7 +27,7 @@ import { UserUpdateData } from '@/types/user';
 import { useEffect } from 'react';
 //! =========================================================================AUTH================================================================================
 export default function Test() {
-  ////////////////////////////////// ! пустой юзэффект для будущих проверок
+  ////////////////////////////////// ! empty useEffect for future checks
   useEffect(() => {
     const testHandler = async () => {
       console.log('TEST useEffect');
@@ -35,25 +35,25 @@ export default function Test() {
     testHandler();
   }, []);
 
-  ////////////////////////////////// ! проверка реги
+  ////////////////////////////////// ! registration check
   const registerHandler = async () => {
-    // ! пример аргумента для регистрации
+    // ! example argument for registration
     const registerData = {
       name: 'TEST4',
       email: 'BC81@gmail.com',
       password: '12345678',
     };
     try {
-      // ! register ничего не возвращает
+      // ! register returns nothing
       await register(registerData);
-      console.log('register Success: метод register ничего не возвращает');
+      console.log('register Success: the register method returns nothing');
     } catch (error) {
       console.log(`registerError: ${error}`);
     }
   };
-  ////////////////////////////////// ! проверка логина
+  ////////////////////////////////// ! login check
   const loginHandler = async () => {
-    // ! пример аргумента для логина
+    // ! example argument for login
     const loginData = {
       email: 'BC81@gmail.com',
       password: '12345678',
@@ -65,11 +65,11 @@ export default function Test() {
       console.log(`loginError: ${error}`);
     }
   };
-  ////////////////////////////////// ! проверка логаута
+  ////////////////////////////////// ! logout check
   const logoutHandler = async () => {
-    // ! для логаута параметр отсутсвует
+    // ! no parameter needed for logout
     try {
-      // ! logout ничего не возвращает
+      // ! logout returns nothing
       await logout();
       console.log('logaut success!!');
     } catch (error) {
@@ -77,12 +77,12 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка сессии
+  ////////////////////////////////// ! session check
   const sessionHandler = async () => {
-    // ! для сессии параметр отсутсвует
+    // ! no parameter needed for session
 
     try {
-      //! при успехе возврщает буль true
+      //! returns boolean true on success
       const response = await checkSession();
       console.log('checkSession:', response);
     } catch (error) {
@@ -92,9 +92,9 @@ export default function Test() {
 
   //! =========================================================================USER================================================================================
 
-  ////////////////////////////////// ! проверка юзера getMe
+  ////////////////////////////////// ! user check getMe
   const getMeHandler = async () => {
-    // ! для getMe параметр отсутсвует
+    // ! no parameter needed for getMe
 
     try {
       const response = await getMe();
@@ -104,10 +104,10 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления юзера updateMe
+  ////////////////////////////////// ! check updating user updateMe
   const updateMeHandler = async () => {
-    // ! пример аргумента для updateMe
-    //! пример создания даты:
+    // ! example argument for updateMe
+    //! example of creating a date:
 
     // const date = new Date();
     // const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -115,14 +115,14 @@ export default function Test() {
     // const dateToPost = `${date.getFullYear()}-${month}-${day}`;
 
     const userUpdateData: UserUpdateData = {
-      //! необходимо как минимум 1 поле для изминения
+      //! at least 1 field is required to update
       name: 'TEST_UPDATE',
       // email: string;
-      //! дата должна быть между 1 и 41 после текущей даты
+      //! date must be between 1 and 41 days from the current date
       // dueDate: dateToPost,
       // babyGender: 'girl',
     };
-    //! необходимо добавить логику проверку полей при реализации запроса
+    //! need to add field validation logic when implementing the request
     try {
       const response = await updateMe(userUpdateData);
       console.log('updateMe:', response);
@@ -131,14 +131,14 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления аватара updateMe
+  ////////////////////////////////// ! check updating avatar updateMe
   const updateAvatarHandler = async () => {};
 
   //! =========================================================================TASKS================================================================================
 
-  ////////////////////////////////// ! проверка тасков getTasks
+  ////////////////////////////////// ! tasks check getTasks
   const getTasksHandler = async () => {
-    // ! для getTasks объект: {page: number, perPage?(дефолтное 10 макс 100): number, sortOrder?(дефолтное 'asc'):('asc|dsc')}
+    // ! for getTasks object: {page: number, perPage?(default 10, max 100): number, sortOrder?(default 'asc'):('asc|dsc')}
 
     try {
       const response = await getTasks({ page: 1, perPage: 10 });
@@ -148,10 +148,10 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка создания таска postTasks
+  ////////////////////////////////// ! check creating a task postTasks
   const postTaskHandler = async () => {
-    // ! пример создания аргумента для postTask
-    // ! пример создания даты:
+    // ! example of creating an argument for postTask
+    // ! example of creating a date:
     const date = new Date();
 
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -174,17 +174,17 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления таска updateTaskStatus
+  ////////////////////////////////// ! check updating a task updateTaskStatus
   const updateTaskStatusHandler = async () => {
-    // ! пример создания аргумента для updateTaskStatus
+    // ! example of creating an argument for updateTaskStatus
 
     try {
-      //! 1.получаем таски
+      //! 1. get the tasks
       const tasks = await getTasks({ page: 10, perPage: 10 });
-      //! 2.берём из массива тасок таску по индексу
+      //! 2. take a task from the array by index
       const task = tasks.tasks[0];
-      //! 3. передаём id таски аргументом
-      //! в ответ приходит новое состояние таски булевым значением
+      //! 3. pass the task id as an argument
+      //! the new task state is returned as a boolean value
       const response = await updateTaskStatus({
         taskId: task._id,
         isDone: false,
@@ -197,14 +197,14 @@ export default function Test() {
 
   //! =========================================================================DIARY================================================================================
 
-  ////////////////////////////////// ! проверка создания нотатки postDiaryNote
+  ////////////////////////////////// ! check creating a note postDiaryNote
   const postDiaryNoteHandler = async () => {
-    // ! пример создания аргумента для postDiaryNote
+    // ! example of creating an argument for postDiaryNote
 
     const diaryNote = {
       title: 'TEST NOTE 4',
       description: 'DESCRIPTION TEST NOTE 4',
-      //!  массив с ID эмоций
+      //!  array of emotion IDs
       emotions: ['6895bd86a5c677999ed2ae16'],
     };
 
@@ -216,7 +216,7 @@ export default function Test() {
     }
   };
 
- ////////////////////////////////// ! проверка getDiaryNotes
+ ////////////////////////////////// ! check getDiaryNotes
   const getDiaryNotesHandler = async () => {
     try {
       const response = await getDiaryNotes({ page: 1, limit: 10 });
@@ -227,14 +227,14 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка обновления таска updateDiaryNote
+  ////////////////////////////////// ! check updating a task updateDiaryNote
   const updateDiaryNoteHandler = async () => {
-    // ! пример создания аргумента для updateDiaryNote
+    // ! example of creating an argument for updateDiaryNote
     const noteDiaryId = '6a8712c7ddd422d137b22939';
     const diaryData = {
       title: 'TEST updateDiaryNote',
       description: 'TEST updateDiaryNote Description',
-      //! треба передати масив с ID эмоций
+      //! need to pass an array of emotion IDs
       emotions: ['6895bd86a5c677999ed2ae16'],
     };
 
@@ -246,7 +246,7 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка удаления нотатки deleteDiaryNote
+  ////////////////////////////////// ! check deleting a note deleteDiaryNote
   const deleteDiaryNoteHandler = async () => {
     try {
       const responsegetDiaryNotes = await getDiaryNotes({ page: 1, limit: 10 });
@@ -263,9 +263,9 @@ export default function Test() {
   };
   //! =========================================================================WEEKS================================================================================
 
-  ////////////////////////////////// ! проверка  getWeeksPregnancyInfo
+  ////////////////////////////////// ! check getWeeksPregnancyInfo
   const getWeeksPregnancyInfoHandler = async () => {
-    // ! для getWeeksPregnancyInfo не нужны аргументы
+    // ! no arguments needed for getWeeksPregnancyInfo
 
     try {
       const response = await getWeeksPregnancyInfo();
@@ -275,9 +275,9 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка  getWeeksPregnancyInfoPublic
+  ////////////////////////////////// ! check getWeeksPregnancyInfoPublic
   const getWeeksPregnancyInfoPublicHandler = async () => {
-    // ! для getWeeksPregnancyInfoPublic не нужны аргументы
+    // ! no arguments needed for getWeeksPregnancyInfoPublic
 
     try {
       const response = await getWeeksPregnancyInfoPublic();
@@ -287,13 +287,13 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка  getWeeksBabyInfo
+  ////////////////////////////////// ! check getWeeksBabyInfo
   const getWeeksBabyInfoHandler = async () => {
-    // ! для getWeeksBabyInfo нужен номер недели (от 1 до 41) возмём её из юзера
+    // ! getWeeksBabyInfo needs a week number (from 1 to 41), take it from the user
 
     try {
       const user = await getMe();
-      //! проверяем есть ли номер недели если нет, подставляем 1
+      //! check whether a week number exists, if not, default to 1
       const weekNumber = user.curWeekNumber ?? 1;
       const response = await getWeeksBabyInfo(weekNumber);
       console.log('getWeeksBabyInfo:', response);
@@ -302,13 +302,13 @@ export default function Test() {
     }
   };
 
-  ////////////////////////////////// ! проверка  getWeeksMomInfo
+  ////////////////////////////////// ! check getWeeksMomInfo
   const getWeeksMomInfoHandler = async () => {
-    // ! для getWeeksMomInfo нужен номер недели (от 1 до 41) возмём её из юзера
+    // ! getWeeksMomInfo needs a week number (from 1 to 41), take it from the user
 
     try {
       const user = await getMe();
-      //! проверяем есть ли номер недели если нет, подставляем 1
+      //! check whether a week number exists, if not, default to 1
       const weekNumber = user.curWeekNumber ?? 1;
       const response = await getWeeksMomInfo(weekNumber);
       console.log('getWeeksMomInfo:', response);
@@ -319,12 +319,12 @@ export default function Test() {
 
   //! =========================================================================EMOTIONS================================================================================
 
-  ////////////////////////////////// ! проверка обновления таска getEmotions
+  ////////////////////////////////// ! check updating a task getEmotions
   const getEmotionsHandler = async () => {
-    // ! пример создания аргумента для getEmotions
+    // ! example of creating an argument for getEmotions
 
     try {
-      // ! для getEmotions 2 параметра: page: number, perPage?(дефолтное 10 макс 100): number,
+      // ! getEmotions takes 2 parameters: page: number, perPage?(default 10, max 100): number,
       const response = await getEmotions(1, 10);
       console.log('getEmotions:', response);
     } catch (error) {

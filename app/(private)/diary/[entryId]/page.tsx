@@ -70,7 +70,6 @@ export default function DiaryDetailPage() {
         onDelete={() => setIsDeleteModalOpen(true)}
       />
 
-      {/* Модалка редагування */}
       {isEditModalOpen && (
         <AddDiaryEntryModal
           diaryNote={selectedNote}
@@ -78,7 +77,6 @@ export default function DiaryDetailPage() {
         />
       )}
 
-      {/* Модалка видалення */}
       {isDeleteModalOpen && (
         <ConfirmationModal
           title="Ви впевнені, що хочете видалити цей запис?"

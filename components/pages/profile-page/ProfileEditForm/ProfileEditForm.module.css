@@ -129,7 +129,6 @@
   color: #d32f2f;
 }
 
-/* react-select */
 
 :global(.profileSelect__control) {
   min-height: 37px !important;
@@ -171,7 +170,6 @@
   display: none;
 }
 
-/* контейнер для нашей иконки из sprite.svg */
 :global(.profileSelect__dropdown-indicator) {
   padding: 0 12px !important;
 
@@ -184,7 +182,6 @@
   color: transparent !important;
 }
 
-/* svg из sprite */
 :global(.profileSelect__dropdown-indicator svg) {
   display: block;
 

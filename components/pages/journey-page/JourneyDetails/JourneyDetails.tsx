@@ -58,7 +58,6 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
         </button>
       </div>
       <div className={css.content}>
-        {/* ТАБ: Розвиток малюка */}
         {activeTab === "baby" && (
           <>
             {babyQuery.isFetching ? (
@@ -105,7 +104,6 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
           </>
         )}
 
-        {/* ТАБ: Тіло мами */}
         {activeTab === "mom" && (
           <>
             {momQuery.isFetching ? (
@@ -117,7 +115,6 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
             ) : momQuery.data ? (
               <div className={css.momLayout}>
                 <div className={css.momBlocks}>
-                  {/* Блок "Як ви можете почуватись" */}
                   <div className={css.block}>
                     <h3 className={css.blockTitle}>Як ви можете почуватись</h3>
                     <ul className={css.statesList}>
@@ -132,7 +129,6 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
                     </p>
                   </div>
 
-                  {/* Блок "Поради для вашого комфорту" */}
                   <div className={css.block}>
                     <h3 className={css.blockTitle}>
                       Поради для вашого комфорту

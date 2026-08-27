@@ -62,7 +62,6 @@
   margin: 0;
 }
 
-/* Мобільні пристрої (< 768px) */
 @media (max-width: 767px) {
   .greeting {
     margin-bottom: 16px;
@@ -73,7 +72,6 @@
   }
 }
 
-/* Планшет (768px – 1439px) */
 @media (min-width: 768px) and (max-width: 1439px) {
   .pageContainer {
     max-width: 768px;
@@ -88,7 +86,6 @@
   }
 }
 
-/* Десктоп (1440px+) */
 @media (min-width: 1440px) {
   .pageContainer {
     max-width: 1440px;
