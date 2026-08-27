@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Leleka
 
-## Getting Started
+A web application that supports women throughout their entire pregnancy.
 
-First, run the development server:
+## It helps them feel calmer and more confident by answering the key questions at every stage:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- What is happening with the baby?
+- How is the body changing?
+- What should I prepare for?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What the app provides:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Personalized weekly guidance - based on the start date, the app calculates the pregnancy stage and displays relevant information: the baby's development and size, possible symptoms and sensations, and tips for comfort.
+- Emotional journal - a space to record feelings and important moments, helping preserve the memories of this special time.
+- Important task list - helps make sure nothing is forgotten while preparing to meet the baby.
+- Daily tips - gentle, practical suggestions to make each day of pregnancy a little easier.
+- Core value - turns anxious anticipation into a calm and mindful journey by bringing all the essential information and support together in one app.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Technologies used
 
-To learn more about Next.js, take a look at the following resources:
+Front-end:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- HTML/CSS
+- JavaScript
+- Axios
+- React
+- Zustand
+- React-datepicker
+- React-hot-toast
+- Yup
+- Formik
+- TanStackQuery
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Back-end:
 
-## Deploy on Vercel
+- Node.js
+- Express
+- Mongoose
+- Swagger
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Utilites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- VSCode
+- Webpack
+- Parcel
+- Figma
+- Git/GitHub
