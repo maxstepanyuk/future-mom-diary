@@ -13,7 +13,12 @@ export default function Header() {
 
   return (
     <header className={css.header}>
-      <Link href="/" className={css.logo} onClick={close}>
+      <Link
+        href="/"
+        className={css.logo}
+        onClick={close}
+        aria-label="Перейти на головну"
+      >
         <svg width={84} height={36}>
           <use href="/sprite.svg#icon-Logo" />
         </svg>
